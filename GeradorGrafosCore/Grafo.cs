@@ -80,6 +80,19 @@ namespace GeradorGrafosCore
             return listaArcos;
         }
 
+        public bool ProcuraArco(Vertice entrada, Vertice saida)
+        {
+            foreach (Arco a in this.Arcos)
+            {
+                if (a.entrada == entrada && a.saida == saida)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public void RemoveArco(int idArco)
         {
             Arco a = new Arco();
