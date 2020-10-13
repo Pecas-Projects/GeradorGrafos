@@ -23,20 +23,28 @@ namespace GeradorGrafosUWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public List<Class1> Contacts = new List<Class1>();
-        public List<string> Estruturas { get; set; }
+        public List<Vertice> vertices { get; set; }
+        public List<Arco> arcos { get; set; }
+        public List<string> estruturas { get; set; }
         public MainPage()
         {
             this.InitializeComponent();
 
-            Estruturas = new List<string>();
-            Estruturas.Add("Lista de adjacência");
-            Estruturas.Add("Matriz de adjacência");
+            estruturas = new List<string>();
+            estruturas.Add("Lista de adjacência");
+            estruturas.Add("Matriz de adjacência");
 
-            Class1 c1 = new Class1{ Name = "Maria"};
-            Class1 c2 = new Class1 { Name = "Davi" };
-            Contacts.Add(c1);
-            Contacts.Add(c2);
+            Vertice v1 = new Vertice { etiqueta = "Maria", id = 1 };
+            Vertice v2 = new Vertice { etiqueta = "Atari", id = 2 };
+            vertices = new List<Vertice>();
+            vertices.Add(v1);
+            vertices.Add(v2);
+
+            Arco a1 = new Arco { id = 1, saida = v1, entrada = v2, peso = 20 };
+            Arco a2 = new Arco { id = 2, saida = v1, entrada = v1, peso = 10 };
+            arcos = new List<Arco>();
+            arcos.Add(a1);
+            arcos.Add(a2);
         }
 
     }

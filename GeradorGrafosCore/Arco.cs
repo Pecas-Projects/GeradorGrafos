@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GeradorGrafosCore
 {
-    class Arco
+    public class Arco
     {
         public int id { get; set; }
         public int peso { get; set; }

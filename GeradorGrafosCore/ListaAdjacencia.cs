@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GeradorGrafosCore
 {
-    class ListaAdjacencia
+    public class ListaAdjacencia
     {
         public Grafo Grafo { get; set; }
     }
