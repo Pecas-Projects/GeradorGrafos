@@ -48,7 +48,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="local1:Vertice">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
-                            <TextBlock Text="{x:Bind etiqueta}" FontSize="20"/>
+                            <TextBlock Text="{x:Bind InformacoesVertice()}" FontSize="20"/>
                             <Button Background="#8E8B8B" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontWeight="Bold"  Content="&#xE711;" Foreground="#000" FontSize="20" Padding="10" CornerRadius="100" Margin="20,0,0,0"/>
                         </StackPanel>
                     </DataTemplate>
@@ -61,7 +61,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="local1:Arco">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
-                            <TextBlock Text="{x:Bind saida.etiqueta}" FontSize="20"/>
+                            <TextBlock Text="{x:Bind InformacoesArco()}" FontSize="20"/>
                             <Button Background="#8E8B8B" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontWeight="Bold"  Content="&#xE711;" Foreground="#000" FontSize="20" Padding="10" CornerRadius="100" Margin="20,0,0,0"/>
                         </StackPanel>
                     </DataTemplate>
