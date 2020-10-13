@@ -8,6 +8,10 @@ namespace GeradorGrafosCore
     {
         public int id { get; set; }
         public string etiqueta { get; set; }
+        public string InformacoesVertice()
+        {
+            return this.id + ": " + this.etiqueta;
+        }
     }
 
 }
