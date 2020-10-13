@@ -4,10 +4,10 @@ using System.Text;
 
 namespace GeradorGrafosCore
 {
-    class Vertice
+    class ListaAdjacencia
     {
-        public int id { get; set; }
-        public string etiqueta { get; set; }
+        public Grafo Grafo { get; set; }
     }
+
 
 }

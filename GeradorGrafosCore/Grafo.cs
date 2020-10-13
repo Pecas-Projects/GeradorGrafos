@@ -27,10 +27,17 @@ namespace GeradorGrafosCore
             return null;
         }
 
-        public void RemoveVertice( int idVertice)
+        public void RemoveVertice(int idVertice)
         {
             Vertice v = new Vertice();
             v = ProcuraVertice(idVertice);
+            List<Arco> listaArco = ProcuraArco(v);
+
+            foreach (Arco arco in listaArco)
+            {
+                this.Arcos.Remove(arco);
+            }
+
             this.Vertices.Remove(v);
         }
 
@@ -44,6 +51,8 @@ namespace GeradorGrafosCore
             this.Arcos.Add(a);
         }
 
+
+
         public Arco ProcuraArco(int idArco)
         {
             foreach (Arco a in this.Arcos)
@@ -54,6 +63,21 @@ namespace GeradorGrafosCore
                 }
             }
             return null;
+        }
+
+        public List<Arco> ProcuraArco(Vertice vertice)
+        {
+            List<Arco> listaArcos = new List<Arco>();
+
+            foreach (Arco a in this.Arcos)
+            {
+                if (a.entrada == vertice || a.saida == vertice)
+                {
+                    listaArcos.Add(a);
+                }
+            }
+
+            return listaArcos;
         }
 
         public void RemoveArco(int idArco)
