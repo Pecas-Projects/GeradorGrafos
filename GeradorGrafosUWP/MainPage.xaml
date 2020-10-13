@@ -44,7 +44,7 @@
         </StackPanel>
         <StackPanel Grid.Row="3" Margin="50,20,0,0">
             <TextBlock Text="Vértices adicionados" FontSize="25" />
-            <ListView ItemsSource="{x:Bind vertices}" Background="White">
+            <ListView ItemsSource="{x:Bind Vertices}" Background="White">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="local1:Vertice">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
@@ -57,7 +57,7 @@
         </StackPanel>
         <StackPanel Grid.Row="3" Grid.Column="1" Margin="50,20,0,0">
             <TextBlock Text="Arestas adicionadas" FontSize="25" />
-            <ListView ItemsSource="{x:Bind arcos}" Background="White">
+            <ListView ItemsSource="{x:Bind Arcos}" Background="White">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="local1:Arco">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
@@ -69,7 +69,7 @@
             </ListView>
         </StackPanel>
         <StackPanel Grid.Row="3" Grid.Column="2" VerticalAlignment="Bottom">
-            <ComboBox Background="#8E8B8B" x:Name="FontsCombo" Header="Estrutura utilizada" HorizontalAlignment="Center" FontSize="20" Padding="10" Margin="0,0,0,20" Width="200" ItemsSource="{x:Bind estruturas}"/>
+            <ComboBox Background="#8E8B8B" x:Name="FontsCombo" Header="Estrutura utilizada" HorizontalAlignment="Center" FontSize="20" Padding="10" Margin="0,0,0,20" Width="200" ItemsSource="{x:Bind Estruturas}"/>
             <Button Background="#8E8B8B" HorizontalAlignment="Center" Content="Visualizar grafo" FontSize="20" Padding="10" Margin="0,0,0,20" Width="200"/>
         </StackPanel>
     </Grid>
