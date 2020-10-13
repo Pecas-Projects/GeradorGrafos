@@ -4,11 +4,73 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:GeradorGrafosUWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local1="using:GeradorGrafosCore"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid Background="#C4C4C4">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.ColumnSpan="3" Text="GERADOR DE GRAFOS" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="50,0,0,0">
+            <RadioButton Content="Grafo não dirigido" GroupName="TipoGrafo" FontSize="25" IsChecked="True"/>
+            <RadioButton Content="Grafo dirigido" GroupName="TipoGrafo" FontSize="25"/>
+        </StackPanel>
 
+        <StackPanel Grid.Row="2" VerticalAlignment="Center" Margin="50,0,0,0">
+            <TextBlock Text="Criar vértice" FontSize="25" />
+            <StackPanel Orientation="Horizontal">
+                <TextBox Header="Informação" FontSize="20" Width="200" Background="White"/>
+                <Button Background="#8E8B8B" VerticalAlignment="Bottom" FontFamily="Segoe MDL2 Assets" FontWeight="Bold"  Content="&#xE710;" Foreground="#000" FontSize="20" Padding="10" CornerRadius="100" Margin="20,0,0,0"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="50,0,0,0">
+            <TextBlock Text="Criar aresta" FontSize="25" />
+            <StackPanel Orientation="Horizontal">
+                <TextBox Header="Vértice de saída" FontSize="20" Width="200" Background="White"/>
+                <TextBox Header="Vértice de entrada" FontSize="20" Margin="20,0,0,0" Width="200" Background="White"/>
+                <TextBox Header="Peso" FontSize="20" Margin="20,0,0,0" Width="200" Background="White"/>
+                <Button Background="#8E8B8B" VerticalAlignment="Bottom" FontFamily="Segoe MDL2 Assets" FontWeight="Bold"  Content="&#xE710;" Foreground="#000" FontSize="20" Padding="10" CornerRadius="100" Margin="20,0,0,0"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Margin="50,20,0,0">
+            <TextBlock Text="Vértices adicionados" FontSize="25" />
+            <ListView ItemsSource="{x:Bind Contacts}" Background="White">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="local1:Class1">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
+                            <TextBlock Text="{x:Bind Name}" FontSize="20"/>
+                            <Button Background="#8E8B8B" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontWeight="Bold"  Content="&#xE711;" Foreground="#000" FontSize="20" Padding="10" CornerRadius="100" Margin="20,0,0,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="1" Margin="50,20,0,0">
+            <TextBlock Text="Arestas adicionadas" FontSize="25" />
+            <ListView ItemsSource="{x:Bind Contacts}" Background="White">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="local1:Class1">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
+                            <TextBlock Text="{x:Bind Name}" FontSize="20"/>
+                            <Button Background="#8E8B8B" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontWeight="Bold"  Content="&#xE711;" Foreground="#000" FontSize="20" Padding="10" CornerRadius="100" Margin="20,0,0,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="2" VerticalAlignment="Bottom">
+            <ComboBox Background="#8E8B8B" x:Name="FontsCombo" Header="Estrutura utilizada" HorizontalAlignment="Center" FontSize="20" Padding="10" Margin="0,0,0,20" Width="200" ItemsSource="{x:Bind Estruturas}"/>
+            <Button Background="#8E8B8B" HorizontalAlignment="Center" Content="Visualizar grafo" FontSize="20" Padding="10" Margin="0,0,0,20" Width="200"/>
+        </StackPanel>
     </Grid>
 </Page>
