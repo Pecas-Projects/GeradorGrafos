@@ -22,8 +22,8 @@
         </Grid.ColumnDefinitions>
         <TextBlock Foreground="Black" Grid.ColumnSpan="3" Text="GERADOR DE GRAFOS" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <StackPanel Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="50,0,0,0">
-            <RadioButton Foreground="Black" Content="Grafo não dirigido" GroupName="TipoGrafo" FontSize="25" IsChecked="True"/>
-            <RadioButton Foreground="Black" Content="Grafo dirigido" GroupName="TipoGrafo" FontSize="25"/>
+            <RadioButton Foreground="Black" Content="Grafo não dirigido" GroupName="TipoGrafo" FontSize="25" IsChecked="True" Checked="naoDirigido_Checked"/>
+            <RadioButton Foreground="Black" Content="Grafo dirigido" GroupName="TipoGrafo" FontSize="25" Checked="dirigido_Checked"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" VerticalAlignment="Center" Margin="50,0,0,0">

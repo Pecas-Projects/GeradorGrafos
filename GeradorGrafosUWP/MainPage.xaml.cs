@@ -23,29 +23,39 @@ namespace GeradorGrafosUWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public List<Vertice> vertices { get; set; }
-        public List<Arco> arcos { get; set; }
-        public List<string> estruturas { get; set; }
+        public List<Vertice> Vertices { get; set; }
+        public List<Arco> Arcos { get; set; }
+        public Grafo Grafo = new Grafo();
+        public List<string> Estruturas { get; set; }
         public MainPage()
         {
             this.InitializeComponent();
 
-            estruturas = new List<string>();
-            estruturas.Add("Lista de adjacência");
-            estruturas.Add("Matriz de adjacência");
+            Estruturas = new List<string>();
+            Estruturas.Add("Lista de adjacência");
+            Estruturas.Add("Matriz de adjacência");
 
             Vertice v1 = new Vertice { etiqueta = "Maria", id = 1 };
             Vertice v2 = new Vertice { etiqueta = "Atari", id = 2 };
-            vertices = new List<Vertice>();
-            vertices.Add(v1);
-            vertices.Add(v2);
+            Vertices = new List<Vertice>();
+            Vertices.Add(v1);
+            Vertices.Add(v2);
 
             Arco a1 = new Arco { id = 1, saida = v1, entrada = v2, peso = 20 };
             Arco a2 = new Arco { id = 2, saida = v1, entrada = v1, peso = 10 };
-            arcos = new List<Arco>();
-            arcos.Add(a1);
-            arcos.Add(a2);
+            Arcos = new List<Arco>();
+            Arcos.Add(a1);
+            Arcos.Add(a2);
         }
 
+        private void naoDirigido_Checked(object sender, RoutedEventArgs e)
+        {
+            this.Grafo.dirigido = false;
+        }
+
+        private void dirigido_Checked(object sender, RoutedEventArgs e)
+        {
+            this.Grafo.dirigido = true;
+        }
     }
 }
