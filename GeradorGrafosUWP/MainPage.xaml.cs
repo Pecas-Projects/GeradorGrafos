@@ -1,8 +1,10 @@
 ﻿using GeradorGrafosCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -23,29 +25,81 @@ namespace GeradorGrafosUWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public List<Vertice> vertices { get; set; }
-        public List<Arco> arcos { get; set; }
-        public List<string> estruturas { get; set; }
+        private Vertice Vertice = new Vertice();
+        public Arco Arco = new Arco();
+
+        public Grafo Grafo = new Grafo();
+        public List<string> Estruturas { get; set; }
+        private string infoVertice { get; set; }
+
         public MainPage()
         {
             this.InitializeComponent();
 
-            estruturas = new List<string>();
-            estruturas.Add("Lista de adjacência");
-            estruturas.Add("Matriz de adjacência");
+            Estruturas = new List<string>();
+            Estruturas.Add("Lista de adjacência");
+            Estruturas.Add("Matriz de adjacência");
 
-            Vertice v1 = new Vertice { etiqueta = "Maria", id = 1 };
-            Vertice v2 = new Vertice { etiqueta = "Atari", id = 2 };
-            vertices = new List<Vertice>();
-            vertices.Add(v1);
-            vertices.Add(v2);
-
-            Arco a1 = new Arco { id = 1, saida = v1, entrada = v2, peso = 20 };
-            Arco a2 = new Arco { id = 2, saida = v1, entrada = v1, peso = 10 };
-            arcos = new List<Arco>();
-            arcos.Add(a1);
-            arcos.Add(a2);
         }
 
+        private void naoDirigido_Checked(object sender, RoutedEventArgs e)
+        {
+            this.Grafo.dirigido = false;
+        }
+
+        private void dirigido_Checked(object sender, RoutedEventArgs e)
+        {
+            this.Grafo.dirigido = true;
+        }
+
+        private void TextBox_Informacao(object sender, TextChangedEventArgs e)
+        {
+            this.infoVertice = inputInformacao.Text;
+        }
+
+        private void Button_addVertice(object sender, RoutedEventArgs e)
+        {
+            if(inputInformacao.Text == null)
+            {
+                // Aviso de erro
+            }
+            else
+            {
+                int idVertice = Grafo.CalculaNumVertices() + 1;
+
+                Vertice.id = idVertice;
+                Vertice.etiqueta = this.infoVertice;
+
+                Grafo.Vertices.Add(Vertice);
+
+                ComboBox_Vertices_Saida.Items.Add(Vertice.etiqueta);
+
+                ComboBox_Vertices_Entrada.Items.Add(Vertice.etiqueta);
+
+                inputInformacao.Text = "";
+
+            }
+
+        }
+
+        private void Button_AddArco(object sender, RoutedEventArgs e)
+        {
+            if (InputPeso.Text == null || ComboBox_Vertices_Saida.SelectedValue == null || ComboBox_Vertices_Entrada.SelectedValue == null)
+            {
+                Debug.WriteLine("UIUIUUI");
+                // Aviso de erro
+            }
+            else
+            {
+                int idArco = Grafo.CalculaNumArcos() + 1;
+
+                this.Arco.id = idArco;
+                this.Arco.peso = int.Parse(InputPeso.Text);
+
+                Grafo.Arcos.Add(Arco);
+
+                InputPeso.Text = "";
+            }
+        }
     }
 }
