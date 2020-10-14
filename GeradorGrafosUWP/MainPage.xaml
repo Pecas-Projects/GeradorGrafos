@@ -48,7 +48,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="local1:Vertice">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
-                            <TextBlock Text="{x:Bind InformacoesVertice()}" FontSize="20"/>
+                            <TextBlock FontSize="20"/>
                             <Button Background="#8E8B8B" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontWeight="Bold"  Content="&#xE711;" Foreground="#000" FontSize="20" Padding="10" CornerRadius="100" Margin="20,0,0,0"/>
                         </StackPanel>
                     </DataTemplate>
@@ -58,7 +58,7 @@
 
         
         <StackPanel Grid.Row="3" Grid.Column="2" VerticalAlignment="Bottom">
-            <ComboBox Background="#8E8B8B" x:Name="FontsCombo" Header="Estrutura utilizada" HorizontalAlignment="Center" FontSize="25"  Margin="0,0,0,20" Width="200" ItemsSource="{x:Bind estruturas}">
+            <ComboBox Background="#8E8B8B" x:Name="FontsCombo" Header="Estrutura utilizada" HorizontalAlignment="Center" FontSize="25"  Margin="0,0,0,20" Width="200" ItemsSource="{x:Bind Estruturas}">
                 <ComboBox.HeaderTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}" Foreground="Black" />
