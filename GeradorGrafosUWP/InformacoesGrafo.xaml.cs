@@ -39,7 +39,7 @@ namespace GeradorGrafosUWP
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            this.Grafo = e.Parameter as Grafo;
+            Grafo = e.Parameter as Grafo;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -49,7 +49,8 @@ namespace GeradorGrafosUWP
 
         private void Button_SalvarArquivo(object sender, RoutedEventArgs e)
         {
-            this.Arquivo.GravacaoGrafoPajek(this.Grafo);
+            Arquivo.GravacaoGrafoPajek(Grafo);
         }
+
     }
 }

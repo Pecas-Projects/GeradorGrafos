@@ -10,7 +10,7 @@ namespace GeradorGrafosCore
         public void GravacaoGrafoPajek(Grafo grafo)
         {
 
-            StreamWriter sr = new StreamWriter(@"C:\Users\anapa\OneDrive\Área de Trabalho\arquivo\grafo.txt");
+            StreamWriter sr = new StreamWriter(@"D:\Projetos\GeradorGrafos\grafo.txt");
 
             int numVertice = grafo.CalculaNumVertices();
 
