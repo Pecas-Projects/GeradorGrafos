@@ -4,11 +4,18 @@ using System.Text;
 
 namespace GeradorGrafosCore
 {
-    class Grafo
+    public class Grafo
     {
         public List<Vertice> Vertices { get; set; }
         public List<Arco> Arcos { get; set; }
         public bool dirigido { get; set; }
+
+        public Grafo()
+        {
+            this.Vertices = new List<Vertice>();
+            this.Arcos = new List<Arco>();
+            this.dirigido = false;
+        }
 
         public void AdicionaVertice( Vertice v)
         {
@@ -27,15 +34,26 @@ namespace GeradorGrafosCore
             return null;
         }
 
-        public void RemoveVertice( int idVertice)
+        public void RemoveVertice(int idVertice)
         {
             Vertice v = new Vertice();
             v = ProcuraVertice(idVertice);
+            List<Arco> listaArco = ProcuraArco(v);
+
+            foreach (Arco arco in listaArco)
+            {
+                this.Arcos.Remove(arco);
+            }
+
             this.Vertices.Remove(v);
         }
 
         public int CalculaNumVertices()
         {
+            if(this.Vertices == null)
+            {
+                return 0;
+            }
             return this.Vertices.Count;
         }
 
@@ -43,6 +61,8 @@ namespace GeradorGrafosCore
         {
             this.Arcos.Add(a);
         }
+
+
 
         public Arco ProcuraArco(int idArco)
         {
@@ -56,6 +76,34 @@ namespace GeradorGrafosCore
             return null;
         }
 
+        public List<Arco> ProcuraArco(Vertice vertice)
+        {
+            List<Arco> listaArcos = new List<Arco>();
+
+            foreach (Arco a in this.Arcos)
+            {
+                if (a.entrada == vertice || a.saida == vertice)
+                {
+                    listaArcos.Add(a);
+                }
+            }
+
+            return listaArcos;
+        }
+
+        public bool ProcuraArco(Vertice entrada, Vertice saida)
+        {
+            foreach (Arco a in this.Arcos)
+            {
+                if (a.entrada == entrada && a.saida == saida)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public void RemoveArco(int idArco)
         {
             Arco a = new Arco();
@@ -65,6 +113,10 @@ namespace GeradorGrafosCore
 
         public int CalculaNumArcos()
         {
+            if (this.Arcos == null)
+            {
+                return 0;
+            }
             return this.Arcos.Count;
         }
 
