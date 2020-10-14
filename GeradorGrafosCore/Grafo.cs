@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace GeradorGrafosCore
@@ -62,8 +63,6 @@ namespace GeradorGrafosCore
             this.Arcos.Add(a);
         }
 
-
-
         public Arco ProcuraArco(int idArco)
         {
             foreach (Arco a in this.Arcos)
@@ -120,5 +119,17 @@ namespace GeradorGrafosCore
             return this.Arcos.Count;
         }
 
+        public void InicializaFonte(List<int> d, List<Vertice> p)
+        {
+            //i = 0 -> índice valor da fonte (s)
+            for(int i = 0; i < this.Vertices.Count(); i++)
+            {
+                d.Add(100000000);
+                p.Add(null);
+            }
+            d[0] = 0;
+        }
+
+        
     }
 }
