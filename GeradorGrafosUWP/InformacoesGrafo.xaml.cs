@@ -27,11 +27,13 @@ namespace GeradorGrafosUWP
 
         public Grafo Grafo = new Grafo();
         public Arquivo Arquivo = new Arquivo();
+
         public InformacoesGrafo()
         {
             teste = new List<string>();
             teste.Add("teste1");
             teste.Add("teste2");
+            
 
             this.InitializeComponent();
         }
@@ -40,6 +42,8 @@ namespace GeradorGrafosUWP
         {
             base.OnNavigatedTo(e);
             this.Grafo = e.Parameter as Grafo;
+
+            NumVertices.Text = Grafo.CalculaNumVertices().ToString();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -50,6 +54,11 @@ namespace GeradorGrafosUWP
         private void Button_SalvarArquivo(object sender, RoutedEventArgs e)
         {
             this.Arquivo.GravacaoGrafoPajek(this.Grafo);
+        }
+
+        private void NumVertices_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
