@@ -10,6 +10,12 @@ namespace GeradorGrafosCore
         public string etiqueta { get; set; }
 
         public List<Vertice> ListaAdjacencia { get; set; }
+
+        public Vertice()
+        {
+            this.ListaAdjacencia = new List<Vertice>();
+        }
     }
 
+    
 }
