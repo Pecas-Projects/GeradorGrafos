@@ -93,14 +93,14 @@
             </ListView>
         </StackPanel>
         <StackPanel Grid.Row="3" Grid.Column="2" VerticalAlignment="Bottom">
-            <ComboBox Background="#8E8B8B" x:Name="FontsCombo" Header="Estrutura utilizada" HorizontalAlignment="Center" FontSize="20" Padding="10" Margin="0,0,0,20" Width="200" ItemsSource="{x:Bind estruturas}">
+            <ComboBox Background="#8E8B8B" x:Name="FontsCombo" Header="Estrutura utilizada" HorizontalAlignment="Center" FontSize="25"  Margin="0,0,0,20" Width="200" ItemsSource="{x:Bind estruturas}">
                 <ComboBox.HeaderTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}" Foreground="Black" />
                     </DataTemplate>
                 </ComboBox.HeaderTemplate>
             </ComboBox>
-            <Button Background="#8E8B8B" Foreground="Black" HorizontalAlignment="Center" Content="Visualizar grafo" FontSize="20" Padding="10" Margin="0,0,0,20" Width="200"/>
+            <Button Background="#8E8B8B" Foreground="Black" HorizontalAlignment="Center" Content="Próxima página" FontSize="25"  Margin="0,0,0,20" Width="200" Click="Button_Click"/>
         </StackPanel>
     </Grid>
 </Page>

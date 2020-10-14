@@ -46,6 +46,9 @@ namespace GeradorGrafosUWP
             arcos.Add(a1);
             arcos.Add(a2);
         }
-
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(InformacoesGrafo));
+        }
     }
 }
