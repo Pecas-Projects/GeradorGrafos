@@ -4,14 +4,12 @@ using System.Text;
 
 namespace GeradorGrafosCore
 {
-    public class Vertice
+    class Vertice
     {
         public int id { get; set; }
         public string etiqueta { get; set; }
-        public string InformacoesVertice()
-        {
-            return this.id + ": " + this.etiqueta;
-        }
+
+        public List<Vertice> ListaAdjacencia { get; set; }
     }
 
 }

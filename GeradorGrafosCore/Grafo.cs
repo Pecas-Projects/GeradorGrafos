@@ -10,6 +10,13 @@ namespace GeradorGrafosCore
         public List<Arco> Arcos { get; set; }
         public bool dirigido { get; set; }
 
+        public Grafo()
+        {
+            this.Vertices = new List<Vertice>();
+            this.Arcos = new List<Arco>();
+            this.dirigido = false;
+        }
+
         public void AdicionaVertice( Vertice v)
         {
             Vertices.Add(v);
@@ -43,6 +50,10 @@ namespace GeradorGrafosCore
 
         public int CalculaNumVertices()
         {
+            if(this.Vertices == null)
+            {
+                return 0;
+            }
             return this.Vertices.Count;
         }
 
@@ -80,6 +91,19 @@ namespace GeradorGrafosCore
             return listaArcos;
         }
 
+        public bool ProcuraArco(Vertice entrada, Vertice saida)
+        {
+            foreach (Arco a in this.Arcos)
+            {
+                if (a.entrada == entrada && a.saida == saida)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public void RemoveArco(int idArco)
         {
             Arco a = new Arco();
@@ -89,6 +113,10 @@ namespace GeradorGrafosCore
 
         public int CalculaNumArcos()
         {
+            if (this.Arcos == null)
+            {
+                return 0;
+            }
             return this.Arcos.Count;
         }
 
