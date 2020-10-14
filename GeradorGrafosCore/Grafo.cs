@@ -130,6 +130,15 @@ namespace GeradorGrafosCore
             d[0] = 0;
         }
 
+        public int ExtraiMenor(List<Vertice> q, List<int> d, Vertice j)
+        {
+            int indice = d.IndexOf(d.Min());
+            j = q.Add[indice];
+            q.RemoveAt(indice);
+
+            return indice;
+        }
+
         
     }
 }
