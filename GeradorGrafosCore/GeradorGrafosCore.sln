@@ -3,12 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeradorGrafosCore", "GeradorGrafosCore.csproj", "{8EEA91DA-1743-476E-9F74-EA4EEB0CDBA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeradorGrafosCore", "GeradorGrafosCore.csproj", "{8EEA91DA-1743-476E-9F74-EA4EEB0CDBA6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeradorGrafosUWP", "..\GeradorGrafosUWP\GeradorGrafosUWP.csproj", "{A52339C6-3E8D-45D7-88CB-B19D79A1E0B5}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8EEA91DA-1743-476E-9F74-EA4EEB0CDBA6} = {8EEA91DA-1743-476E-9F74-EA4EEB0CDBA6}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testes Console", "..\Testes Console\Testes Console.csproj", "{7B2E4F4D-46EE-4E76-B818-F1B990DE9F7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,6 +72,26 @@ Global
 		{A52339C6-3E8D-45D7-88CB-B19D79A1E0B5}.Release|x86.ActiveCfg = Release|x86
 		{A52339C6-3E8D-45D7-88CB-B19D79A1E0B5}.Release|x86.Build.0 = Release|x86
 		{A52339C6-3E8D-45D7-88CB-B19D79A1E0B5}.Release|x86.Deploy.0 = Release|x86
+		{7B2E4F4D-46EE-4E76-B818-F1B990DE9F7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B2E4F4D-46EE-4E76-B818-F1B990DE9F7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B2E4F4D-46EE-4E76-B818-F1B990DE9F7E}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{7B2E4F4D-46EE-4E76-B818-F1B990DE9F7E}.Debug|ARM.Build.0 = Debug|Any CPU
+		{7B2E4F4D-46EE-4E76-B818-F1B990DE9F7E}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{7B2E4F4D-46EE-4E76-B818-F1B990DE9F7E}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{7B2E4F4D-46EE-4E76-B818-F1B990DE9F7E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7B2E4F4D-46EE-4E76-B818-F1B990DE9F7E}.Debug|x64.Build.0 = Debug|Any CPU
+		{7B2E4F4D-46EE-4E76-B818-F1B990DE9F7E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7B2E4F4D-46EE-4E76-B818-F1B990DE9F7E}.Debug|x86.Build.0 = Debug|Any CPU
+		{7B2E4F4D-46EE-4E76-B818-F1B990DE9F7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B2E4F4D-46EE-4E76-B818-F1B990DE9F7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B2E4F4D-46EE-4E76-B818-F1B990DE9F7E}.Release|ARM.ActiveCfg = Release|Any CPU
+		{7B2E4F4D-46EE-4E76-B818-F1B990DE9F7E}.Release|ARM.Build.0 = Release|Any CPU
+		{7B2E4F4D-46EE-4E76-B818-F1B990DE9F7E}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{7B2E4F4D-46EE-4E76-B818-F1B990DE9F7E}.Release|ARM64.Build.0 = Release|Any CPU
+		{7B2E4F4D-46EE-4E76-B818-F1B990DE9F7E}.Release|x64.ActiveCfg = Release|Any CPU
+		{7B2E4F4D-46EE-4E76-B818-F1B990DE9F7E}.Release|x64.Build.0 = Release|Any CPU
+		{7B2E4F4D-46EE-4E76-B818-F1B990DE9F7E}.Release|x86.ActiveCfg = Release|Any CPU
+		{7B2E4F4D-46EE-4E76-B818-F1B990DE9F7E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

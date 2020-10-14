@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GeradorGrafosCore;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,18 +24,41 @@ namespace GeradorGrafosUWP
     public sealed partial class InformacoesGrafo : Page
     {
         public List<string> teste { get; set; }
+
+        public Grafo Grafo = new Grafo();
+        public Arquivo Arquivo = new Arquivo();
+
         public InformacoesGrafo()
         {
             teste = new List<string>();
             teste.Add("teste1");
             teste.Add("teste2");
+            
 
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            this.Grafo = e.Parameter as Grafo;
+
+            NumVertices.Text = Grafo.CalculaNumVertices().ToString();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(MainPage));
+        }
+
+        private void Button_SalvarArquivo(object sender, RoutedEventArgs e)
+        {
+            this.Arquivo.GravacaoGrafoPajek(this.Grafo);
+        }
+
+        private void NumVertices_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
