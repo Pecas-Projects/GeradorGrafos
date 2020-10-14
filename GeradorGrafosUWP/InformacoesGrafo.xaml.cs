@@ -22,9 +22,19 @@ namespace GeradorGrafosUWP
     /// </summary>
     public sealed partial class InformacoesGrafo : Page
     {
+        public List<string> teste { get; set; }
         public InformacoesGrafo()
         {
+            teste = new List<string>();
+            teste.Add("teste1");
+            teste.Add("teste2");
+
             this.InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MainPage));
         }
     }
 }

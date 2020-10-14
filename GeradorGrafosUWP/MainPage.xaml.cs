@@ -51,6 +51,10 @@ namespace GeradorGrafosUWP
         {
             this.Grafo.dirigido = true;
         }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(InformacoesGrafo));
+         }
 
         private void TextBox_Informacao(object sender, TextChangedEventArgs e)
         {
