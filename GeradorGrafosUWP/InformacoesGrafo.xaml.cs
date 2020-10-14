@@ -26,6 +26,7 @@ namespace GeradorGrafosUWP
         public List<string> teste { get; set; }
 
         public Grafo Grafo = new Grafo();
+        public Arquivo Arquivo = new Arquivo();
         public InformacoesGrafo()
         {
             teste = new List<string>();
@@ -38,7 +39,7 @@ namespace GeradorGrafosUWP
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            Grafo = e.Parameter as Grafo;
+            this.Grafo = e.Parameter as Grafo;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -48,7 +49,7 @@ namespace GeradorGrafosUWP
 
         private void Button_SalvarArquivo(object sender, RoutedEventArgs e)
         {
-
+            this.Arquivo.GravacaoGrafoPajek(this.Grafo);
         }
     }
 }
