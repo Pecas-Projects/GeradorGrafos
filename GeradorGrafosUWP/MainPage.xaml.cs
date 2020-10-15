@@ -75,11 +75,7 @@ namespace GeradorGrafosUWP
 
         private void Button_addVertice(object sender, RoutedEventArgs e)
         {
-            if (inputInformacao.Text == null)
-            {
-                // Aviso de erro
-            }
-            else
+            if (inputInformacao.Text != "")
             {
                 Vertice v = new Vertice();
                 v.id = Grafo.CalculaNumVertices() + 1;
@@ -96,16 +92,12 @@ namespace GeradorGrafosUWP
 
         private void Button_AddArco(object sender, RoutedEventArgs e)
         {
-            if (InputPeso.Text == null || ComboBox_Vertices_Saida.SelectedValue == null || ComboBox_Vertices_Entrada.SelectedValue == null)
-            {
-                Debug.WriteLine("UIUIUUI");
-                // Aviso de erro
-            }
-            else
+            if (ComboBox_Vertices_Saida.SelectedValue != null && ComboBox_Vertices_Entrada.SelectedValue != null)
             {
                 Arco a = new Arco();
                 a.id = Grafo.CalculaNumArcos() + 1;
-                a.peso = int.Parse(InputPeso.Text);
+                if (InputPeso.Text != "")
+                    a.peso = int.Parse(InputPeso.Text);
                 a.entrada = ComboBox_Vertices_Entrada.SelectedValue as Vertice;
                 a.saida = ComboBox_Vertices_Saida.SelectedValue as Vertice;
 
