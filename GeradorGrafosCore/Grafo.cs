@@ -96,7 +96,7 @@ namespace GeradorGrafosCore
                 a.entrada.ListaAdjacencia.Add(a.saida);
             }          
             
-            if(a.peso == null)
+            if(a.peso == 0)
             {
                 a.peso = 1;
             }
