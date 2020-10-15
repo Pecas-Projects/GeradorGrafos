@@ -107,6 +107,7 @@ namespace GeradorGrafosUWP
                 {
                     conteudo = leitura.ReadToEnd();
                 }
+
             }
 
         }
