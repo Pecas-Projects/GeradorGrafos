@@ -83,17 +83,9 @@ namespace GeradorGrafosUWP
         {
             using (StreamWriter escrita = new StreamWriter(await arquivo.OpenStreamForWriteAsync()))
             {
-                await escrita.WriteLineAsync("Ola Mundo");
-            }
-        }
-
-        private async void EscreverArquivoPajek(StorageFile arquivo, Grafo grafo)
-        {
-            using (StreamWriter escrita = new StreamWriter(await arquivo.OpenStreamForWriteAsync()))
-            {
                 int numVertice = grafo.CalculaNumVertices();
 
-                if(numVertice == 0)
+                if (numVertice == 0)
                 {
                     await escrita.WriteLineAsync("*vertices " + numVertice.ToString());
                 }
@@ -106,7 +98,7 @@ namespace GeradorGrafosUWP
                         await escrita.WriteLineAsync(v.id.ToString() + v.etiqueta);
                     }
 
-                    if(grafo.Arcos.Count > 0)
+                    if (grafo.Arcos.Count > 0)
                     {
                         foreach (Arco a in grafo.Arcos)
                         {
@@ -124,7 +116,7 @@ namespace GeradorGrafosUWP
             {
                 StorageFile newFile = await ApplicationData.Current.LocalFolder.GetFileAsync("GrafoPajek.net");
 
-                EscreverArquivoPajek(newFile, this.Grafo);
+                EscreverArquivo(newFile, this.Grafo);
 
                 using (StreamReader leitura = new StreamReader(await newFile.OpenStreamForReadAsync()))
                 {
@@ -135,7 +127,7 @@ namespace GeradorGrafosUWP
             {
                 StorageFile arquivo = await ApplicationData.Current.LocalFolder.CreateFileAsync("GrafoPajek.net");
 
-                EscreverArquivoPajek(arquivo, this.Grafo);
+                EscreverArquivo(arquivo, this.Grafo);
 
                 using (StreamReader leitura = new StreamReader(await arquivo.OpenStreamForReadAsync()))
                 {
