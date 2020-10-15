@@ -51,6 +51,13 @@ namespace GeradorGrafosUWP
             this.Frame.Navigate(typeof(MainPage));
         }
 
+        private void CalculaCaminhoMinimo(object sender, RoutedEventArgs e)
+        {
+            int aux = this.Grafo.CaminhoMinimoDijkstra(this.Grafo.Vertices[0], this.Grafo.Vertices[1]);
+            CaminhoMinimo.Text = aux.ToString();
+        }
+
+
         private void Button_SalvarArquivo(object sender, RoutedEventArgs e)
         {
             this.Arquivo.GravacaoGrafoPajek(this.Grafo);

@@ -71,14 +71,16 @@ namespace GeradorGrafosUWP
             {
                 int idVertice = Grafo.CalculaNumVertices() + 1;
 
-                Vertice.id = idVertice;
-                Vertice.etiqueta = this.infoVertice;
+                Vertice v = new Vertice();
 
-                Grafo.Vertices.Add(Vertice);
+                v.id = idVertice;
+                v.etiqueta = this.infoVertice;
 
-                ComboBox_Vertices_Saida.Items.Add(Vertice.etiqueta);
+                Grafo.AdicionaVertice(v);
 
-                ComboBox_Vertices_Entrada.Items.Add(Vertice.etiqueta);
+                ComboBox_Vertices_Saida.Items.Add(v.etiqueta);
+
+                ComboBox_Vertices_Entrada.Items.Add(v.etiqueta);
 
                 inputInformacao.Text = "";
 
@@ -97,10 +99,14 @@ namespace GeradorGrafosUWP
             {
                 int idArco = Grafo.CalculaNumArcos() + 1;
 
-                this.Arco.id = idArco;
-                this.Arco.peso = int.Parse(InputPeso.Text);
+                Arco a = new Arco();
 
-                Grafo.Arcos.Add(Arco);
+                a.id = idArco;
+                a.peso = int.Parse(InputPeso.Text);
+                a.entrada = Grafo.ProcuraVertice(ComboBox_Vertices_Entrada.SelectedValue.ToString());
+                a.saida = Grafo.ProcuraVertice(ComboBox_Vertices_Saida.SelectedValue.ToString());
+
+                Grafo.AdicionarArco(a);
 
                 InputPeso.Text = "";
             }

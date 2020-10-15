@@ -67,9 +67,9 @@
                     </ComboBox.HeaderTemplate>
                 </ComboBox>
             </Grid>
-            <Button Background="#C4C4C4" Foreground="Black" HorizontalAlignment="Center" Content="Calcular" FontSize="20"  Width="200" Margin="10"/>
+            <Button Background="#C4C4C4" Foreground="Black" HorizontalAlignment="Center" Content="Calcular" FontSize="20"  Width="200" Margin="10" Click="CalculaCaminhoMinimo"/>
             <StackPanel Background="#C4C4C4" Width="100">
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Text="100"/>
+                <TextBlock x:Name="CaminhoMinimo" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Text="100"/>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2">
