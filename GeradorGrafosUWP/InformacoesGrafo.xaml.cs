@@ -67,5 +67,10 @@ namespace GeradorGrafosUWP
         {
 
         }
+
+        private void ButtonCalularComponentes(object sender, RoutedEventArgs e)
+        {
+            nComponentes.Text = Grafo.DFS().ToString();
+        }
     }
 }
