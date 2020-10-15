@@ -1,6 +1,7 @@
 ﻿using GeradorGrafosCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -30,6 +31,15 @@ namespace GeradorGrafosUWP
 
         public Grafo Grafo = new Grafo();
         private string infoVertice { get; set; }
+
+        public ObservableCollection<Vertice> _vertices = new ObservableCollection<Vertice>();
+        public ObservableCollection<Vertice> Vertices
+        {
+            get
+            {
+                return _vertices;
+            }
+        }
 
         public MainPage()
         {
@@ -71,7 +81,7 @@ namespace GeradorGrafosUWP
                 v.etiqueta = this.infoVertice;
 
                 Grafo.AdicionaVertice(v);
-
+                _vertices.Add(v);
                 ComboBox_Vertices_Saida.Items.Add(v.etiqueta);
 
                 ComboBox_Vertices_Entrada.Items.Add(v.etiqueta);
