@@ -167,7 +167,7 @@ namespace GeradorGrafosCore
             d[0] = 0;
         }
 
-        public int RetornaPeso(Vertice i, Vertice j)
+        public int RetornaPeso(Vertice j, Vertice i)
         {
             Arco a = new Arco(); 
             a = this.ProcuraArco2(i, j); 
@@ -181,18 +181,30 @@ namespace GeradorGrafosCore
 
         }
 
-        public void Relaxamento(Vertice j, Vertice i, List<Vertice> p, List<int> d)
+        public void Relaxamento(Vertice j, Vertice i, List<Vertice> p, List<int> d, List<int> dq)
         {
             int di = this.Vertices.IndexOf(i);
             int dj = this.Vertices.IndexOf(j);
-            int comparador = d[dj] + RetornaPeso(j, i);
+            int comparador = d[di] + RetornaPeso(i, j);
             
-            if (d[di] > comparador)
+            if (d[dj] > comparador)
             {
-                
-                d[di] = comparador;
-                p[di] = j;
+                dq[dj] = comparador;
+                d[dj] = comparador;
+                p[dj] = i;
             }
+        }
+
+        public bool listaVazia(List<Vertice> q)
+        {
+            foreach(Vertice v in q)
+            {
+                if(v != null)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public int CaminhoMinimoDijkstra(Vertice s, Vertice k)
@@ -208,23 +220,30 @@ namespace GeradorGrafosCore
 
             this.InicializaFonte(d, dq, p);
 
-            while (q != null)
+            while (!listaVazia(q))
             {
                 Vertice j = new Vertice();
                 int indice = dq.IndexOf(dq.Min());
                 j = q[indice];
-                q.RemoveAt(indice);
-                dq.RemoveAt(indice);
+                q[indice] = null;
+                dq[indice] = infinito;
                 S.Add(j);
-                if(j == k)
-                {
-                    return d[indice];
-                }
+                
                 foreach(Vertice v in j.ListaAdjacencia)
                 {
-                    this.Relaxamento(v, j, p, d);
+                    this.Relaxamento(v, j, p, d, dq);
+                }
+
+            }
+
+            for(int index = 0; index < d.Count(); index++)
+            {
+                if (this.Vertices[index] == k)
+                {
+                    return d[index];
                 }
             }
+
             return -1;
         }
 
