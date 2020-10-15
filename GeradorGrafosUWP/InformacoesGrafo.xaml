@@ -21,19 +21,63 @@
         <StackPanel Grid.Column="1" Grid.RowSpan="5" Grid.ColumnSpan="2" Background="#847f7f" Orientation="Horizontal"/>
         <Button Background="#C4C4C4" Foreground="Black" HorizontalAlignment="Right" Content="Salvar grafo" FontSize="20" Width="200" Margin="0,0,50,0" Click="Button_SalvarArquivo"/>
         <Button Background="#C4C4C4" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="Bold" Content="&#xE72B;" Foreground="#000" FontSize="30" Padding="10" CornerRadius="100" Margin="50,0,0,0" Click="Button_Click"/>
-        <TextBlock Foreground="Black" Grid.Column="1" Text="Infromações do Grafo" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <ScrollViewer Grid.Row="1" Grid.Column="1">
-            <StackPanel>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="Vértices" FontSize="20" Foreground="Black" HorizontalAlignment="Center"/>
-                        <StackPanel Background="#C4C4C4" Width="100" Margin="0,5,0,0">
-                            <TextBlock x:Name="NumVertices" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Foreground="Black" Text="0" SelectionChanged="NumVertices_SelectionChanged"/>
-                        </StackPanel>
+        <TextBlock Foreground="Black" Grid.Column="1" Grid.ColumnSpan="2" Text="Infromações do Grafo" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="Vértices" FontSize="20" Foreground="Black" HorizontalAlignment="Center"/>
+            <StackPanel Background="#C4C4C4" Width="100" Margin="0,20,0,0">
+                <TextBlock x:Name="NumVertices" VerticalAlignment="Center" FontSize="20" Foreground="Black" Text=" " SelectionChanged="NumVertices_SelectionChanged"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="1">
+            <TextBlock Text="Arestas" FontSize="20" HorizontalAlignment="Center" Foreground="Black"/>
+            <StackPanel Background="#C4C4C4" Width="100" Margin="0,20,0,0">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Text=" "/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2">
+            <TextBlock Text="Componentes" FontSize="20" HorizontalAlignment="Center" Foreground="Black"/>
+            <StackPanel Background="#C4C4C4" Width="100" Margin="0,20,0,0">
+                <TextBlock x:Name="nComponentes" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Text=" "/>
+            </StackPanel>
+        </StackPanel>
+        <Button Grid.Row="2" Grid.Column="2" Background="#C4C4C4" Foreground="Black" Content="Calcular" FontSize="20" Width="200" Margin="10,63,0,0" VerticalAlignment="Top" Click="ButtonCalularComponentes" />
+        <StackPanel  Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
+            <TextBlock Foreground="Black" Text="Caminho mínimo" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox Background="#C4C4C4" Header="Vértice 1" FontSize="20" ItemsSource="{x:Bind teste}" Margin="20,0,20,0" HorizontalAlignment="Stretch">
+                    <ComboBox.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Foreground="Black" />
+                        </DataTemplate>
+                    </ComboBox.HeaderTemplate>
+                </ComboBox>
+                <ComboBox Grid.Column="1" Background="#C4C4C4" Header="Vértice 2" FontSize="20" ItemsSource="{x:Bind teste}" Margin="20,0,20,0" HorizontalAlignment="Stretch">
+                    <ComboBox.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Foreground="Black" />
+                        </DataTemplate>
+                    </ComboBox.HeaderTemplate>
+                </ComboBox>
+            </Grid>
+            <Button Background="#C4C4C4" Foreground="Black" HorizontalAlignment="Center" Content="Calcular" FontSize="20"  Width="200" Margin="10" Click="CalculaCaminhoMinimo"/>
+            <StackPanel Background="#C4C4C4" Width="100">
+                <TextBlock x:Name="CaminhoMinimo" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Text=" "/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2">
+            <TextBlock Foreground="Black" Text="Vértices" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel  Background="#C4C4C4" Margin="20,20,0,20">
+                    <StackPanel Background="#C4C4C4" Width="100">
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Padding="10" Text="ID"/>
                     </StackPanel>
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="1">
                         <TextBlock Text="Arestas" FontSize="20" Foreground="Black" HorizontalAlignment="Center"/>
@@ -84,6 +128,10 @@
                         <TextBlock x:Name="CaminhoMinimo" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Text="0"/>
                     </StackPanel>
                 </StackPanel>
+
+            </Grid>
+
+        </StackPanel>
                 <StackPanel Height="1" Background="Black" Margin="20"/>
                 <StackPanel>
                     <TextBlock Foreground="Black" Text="Vértices" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
