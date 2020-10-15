@@ -50,7 +50,7 @@
                     </ComboBox.HeaderTemplate>
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding etiqueta}" Foreground="White" />
+                            <TextBlock Text="{Binding etiqueta}" Foreground="Black" />
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
@@ -62,7 +62,7 @@
                     </ComboBox.HeaderTemplate>
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding etiqueta}" Foreground="White" />
+                            <TextBlock Text="{Binding etiqueta}" Foreground="Black" />
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
@@ -82,10 +82,33 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="local1:Vertice">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
-                            <TextBlock FontSize="20">
+                            <TextBlock FontSize="20" Foreground="Black">
                                 <Run Text="{Binding id}"/>
-                                <Run Text=": "/>
+                                <Run Text=":"/>
                                 <Run Text="{Binding etiqueta}"/>
+                            </TextBlock>
+                            <Button Background="#8E8B8B" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontWeight="Bold"  Content="&#xE711;" Foreground="#000" FontSize="20" Padding="10" CornerRadius="100" Margin="20,0,0,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="1" Margin="50,20,0,0">
+            <TextBlock Text="Arestas adicionadas" FontSize="25" />
+            <ListView ItemsSource="{x:Bind Arcos}" Background="White">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="local1:Arco">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
+                            <TextBlock FontSize="20" Foreground="Black">
+                                <Run Text="{Binding saida.id}"/>
+                                <Run Text=":"/>
+                                <Run Text="{Binding saida.etiqueta}"/>
+                                <Run Text="->"/>
+                                <Run Text="{Binding entrada.id}"/>
+                                <Run Text=":"/>
+                                <Run Text="{Binding entrada.etiqueta}"/>
+                                <Run Text=" / Peso:"/>
+                                <Run Text="{Binding peso}"/>
                             </TextBlock>
                             <Button Background="#8E8B8B" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontWeight="Bold"  Content="&#xE711;" Foreground="#000" FontSize="20" Padding="10" CornerRadius="100" Margin="20,0,0,0"/>
                         </StackPanel>
