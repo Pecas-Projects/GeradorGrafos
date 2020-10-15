@@ -1,6 +1,7 @@
 ﻿using GeradorGrafosCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -25,21 +26,21 @@ namespace GeradorGrafosUWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private Vertice Vertice = new Vertice();
         public Arco Arco = new Arco();
-
         public Grafo Grafo = new Grafo();
-        public List<string> Estruturas { get; set; }
         private string infoVertice { get; set; }
+        public ObservableCollection<Vertice> _vertices = new ObservableCollection<Vertice>();
+        public ObservableCollection<Vertice> Vertices
+        {
+            get
+            {
+                return _vertices;
+            }
+        }
 
         public MainPage()
         {
             this.InitializeComponent();
-
-            Estruturas = new List<string>();
-            Estruturas.Add("Lista de adjacência");
-            Estruturas.Add("Matriz de adjacência");
-
         }
 
         private void naoDirigido_Checked(object sender, RoutedEventArgs e)
@@ -54,7 +55,7 @@ namespace GeradorGrafosUWP
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(InformacoesGrafo), Grafo);
-         }
+        }
 
         private void TextBox_Informacao(object sender, TextChangedEventArgs e)
         {
@@ -63,27 +64,21 @@ namespace GeradorGrafosUWP
 
         private void Button_addVertice(object sender, RoutedEventArgs e)
         {
-            if(inputInformacao.Text == null)
+            if (inputInformacao.Text == null)
             {
                 // Aviso de erro
             }
             else
             {
-                int idVertice = Grafo.CalculaNumVertices() + 1;
-
                 Vertice v = new Vertice();
-
-                v.id = idVertice;
+                v.id = Grafo.CalculaNumVertices() + 1;
                 v.etiqueta = this.infoVertice;
 
                 Grafo.AdicionaVertice(v);
-
-                ComboBox_Vertices_Saida.Items.Add(v.etiqueta);
-
-                ComboBox_Vertices_Entrada.Items.Add(v.etiqueta);
+                // Adiciona o vértice na lista do front
+                _vertices.Add(v);
 
                 inputInformacao.Text = "";
-
             }
 
         }
@@ -97,15 +92,11 @@ namespace GeradorGrafosUWP
             }
             else
             {
-                int idArco = Grafo.CalculaNumArcos() + 1;
-
                 Arco a = new Arco();
-
-                a.id = idArco;
+                a.id = Grafo.CalculaNumArcos() + 1;
                 a.peso = int.Parse(InputPeso.Text);
-                a.entrada = Grafo.ProcuraVertice(ComboBox_Vertices_Entrada.SelectedValue.ToString());
-                a.saida = Grafo.ProcuraVertice(ComboBox_Vertices_Saida.SelectedValue.ToString());
-
+                a.entrada = ComboBox_Vertices_Entrada.SelectedValue as Vertice;
+                a.saida = ComboBox_Vertices_Saida.SelectedValue as Vertice;
                 Grafo.AdicionarArco(a);
 
                 InputPeso.Text = "";
