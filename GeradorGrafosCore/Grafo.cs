@@ -21,7 +21,13 @@ namespace GeradorGrafosCore
 
         public void AdicionaVertice( Vertice v)
         {
-            this.Vertices.Add(v);
+            Vertice aux = new Vertice();
+            aux = ProcuraVertice(v.etiqueta);
+            if(aux == null)
+            {
+                this.Vertices.Add(v);
+            }
+            //se já existir um vértice com essa etiqueta ele não poderá ser adicionado
         }
 
         public Vertice ProcuraVertice(int idVertice)
@@ -59,6 +65,16 @@ namespace GeradorGrafosCore
                 this.Arcos.Remove(arco);
             }
 
+            foreach (Vertice vertice in this.Vertices)
+            {
+                foreach(Vertice vAdj in vertice.ListaAdjacencia)
+                {
+                    if(vAdj == v)
+                    {
+                        vertice.ListaAdjacencia.Remove(vAdj);
+                    }
+                }
+            }
             this.Vertices.Remove(v);
         }
 
@@ -139,8 +155,23 @@ namespace GeradorGrafosCore
         {
             Arco a = new Arco();
             a = ProcuraArco(idArco);
-            this.Arcos.Remove(a);
 
+            foreach(Vertice v in this.Vertices)
+            {
+                if(a.saida == v)
+                {
+                    a.saida.ListaAdjacencia.Remove(v);
+                }
+
+                if (!this.dirigido)
+                {
+                    if(a.entrada == v)
+                    {
+                        a.entrada.ListaAdjacencia.Remove(v);
+                    }
+                }
+            }
+            this.Arcos.Remove(a);
             //mexer na lista de adjacencia dos vértices envolvidos
         }
 
