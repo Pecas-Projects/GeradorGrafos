@@ -96,6 +96,10 @@ namespace GeradorGrafosCore
                 a.entrada.ListaAdjacencia.Add(a.saida);
             }          
             
+            if(a.peso == null)
+            {
+                a.peso = 1;
+            }
         }
 
         public Arco ProcuraArco(int idArco)

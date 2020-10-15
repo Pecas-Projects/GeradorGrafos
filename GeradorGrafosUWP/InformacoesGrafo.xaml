@@ -11,15 +11,11 @@
     <Grid Background="#C4C4C4">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="7*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Background="#8E8B8B" Orientation="Horizontal"/>
         <StackPanel Grid.Column="1" Grid.RowSpan="5" Grid.ColumnSpan="2" Background="#847f7f" Orientation="Horizontal"/>
@@ -83,34 +79,98 @@
                     <StackPanel Background="#C4C4C4" Width="100">
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Padding="10" Text="ID"/>
                     </StackPanel>
-                    <ListView ItemsSource="{x:Bind teste}" Background="#C4C4C4">
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="x:String">
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
-                                    <TextBlock Text="{Binding}" FontSize="20" Foreground="Black"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </StackPanel>
-
-                <StackPanel Margin="0,20,20,20" Background="#C4C4C4" Grid.Column="1" >
-                    <StackPanel Background="#C4C4C4" Width="100">
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Padding="10" Foreground="Black" Text="Etiqueta"/>
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="1">
+                        <TextBlock Text="Arestas" FontSize="20" Foreground="Black" HorizontalAlignment="Center"/>
+                        <StackPanel Background="#C4C4C4" Width="100" Margin="0,5,0,0">
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Text="0"/>
+                        </StackPanel>
                     </StackPanel>
-                    <ListView ItemsSource="{x:Bind teste}" Background="#C4C4C4" >
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="x:String">
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
-                                    <TextBlock Text="{Binding}" FontSize="20" Foreground="Black" HorizontalAlignment="Center"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                </Grid>
+                <StackPanel Height="1" Background="Black" Margin="20"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0">
+                        <TextBlock Text="Componentes" FontSize="20" HorizontalAlignment="Center" Foreground="Black"/>
+                        <StackPanel Background="#C4C4C4" Width="100" Margin="0,5,0,0">
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Text="0"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <Button Grid.Row="2" Grid.Column="2" Background="#C4C4C4" Foreground="Black" HorizontalAlignment="Stretch" Content="Calcular" FontSize="20" Margin="10,0,20,0" />
+                </Grid>
+                <StackPanel Height="1" Background="Black" Margin="20"/>
+                <StackPanel>
+                    <TextBlock Foreground="Black" Text="Caminho mínimo" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox Background="#C4C4C4" Header="Vértice 1" FontSize="20" ItemsSource="{x:Bind teste}" Margin="20,0,10,0" HorizontalAlignment="Stretch">
+                            <ComboBox.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" Foreground="Black" HorizontalAlignment="Center"/>
+                                </DataTemplate>
+                            </ComboBox.HeaderTemplate>
+                        </ComboBox>
+                        <ComboBox Grid.Column="1" Background="#C4C4C4" Header="Vértice 2" FontSize="20" ItemsSource="{x:Bind teste}" Margin="10,0,20,0" HorizontalAlignment="Stretch">
+                            <ComboBox.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" Foreground="Black" HorizontalAlignment="Center"/>
+                                </DataTemplate>
+                            </ComboBox.HeaderTemplate>
+                        </ComboBox>
+                    </Grid>
+                    <Button Background="#C4C4C4" Foreground="Black" HorizontalAlignment="Stretch" Content="Calcular" FontSize="20" Margin="20" Click="CalculaCaminhoMinimo"/>
+                    <StackPanel Background="#C4C4C4" Width="100">
+                        <TextBlock x:Name="CaminhoMinimo" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Text="0"/>
+                    </StackPanel>
                 </StackPanel>
 
             </Grid>
 
         </StackPanel>
+                <StackPanel Height="1" Background="Black" Margin="20"/>
+                <StackPanel>
+                    <TextBlock Foreground="Black" Text="Vértices" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel  Background="#C4C4C4" Margin="20,20,0,20">
+                            <StackPanel Background="#C4C4C4" Width="100">
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Padding="10" Text="ID"/>
+                            </StackPanel>
+                            <ListView ItemsSource="{x:Bind teste}" Background="#C4C4C4">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="x:String">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
+                                            <TextBlock Text="{Binding}" FontSize="20" Foreground="Black"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+                        <StackPanel Margin="0,20,20,20" Background="#C4C4C4" Grid.Column="1" >
+                            <StackPanel Background="#C4C4C4" Width="100">
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Padding="10" Foreground="Black" Text="Etiqueta"/>
+                            </StackPanel>
+                            <ListView ItemsSource="{x:Bind teste}" Background="#C4C4C4" >
+                                <ListView.ItemTemplate>
+                                    <DataTemplate x:DataType="x:String">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
+                                            <TextBlock Text="{Binding}" FontSize="20" Foreground="Black" HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>
