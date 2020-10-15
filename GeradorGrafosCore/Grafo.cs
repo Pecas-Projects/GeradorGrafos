@@ -259,24 +259,24 @@ namespace GeradorGrafosCore
             return -1;
         }
 
-        public int DFS(List<Vertice> Vertices)
+        public int DFS()
         {
            
             int tempo = 0, nComponentes = 0;
 
-            foreach(Vertice v in Vertices)
+            foreach(Vertice v in this.Vertices)
             {
                 v.Cor = 'B';
             }
 
-            foreach (Vertice v in Vertices)
+            foreach (Vertice v in this.Vertices)
             {
                 if(v.Cor == 'B')
                 {
-                    VisitaDFS(Vertices, tempo, v);
+                    VisitaDFS( tempo, v);
                 }
             }
-            foreach (Vertice v in Vertices)
+            foreach (Vertice v in this.Vertices)
             {
                 if (v.Predecssor == null)
                 {
@@ -287,7 +287,7 @@ namespace GeradorGrafosCore
             return nComponentes;
         }
 
-        public void VisitaDFS(List<Vertice> Vertices, int tempo, Vertice v)
+        public void VisitaDFS( int tempo, Vertice v)
         {
             tempo += 1;
             v.Descoberta = tempo;
@@ -298,7 +298,7 @@ namespace GeradorGrafosCore
                 if(v1.Cor == 'B')
                 {
                     v1.Predecssor = v;
-                    VisitaDFS(Vertices, tempo, v1);
+                    VisitaDFS( tempo, v1);
                 }
             }
 
