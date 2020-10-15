@@ -33,13 +33,7 @@ namespace GeradorGrafosUWP
             teste = new List<string>();
             teste.Add("teste1");
             teste.Add("teste2");
-            teste.Add("teste1");
-            teste.Add("teste2");
-            teste.Add("teste1");
-            teste.Add("teste2");
-            teste.Add("teste1");
-            teste.Add("teste2");
-
+            
 
             this.InitializeComponent();
         }

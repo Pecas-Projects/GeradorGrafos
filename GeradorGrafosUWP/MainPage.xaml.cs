@@ -28,24 +28,13 @@ namespace GeradorGrafosUWP
     {
         public Arco Arco = new Arco();
         public Grafo Grafo = new Grafo();
-
         private string infoVertice { get; set; }
-
         public ObservableCollection<Vertice> _vertices = new ObservableCollection<Vertice>();
         public ObservableCollection<Vertice> Vertices
         {
             get
             {
                 return _vertices;
-            }
-        }
-
-        public ObservableCollection<Arco> _arcos = new ObservableCollection<Arco>();
-        public ObservableCollection<Arco> Arcos
-        {
-            get
-            {
-                return _arcos;
             }
         }
 
@@ -108,10 +97,7 @@ namespace GeradorGrafosUWP
                 a.peso = int.Parse(InputPeso.Text);
                 a.entrada = ComboBox_Vertices_Entrada.SelectedValue as Vertice;
                 a.saida = ComboBox_Vertices_Saida.SelectedValue as Vertice;
-
                 Grafo.AdicionarArco(a);
-                // Adiciona o arco na lista do front
-                _arcos.Add(a);
 
                 InputPeso.Text = "";
             }

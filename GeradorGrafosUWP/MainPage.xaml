@@ -29,13 +29,7 @@
         <StackPanel Grid.Row="2" VerticalAlignment="Center" Margin="50,0,0,0">
             <TextBlock Foreground="Black" Text="Criar vértice" FontSize="25" />
             <StackPanel Orientation="Horizontal">
-                <TextBox Foreground="Black" Header="Informação" x:Name="inputInformacao" FontSize="20" Width="200" Background="White" TextChanged="TextBox_Informacao">
-                    <TextBox.HeaderTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding}" Foreground="Black" />
-                        </DataTemplate>
-                    </TextBox.HeaderTemplate>
-                </TextBox>
+                <TextBox Foreground="Black" Header="Informação" x:Name="inputInformacao" FontSize="20" Width="200" Background="White" TextChanged="TextBox_Informacao"/>
                 <Button Background="#8E8B8B" VerticalAlignment="Bottom" FontFamily="Segoe MDL2 Assets" FontWeight="Bold"  Content="&#xE710;" Foreground="#000" FontSize="20" Padding="10" CornerRadius="100" Margin="20,0,0,0" Click="Button_addVertice"/>
             </StackPanel>
         </StackPanel>
@@ -66,49 +60,20 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <TextBox Foreground="Black"  Header="Peso" FontSize="20" Margin="20,0,0,0" Width="200" Background="White"  x:Name="InputPeso">
-                    <TextBox.HeaderTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding}" Foreground="Black" />
-                        </DataTemplate>
-                    </TextBox.HeaderTemplate>
-                </TextBox>
+                <TextBox Foreground="Black"  Header="Peso" FontSize="20" Margin="20,0,0,0" Width="200" Background="White"  x:Name="InputPeso"/>
                 <Button Background="#8E8B8B" VerticalAlignment="Bottom" FontFamily="Segoe MDL2 Assets" FontWeight="Bold"  Content="&#xE710;" Foreground="#000" FontSize="20" Padding="10" CornerRadius="100" Margin="20,0,0,0" Click="Button_AddArco"/>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="3" Margin="50,20,0,0">
-            <TextBlock Text="Vértices adicionados" FontSize="25" Foreground="Black"/>
+            <TextBlock Text="Vértices adicionados" FontSize="25" />
             <ListView ItemsSource="{x:Bind Vertices}" Background="White">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="local1:Vertice">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
-                            <TextBlock FontSize="20" Foreground="Black">
+                            <TextBlock FontSize="20">
                                 <Run Text="{Binding id}"/>
-                                <Run Text=":"/>
+                                <Run Text=": "/>
                                 <Run Text="{Binding etiqueta}"/>
-                            </TextBlock>
-                            <Button Background="#8E8B8B" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontWeight="Bold"  Content="&#xE711;" Foreground="#000" FontSize="20" Padding="10" CornerRadius="100" Margin="20,0,0,0"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
-        <StackPanel Grid.Row="3" Grid.Column="1" Margin="50,20,0,0">
-            <TextBlock Text="Arestas adicionadas" FontSize="25" />
-            <ListView ItemsSource="{x:Bind Arcos}" Background="White">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="local1:Arco">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
-                            <TextBlock FontSize="20" Foreground="Black">
-                                <Run Text="{Binding saida.id}"/>
-                                <Run Text=":"/>
-                                <Run Text="{Binding saida.etiqueta}"/>
-                                <Run Text="->"/>
-                                <Run Text="{Binding entrada.id}"/>
-                                <Run Text=":"/>
-                                <Run Text="{Binding entrada.etiqueta}"/>
-                                <Run Text=" / Peso:"/>
-                                <Run Text="{Binding peso}"/>
                             </TextBlock>
                             <Button Background="#8E8B8B" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontWeight="Bold"  Content="&#xE711;" Foreground="#000" FontSize="20" Padding="10" CornerRadius="100" Margin="20,0,0,0"/>
                         </StackPanel>
