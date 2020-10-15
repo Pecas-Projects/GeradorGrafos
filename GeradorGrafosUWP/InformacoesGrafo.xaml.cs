@@ -28,11 +28,19 @@ namespace GeradorGrafosUWP
         public List<string> teste { get; set; }
 
         public Grafo Grafo = new Grafo();
+
         public InformacoesGrafo()
         {
             teste = new List<string>();
             teste.Add("teste1");
             teste.Add("teste2");
+            teste.Add("teste1");
+            teste.Add("teste2");
+            teste.Add("teste1");
+            teste.Add("teste2");
+            teste.Add("teste1");
+            teste.Add("teste2");
+
 
             this.InitializeComponent();
         }
@@ -40,7 +48,10 @@ namespace GeradorGrafosUWP
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            Grafo = e.Parameter as Grafo;
+
+            this.Grafo = e.Parameter as Grafo;
+
+            NumVertices.Text = Grafo.CalculaNumVertices().ToString();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -48,7 +59,15 @@ namespace GeradorGrafosUWP
             this.Frame.Navigate(typeof(MainPage));
         }
 
-        private async void Button_SalvarArquivo(object sender, RoutedEventArgs e)
+
+        private void CalculaCaminhoMinimo(object sender, RoutedEventArgs e)
+        {
+            int aux = this.Grafo.CaminhoMinimoDijkstra(this.Grafo.Vertices[0], this.Grafo.Vertices[1]);
+            CaminhoMinimo.Text = aux.ToString();
+        }
+
+
+        private void Button_SalvarArquivo(object sender, RoutedEventArgs e)
         {
             string conteudo = "";
             try
@@ -134,6 +153,11 @@ namespace GeradorGrafosUWP
                     conteudo = leitura.ReadToEnd();
                 }
             }
+        }
+
+        private void NumVertices_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
