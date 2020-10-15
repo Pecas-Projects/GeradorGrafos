@@ -29,7 +29,13 @@
         <StackPanel Grid.Row="2" VerticalAlignment="Center" Margin="50,0,0,0">
             <TextBlock Foreground="Black" Text="Criar vértice" FontSize="25" />
             <StackPanel Orientation="Horizontal">
-                <TextBox Foreground="Black" Header="Informação" x:Name="inputInformacao" FontSize="20" Width="200" Background="White" TextChanged="TextBox_Informacao"/>
+                <TextBox Foreground="Black" Header="Informação" x:Name="inputInformacao" FontSize="20" Width="200" Background="White" TextChanged="TextBox_Informacao">
+                    <TextBox.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Foreground="Black" />
+                        </DataTemplate>
+                    </TextBox.HeaderTemplate>
+                </TextBox>
                 <Button Background="#8E8B8B" VerticalAlignment="Bottom" FontFamily="Segoe MDL2 Assets" FontWeight="Bold"  Content="&#xE710;" Foreground="#000" FontSize="20" Padding="10" CornerRadius="100" Margin="20,0,0,0" Click="Button_addVertice"/>
             </StackPanel>
         </StackPanel>
@@ -44,7 +50,7 @@
                     </ComboBox.HeaderTemplate>
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding etiqueta}" Foreground="Black" />
+                            <TextBlock Text="{Binding etiqueta}" Foreground="White" />
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
@@ -56,16 +62,22 @@
                     </ComboBox.HeaderTemplate>
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding etiqueta}" Foreground="Black" />
+                            <TextBlock Text="{Binding etiqueta}" Foreground="White" />
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <TextBox Foreground="Black"  Header="Peso" FontSize="20" Margin="20,0,0,0" Width="200" Background="White"  x:Name="InputPeso"/>
+                <TextBox Foreground="Black"  Header="Peso" FontSize="20" Margin="20,0,0,0" Width="200" Background="White"  x:Name="InputPeso">
+                    <TextBox.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Foreground="Black" />
+                        </DataTemplate>
+                    </TextBox.HeaderTemplate>
+                </TextBox>
                 <Button Background="#8E8B8B" VerticalAlignment="Bottom" FontFamily="Segoe MDL2 Assets" FontWeight="Bold"  Content="&#xE710;" Foreground="#000" FontSize="20" Padding="10" CornerRadius="100" Margin="20,0,0,0" Click="Button_AddArco"/>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="3" Margin="50,20,0,0">
-            <TextBlock Text="Vértices adicionados" FontSize="25" />
+            <TextBlock Text="Vértices adicionados" FontSize="25" Foreground="Black"/>
             <ListView ItemsSource="{x:Bind Vertices}" Background="White">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="local1:Vertice">
