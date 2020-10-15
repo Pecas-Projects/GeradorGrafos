@@ -29,17 +29,11 @@ namespace GeradorGrafosUWP
         public Arco Arco = new Arco();
 
         public Grafo Grafo = new Grafo();
-        public List<string> Estruturas { get; set; }
         private string infoVertice { get; set; }
 
         public MainPage()
         {
             this.InitializeComponent();
-
-            Estruturas = new List<string>();
-            Estruturas.Add("Lista de adjacência");
-            Estruturas.Add("Matriz de adjacência");
-
         }
 
         private void naoDirigido_Checked(object sender, RoutedEventArgs e)
