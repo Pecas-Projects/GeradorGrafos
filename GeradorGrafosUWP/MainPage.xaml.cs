@@ -26,12 +26,9 @@ namespace GeradorGrafosUWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private Vertice Vertice = new Vertice();
         public Arco Arco = new Arco();
-
         public Grafo Grafo = new Grafo();
         private string infoVertice { get; set; }
-
         public ObservableCollection<Vertice> _vertices = new ObservableCollection<Vertice>();
         public ObservableCollection<Vertice> Vertices
         {
@@ -58,7 +55,7 @@ namespace GeradorGrafosUWP
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(InformacoesGrafo), Grafo);
-         }
+        }
 
         private void TextBox_Informacao(object sender, TextChangedEventArgs e)
         {
@@ -67,27 +64,21 @@ namespace GeradorGrafosUWP
 
         private void Button_addVertice(object sender, RoutedEventArgs e)
         {
-            if(inputInformacao.Text == null)
+            if (inputInformacao.Text == null)
             {
                 // Aviso de erro
             }
             else
             {
-                int idVertice = Grafo.CalculaNumVertices() + 1;
-
                 Vertice v = new Vertice();
-
-                v.id = idVertice;
+                v.id = Grafo.CalculaNumVertices() + 1;
                 v.etiqueta = this.infoVertice;
 
                 Grafo.AdicionaVertice(v);
+                // Adiciona o vértice na lista do front
                 _vertices.Add(v);
-                ComboBox_Vertices_Saida.Items.Add(v.etiqueta);
-
-                ComboBox_Vertices_Entrada.Items.Add(v.etiqueta);
 
                 inputInformacao.Text = "";
-
             }
 
         }
