@@ -92,15 +92,11 @@ namespace GeradorGrafosUWP
             }
             else
             {
-                int idArco = Grafo.CalculaNumArcos() + 1;
-
                 Arco a = new Arco();
-
-                a.id = idArco;
+                a.id = Grafo.CalculaNumArcos() + 1;
                 a.peso = int.Parse(InputPeso.Text);
-                a.entrada = Grafo.ProcuraVertice(ComboBox_Vertices_Entrada.SelectedValue.ToString());
-                a.saida = Grafo.ProcuraVertice(ComboBox_Vertices_Saida.SelectedValue.ToString());
-
+                a.entrada = ComboBox_Vertices_Entrada.SelectedValue as Vertice;
+                a.saida = ComboBox_Vertices_Saida.SelectedValue as Vertice;
                 Grafo.AdicionarArco(a);
 
                 InputPeso.Text = "";
