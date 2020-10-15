@@ -67,33 +67,47 @@ namespace GeradorGrafosUWP
         }
 
 
-        private void Button_SalvarArquivo(object sender, RoutedEventArgs e)
+        private async void Button_SalvarArquivo(object sender, RoutedEventArgs e)
         {
             string conteudo = "";
             try
             {
-                StorageFile newFile = await ApplicationData.Current.LocalFolder.GetFileAsync("grafinho.txt");
+                StorageFile arqTxt = await ApplicationData.Current.LocalFolder.GetFileAsync("Grafo.txt");
 
-                EscreverArquivo(newFile, this.Grafo);
+                await arqTxt.DeleteAsync();
 
-                using (StreamReader leitura = new StreamReader(await newFile.OpenStreamForReadAsync()))
+                StorageFile arquivoTxt = await ApplicationData.Current.LocalFolder.CreateFileAsync("Grafo.txt");
+
+                StorageFile arqPajek = await ApplicationData.Current.LocalFolder.GetFileAsync("GrafoPajek.net");
+
+                await arqPajek.DeleteAsync();
+
+                StorageFile arquivoPajek = await ApplicationData.Current.LocalFolder.CreateFileAsync("GrafoPajek.net");
+
+                EscreverArquivo(arquivoTxt, this.Grafo);
+
+                EscreverArquivo(arquivoPajek, this.Grafo);
+
+                using (StreamReader leitura = new StreamReader(await arquivoTxt.OpenStreamForReadAsync()))
                 {
                     conteudo = leitura.ReadToEnd();
                 }
             }
             catch (Exception ex)
             {
-                StorageFile arquivo = await ApplicationData.Current.LocalFolder.CreateFileAsync("grafinho.txt");
+                StorageFile arquivoTxt = await ApplicationData.Current.LocalFolder.CreateFileAsync("Grafo.txt");
 
-                EscreverArquivo(arquivo, this.Grafo);
+                StorageFile arquivoPajek = await ApplicationData.Current.LocalFolder.CreateFileAsync("GrafoPajek.net");
 
-                using (StreamReader leitura = new StreamReader(await arquivo.OpenStreamForReadAsync()))
+                EscreverArquivo(arquivoTxt, this.Grafo);
+
+                EscreverArquivo(arquivoPajek, this.Grafo);
+
+                using (StreamReader leitura = new StreamReader(await arquivoTxt.OpenStreamForReadAsync()))
                 {
                     conteudo = leitura.ReadToEnd();
                 }
             }
-
-            //await newFile.DeleteAsync();
 
         }
 
@@ -106,51 +120,37 @@ namespace GeradorGrafosUWP
 
                 if (numVertice == 0)
                 {
-                    await escrita.WriteLineAsync("*vertices " + numVertice.ToString());
+                    await escrita.WriteLineAsync("*Vertices 0");
                 }
                 else
                 {
-                    await escrita.WriteLineAsync("*vertices " + numVertice.ToString());
+                    await escrita.WriteLineAsync("*Vertices " + numVertice.ToString());
 
                     foreach (Vertice v in grafo.Vertices)
                     {
-                        await escrita.WriteLineAsync(v.id.ToString() + v.etiqueta);
+                        await escrita.WriteLineAsync(v.id.ToString()+ " " + v.etiqueta);
                     }
 
                     if (grafo.Arcos.Count > 0)
                     {
-                        foreach (Arco a in grafo.Arcos)
+                        if (grafo.dirigido)
                         {
-                            await escrita.WriteLineAsync(a.entrada.etiqueta + a.saida.etiqueta);
+                            await escrita.WriteLineAsync("*Arcs");
+                            foreach (Arco a in grafo.Arcos)
+                            {
+                                await escrita.WriteLineAsync(a.saida.id+ " " + a.entrada.id + " " + a.peso.ToString());
+                            }
                         }
+                        else
+                        {
+                            await escrita.WriteLineAsync("*Edges");
+                            foreach (Arco a in grafo.Arcos)
+                            {
+                                await escrita.WriteLineAsync(a.saida.id + " " + a.entrada.id + " " + a.peso.ToString());
+                            }
+                        }
+                       
                     }
-                }
-            }
-        }
-
-        private async void Button_SalvarArquivoPajek(object sender, RoutedEventArgs e)
-        {
-            string conteudo = "";
-            try
-            {
-                StorageFile newFile = await ApplicationData.Current.LocalFolder.GetFileAsync("GrafoPajek.net");
-
-                EscreverArquivo(newFile, this.Grafo);
-
-                using (StreamReader leitura = new StreamReader(await newFile.OpenStreamForReadAsync()))
-                {
-                    conteudo = leitura.ReadToEnd();
-                }
-            }
-            catch (Exception ex)
-            {
-                StorageFile arquivo = await ApplicationData.Current.LocalFolder.CreateFileAsync("GrafoPajek.net");
-
-                EscreverArquivo(arquivo, this.Grafo);
-
-                using (StreamReader leitura = new StreamReader(await arquivo.OpenStreamForReadAsync()))
-                {
-                    conteudo = leitura.ReadToEnd();
                 }
             }
         }
