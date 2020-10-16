@@ -19,15 +19,17 @@ namespace GeradorGrafosCore
             this.dirigido = false;
         }
 
-        public void AdicionaVertice( Vertice v)
+        public bool AdicionaVertice( Vertice v)
         {
             Vertice aux = new Vertice();
             aux = ProcuraVertice(v.etiqueta);
             if(aux == null)
             {
                 this.Vertices.Add(v);
+                return true;
             }
             //se já existir um vértice com essa etiqueta ele não poderá ser adicionado
+            return false;
         }
 
         public Vertice ProcuraVertice(int idVertice)
@@ -76,6 +78,28 @@ namespace GeradorGrafosCore
                 }
             }
             this.Vertices.Remove(v);
+        }
+
+        public void RemoveVertice(Vertice vertice)
+        {
+            List<Arco> listaArco = ProcuraArco(vertice);
+
+            foreach (Arco arco in listaArco)
+            {
+                this.Arcos.Remove(arco);
+            }
+
+            foreach (Vertice v in this.Vertices)
+            {
+                foreach (Vertice vAdj in v.ListaAdjacencia)
+                {
+                    if (vAdj == vertice)
+                    {
+                        v.ListaAdjacencia.Remove(vAdj);
+                    }
+                }
+            }
+            this.Vertices.Remove(vertice);
         }
 
         public int CalculaNumVertices()
@@ -176,6 +200,27 @@ namespace GeradorGrafosCore
                 }
             }
             this.Arcos.Remove(a);
+            //mexer na lista de adjacencia dos vértices envolvidos
+        }
+
+        public void RemoveArco(Arco arco)
+        {
+            foreach (Vertice v in this.Vertices)
+            {
+                if (arco.saida == v)
+                {
+                    arco.saida.ListaAdjacencia.Remove(v);
+                }
+
+                if (!this.dirigido)
+                {
+                    if (arco.entrada == v)
+                    {
+                        arco.entrada.ListaAdjacencia.Remove(v);
+                    }
+                }
+            }
+            this.Arcos.Remove(arco);
             //mexer na lista de adjacencia dos vértices envolvidos
         }
 

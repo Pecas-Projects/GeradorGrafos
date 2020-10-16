@@ -76,30 +76,33 @@
                 <Button Background="#8E8B8B" VerticalAlignment="Bottom" FontFamily="Segoe MDL2 Assets" FontWeight="Bold"  Content="&#xE710;" Foreground="#000" FontSize="20" Padding="10" CornerRadius="100" Margin="20,0,0,0" Click="Button_AddArco"/>
             </StackPanel>
         </StackPanel>
-        <StackPanel Grid.Row="3" Margin="50,20,0,0">
-            <TextBlock Text="Vértices adicionados" FontSize="25" Foreground="Black"/>
-            <ListView ItemsSource="{x:Bind Vertices}" Background="White">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="local1:Vertice">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
-                            <TextBlock FontSize="20" Foreground="Black">
+        <ScrollViewer Grid.Row="3">
+            <StackPanel Margin="50,20,0,0">
+                <TextBlock Text="Vértices adicionados" FontSize="25" Foreground="Black"/>
+                <ListView ItemsSource="{x:Bind Vertices}" Background="White">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="local1:Vertice">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
+                                <TextBlock FontSize="20" Foreground="Black">
                                 <Run Text="{Binding id}"/>
                                 <Run Text=":"/>
                                 <Run Text="{Binding etiqueta}"/>
-                            </TextBlock>
-                            <Button Background="#8E8B8B" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontWeight="Bold"  Content="&#xE711;" Foreground="#000" FontSize="20" Padding="10" CornerRadius="100" Margin="20,0,0,0"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
-        <StackPanel Grid.Row="3" Grid.Column="1" Margin="50,20,0,0">
-            <TextBlock Text="Arestas adicionadas" FontSize="25" />
-            <ListView ItemsSource="{x:Bind Arcos}" Background="White">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="local1:Arco">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
-                            <TextBlock FontSize="20" Foreground="Black">
+                                </TextBlock>
+                                <Button Tag="{Binding id}" Click="ButtonRemoveVertice" Background="#8E8B8B" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontWeight="Bold"  Content="&#xE711;" Foreground="#000" FontSize="20" Padding="10" CornerRadius="100" Margin="20,0,0,0"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </ScrollViewer>
+        <ScrollViewer Grid.Row="3" Grid.Column="1">
+            <StackPanel Margin="50,20,0,0">
+                <TextBlock Text="Arestas adicionadas" FontSize="25" />
+                <ListView ItemsSource="{x:Bind Arcos}" Background="White">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="local1:Arco">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
+                                <TextBlock FontSize="20" Foreground="Black">
                                 <Run Text="{Binding saida.id}"/>
                                 <Run Text=":"/>
                                 <Run Text="{Binding saida.etiqueta}"/>
@@ -109,13 +112,14 @@
                                 <Run Text="{Binding entrada.etiqueta}"/>
                                 <Run Text=" / Peso:"/>
                                 <Run Text="{Binding peso}"/>
-                            </TextBlock>
-                            <Button Background="#8E8B8B" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontWeight="Bold"  Content="&#xE711;" Foreground="#000" FontSize="20" Padding="10" CornerRadius="100" Margin="20,0,0,0"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
+                                </TextBlock>
+                                <Button Tag="{Binding id}" Click="ButtonRemoveArco" Background="#8E8B8B" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontWeight="Bold"  Content="&#xE711;" Foreground="#000" FontSize="20" Padding="10" CornerRadius="100" Margin="20,0,0,0"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </ScrollViewer>
         <StackPanel Grid.Row="3" Grid.Column="2" VerticalAlignment="Bottom">
             <ComboBox Background="#8E8B8B" x:Name="FontsCombo" Header="Estrutura utilizada" HorizontalAlignment="Center" FontSize="25"  Margin="0,0,0,20" Width="200">
                 <ComboBox.HeaderTemplate>
