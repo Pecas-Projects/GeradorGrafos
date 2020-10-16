@@ -138,5 +138,10 @@ namespace GeradorGrafosUWP
         {
             Grafo.Nome = NomeGrafo.Text;
         }
+
+        private void inputInformacao_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.infoVertice = inputInformacao.Text;
+        }
     }
 }
