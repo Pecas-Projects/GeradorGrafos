@@ -263,5 +263,54 @@ namespace GeradorGrafosCore
             return -1;
         }
 
+        public int DFS()
+        {
+
+            int tempo = 0, nComponentes = 0;
+
+            foreach (Vertice v in this.Vertices)
+            {
+                v.Cor = 'B';
+            }
+
+            foreach (Vertice v in this.Vertices)
+            {
+                if (v.Cor == 'B')
+                {
+                    VisitaDFS(tempo, v);
+                }
+            }
+            foreach (Vertice v in this.Vertices)
+            {
+                if (v.Predecssor == null)
+                {
+                    nComponentes++;
+                }
+            }
+
+            return nComponentes;
+        }
+
+        public void VisitaDFS(int tempo, Vertice v)
+        {
+            tempo += 1;
+            v.Descoberta = tempo;
+            v.Cor = 'C';
+
+            foreach (Vertice v1 in v.ListaAdjacencia)
+            {
+                if (v1.Cor == 'B')
+                {
+                    v1.Predecssor = v;
+                    VisitaDFS(tempo, v1);
+                }
+            }
+
+            v.Cor = 'P';
+            tempo += 1;
+            v.Fechamento = tempo;
+
+        }
+
     }
 }
