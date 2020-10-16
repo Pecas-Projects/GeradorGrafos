@@ -19,15 +19,17 @@ namespace GeradorGrafosCore
             this.dirigido = false;
         }
 
-        public void AdicionaVertice( Vertice v)
+        public bool AdicionaVertice( Vertice v)
         {
             Vertice aux = new Vertice();
             aux = ProcuraVertice(v.etiqueta);
             if(aux == null)
             {
                 this.Vertices.Add(v);
+                return true;
             }
             //se já existir um vértice com essa etiqueta ele não poderá ser adicionado
+            return false;
         }
 
         public Vertice ProcuraVertice(int idVertice)

@@ -83,9 +83,9 @@ namespace GeradorGrafosUWP
                 v.id = Grafo.CalculaNumVertices() + 1;
                 v.etiqueta = this.infoVertice;
 
-                Grafo.AdicionaVertice(v);
-                // Adiciona o vértice na lista do front
-                _vertices.Add(v);
+                // Adiciona o vértice na lista do front caso tenha sido adicionado ao grafo
+                if (Grafo.AdicionaVertice(v))
+                    _vertices.Add(v);
 
                 inputInformacao.Text = "";
             }
