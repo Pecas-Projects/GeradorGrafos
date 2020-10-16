@@ -56,6 +56,11 @@ namespace GeradorGrafosUWP
             this.InitializeComponent();
         }
 
+        private void BotaoVoltar(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(PaginaInicial), Grafo);
+        }
+
         private void naoDirigido_Checked(object sender, RoutedEventArgs e)
         {
             this.Grafo.dirigido = false;
@@ -119,120 +124,120 @@ namespace GeradorGrafosUWP
             }
         }
 
-        private async void Button_CarregarGrafo(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                StorageFile arqTxt = await ApplicationData.Current.LocalFolder.GetFileAsync("Grafo.txt");
+        //private async void Button_CarregarGrafo(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        StorageFile arqTxt = await ApplicationData.Current.LocalFolder.GetFileAsync("Grafo.txt");
 
-                string arquivoGrafo = "";
+        //        string arquivoGrafo = "";
 
-                Grafo grafo = new Grafo();
+        //        Grafo grafo = new Grafo();
 
-                List<Vertice> verticesList = new List<Vertice>();
+        //        List<Vertice> verticesList = new List<Vertice>();
 
-                List<Arco> arcosList = new List<Arco>();
+        //        List<Arco> arcosList = new List<Arco>();
 
 
-                using (StreamReader leitura = new StreamReader(await arqTxt.OpenStreamForReadAsync()))
-                {
-                    arquivoGrafo = leitura.ReadToEnd();
-                }
+        //        using (StreamReader leitura = new StreamReader(await arqTxt.OpenStreamForReadAsync()))
+        //        {
+        //            arquivoGrafo = leitura.ReadToEnd();
+        //        }
 
-                string[] vetorArqGrafo = arquivoGrafo.Split("*");
+        //        string[] vetorArqGrafo = arquivoGrafo.Split("*");
 
-                string[] vertices = vetorArqGrafo[1].Split("\r\n");
+        //        string[] vertices = vetorArqGrafo[1].Split("\r\n");
 
-                string[] arcos = vetorArqGrafo[2].Split("\r\n");
+        //        string[] arcos = vetorArqGrafo[2].Split("\r\n");
 
-                if (arcos[0].Equals("Edges"))
-                {
-                    grafo.dirigido = false;
-                }
-                else if (arcos[0].Equals("Arcs"))
-                {
-                    grafo.dirigido = true;
-                }
+        //        if (arcos[0].Equals("Edges"))
+        //        {
+        //            grafo.dirigido = false;
+        //        }
+        //        else if (arcos[0].Equals("Arcs"))
+        //        {
+        //            grafo.dirigido = true;
+        //        }
 
-                BuscarVertices(verticesList, vertices);
+        //        BuscarVertices(verticesList, vertices);
 
-                BuscarArcos(arcosList, verticesList, arcos);
+        //        BuscarArcos(arcosList, verticesList, arcos);
 
-                grafo.Arcos = arcosList;
-                grafo.Vertices = verticesList;
+        //        grafo.Arcos = arcosList;
+        //        grafo.Vertices = verticesList;
 
-                this.Grafo = grafo;
+        //        this.Grafo = grafo;
 
-                this.Frame.Navigate(typeof(InformacoesGrafo), Grafo);
+        //        this.Frame.Navigate(typeof(InformacoesGrafo), Grafo);
 
-            }
-            catch(Exception ex)
-            {
-                //Algo no front falando que nao salvou o grafo;
-                Debug.WriteLine("Nenhum grafo salvo");
-            }
-        }
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        //Algo no front falando que nao salvou o grafo;
+        //        Debug.WriteLine("Nenhum grafo salvo");
+        //    }
+        //}
 
-        private void BuscarArcos(List<Arco> arcosList, List<Vertice> verticesList, string[] arcos)
-        {
-            int ID = 0;
-            for (int v = 1; v < arcos.Length; v++)
-            {
-                if (!arcos[v].Equals(""))
-                {
-                    string[] arc = arcos[v].Split(" ");
+        //private void BuscarArcos(List<Arco> arcosList, List<Vertice> verticesList, string[] arcos)
+        //{
+        //    int ID = 0;
+        //    for (int v = 1; v < arcos.Length; v++)
+        //    {
+        //        if (!arcos[v].Equals(""))
+        //        {
+        //            string[] arc = arcos[v].Split(" ");
 
-                    Arco arcoAux = new Arco();
+        //            Arco arcoAux = new Arco();
 
-                    int SaidaId = int.Parse(arc[0]);
+        //            int SaidaId = int.Parse(arc[0]);
 
-                    int EntradaId = int.Parse(arc[1]);
+        //            int EntradaId = int.Parse(arc[1]);
 
-                    int Peso = int.Parse(arc[2]);
+        //            int Peso = int.Parse(arc[2]);
 
-                    ID++;
+        //            ID++;
 
-                    foreach (Vertice ver in verticesList)
-                    {
+        //            foreach (Vertice ver in verticesList)
+        //            {
 
-                        if (ver.id == SaidaId)
-                        {
-                            arcoAux.saida = ver;
+        //                if (ver.id == SaidaId)
+        //                {
+        //                    arcoAux.saida = ver;
 
-                        }
+        //                }
 
-                        if (ver.id == EntradaId)
-                        {
-                            arcoAux.entrada = ver;
-                        }
-                    }
+        //                if (ver.id == EntradaId)
+        //                {
+        //                    arcoAux.entrada = ver;
+        //                }
+        //            }
 
-                    arcoAux.id = ID;
-                    arcoAux.peso = Peso;
-                    arcosList.Add(arcoAux);
-                }
-            }
-        }
+        //            arcoAux.id = ID;
+        //            arcoAux.peso = Peso;
+        //            arcosList.Add(arcoAux);
+        //        }
+        //    }
+        //}
 
-        private void BuscarVertices(List<Vertice> verticesList, string[] vertices)
-        {
-            for (int v = 0; v < vertices.Length; v++)
-            {
-                if (v > 0 && !vertices[v].Equals(""))
-                {
-                    string[] ver = vertices[v].Split(" ");
+        //private void BuscarVertices(List<Vertice> verticesList, string[] vertices)
+        //{
+        //    for (int v = 0; v < vertices.Length; v++)
+        //    {
+        //        if (v > 0 && !vertices[v].Equals(""))
+        //        {
+        //            string[] ver = vertices[v].Split(" ");
 
-                    int idVertice = int.Parse(ver[0]);
+        //            int idVertice = int.Parse(ver[0]);
 
-                    string etiquetaVertice = ver[1];
+        //            string etiquetaVertice = ver[1];
 
-                    verticesList.Add(new Vertice
-                    {
-                        id = idVertice,
-                        etiqueta = etiquetaVertice
-                    });
-                }
-            }
-        }
+        //            verticesList.Add(new Vertice
+        //            {
+        //                id = idVertice,
+        //                etiqueta = etiquetaVertice
+        //            });
+        //        }
+        //    }
+        //}
     }
 }

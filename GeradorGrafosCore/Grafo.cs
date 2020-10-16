@@ -11,12 +11,14 @@ namespace GeradorGrafosCore
         public List<Vertice> Vertices { get; set; }
         public List<Arco> Arcos { get; set; }
         public bool dirigido { get; set; }
+        public string Nome { get; set; }
 
         public Grafo()
         {
             this.Vertices = new List<Vertice>();
             this.Arcos = new List<Arco>();
             this.dirigido = false;
+            this.Nome = "Grafo";
         }
 
         public void AdicionaVertice( Vertice v)
