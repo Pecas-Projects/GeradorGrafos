@@ -214,7 +214,6 @@ namespace GeradorGrafosCore
                 }
             }
             this.Arcos.Remove(a);
-            //mexer na lista de adjacencia dos vértices envolvidos
         }
 
         public void RemoveArco(Arco arco)
@@ -235,7 +234,6 @@ namespace GeradorGrafosCore
                 }
             }
             this.Arcos.Remove(arco);
-            //mexer na lista de adjacencia dos vértices envolvidos
         }
 
         public int CalculaNumArcos()

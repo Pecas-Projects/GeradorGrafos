@@ -20,7 +20,7 @@ namespace GeradorGrafosCore
         {
             this.Predecssor = null;
             this.ListaAdjacencia = new List<Vertice>();
-
+            this.id = 1;
         }
     }
 
