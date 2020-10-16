@@ -22,16 +22,21 @@
         </Grid.ColumnDefinitions>
         <Button Background="#8E8B8B" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="Bold" Content="&#xE72B;" Foreground="#000" FontSize="30" Padding="10" CornerRadius="100" Margin="50,0,0,0" Click="BotaoVoltar"/>
         <TextBlock Foreground="Black" Grid.ColumnSpan="3" Text="GERADOR DE GRAFOS" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBox Header="Nome do Grafo" FontSize="18" Margin="0,64,475,24" Grid.Row="1" Grid.Column="1"/>
         <StackPanel Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="50,0,0,0">
             <RadioButton Foreground="Black" Content="Grafo não dirigido" GroupName="TipoGrafo" FontSize="25" IsChecked="True" Checked="naoDirigido_Checked"/>
             <RadioButton Foreground="Black" Content="Grafo dirigido" GroupName="TipoGrafo" FontSize="25" Checked="dirigido_Checked"/>
         </StackPanel>
-
+        <TextBox HorizontalAlignment="Left" Height="70" Grid.Row="1" Grid.Column="1" Foreground="Black" Header="Nome do grafo" x:Name="NomeGrafo" Margin="50,0,0,0" FontSize="20" Width="200" Background="White" TextChanged="TextBox_Informacao">
+            <TextBox.HeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" Foreground="Black" />
+                </DataTemplate>
+            </TextBox.HeaderTemplate>
+        </TextBox>
         <StackPanel Grid.Row="2" VerticalAlignment="Center" Margin="50,0,0,0">
             <TextBlock Foreground="Black" Text="Criar vértice" FontSize="25" />
             <StackPanel Orientation="Horizontal">
-                <TextBox Foreground="Black" Header="Informação" x:Name="inputInformacao" FontSize="20" Width="200" Background="White" TextChanged="TextBox_Informacao">
+                <TextBox Foreground="Black" Header="Informação" x:Name="inputInformacao" FontSize="20" Height="70" Width="200" Background="White" TextChanged="TextBox_Informacao">
                     <TextBox.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding}" Foreground="Black" />
@@ -44,7 +49,7 @@
         <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="50,0,0,0">
             <TextBlock Foreground="Black" Text="Criar aresta" FontSize="25" />
             <StackPanel Orientation="Horizontal">
-                <ComboBox Foreground="Black" Header="Vértice de saída" FontSize="20" Width="200" Background="White" x:Name="ComboBox_Vertices_Saida" ItemsSource="{x:Bind Vertices}">
+                <ComboBox Foreground="Black" Header="Vértice de saída" FontSize="20" Width="200" Height="70" Background="White" x:Name="ComboBox_Vertices_Saida" ItemsSource="{x:Bind Vertices}">
                     <ComboBox.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding}" Foreground="Black" />
@@ -56,7 +61,7 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <ComboBox Foreground="Black" Header="Vértice de Entrada" Margin="20,0,0,0" FontSize="20" Width="200" Background="White" x:Name="ComboBox_Vertices_Entrada" ItemsSource="{x:Bind Vertices}">
+                <ComboBox Foreground="Black" Header="Vértice de Entrada" Margin="20,0,0,0" FontSize="20" Width="200" Height="70" Background="White" x:Name="ComboBox_Vertices_Entrada" ItemsSource="{x:Bind Vertices}">
                     <ComboBox.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding}" Foreground="Black" />
@@ -68,7 +73,7 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <TextBox Foreground="Black"  Header="Peso" FontSize="20" Margin="20,0,0,0" Width="200" Background="White"  x:Name="InputPeso">
+                <TextBox Foreground="Black" Header="Peso" FontSize="20" Margin="20,0,0,0" Width="200" Height="70" Background="White"  x:Name="InputPeso">
                     <TextBox.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding}" Foreground="Black" />
@@ -123,7 +128,7 @@
             </StackPanel>
         </ScrollViewer>
         <StackPanel Grid.Row="3" Grid.Column="2" VerticalAlignment="Bottom">
-            <ComboBox Background="#8E8B8B" x:Name="FontsCombo" Header="Estrutura utilizada" HorizontalAlignment="Center" FontSize="25"  Margin="0,0,0,20" Width="200">
+            <ComboBox Background="#8E8B8B" x:Name="FontsCombo" Header="Estrutura utilizada" HorizontalAlignment="Center" FontSize="20" Margin="0,0,0,20" Height="70" Width="200">
                 <ComboBox.HeaderTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}" Foreground="Black" />
@@ -132,10 +137,7 @@
                 <x:String>Lista de adjacência</x:String>
                 <x:String>Matriz de adjacência</x:String>
             </ComboBox>
-            <Button Background="#8E8B8B" Foreground="Black" HorizontalAlignment="Center" Content="Próxima página" FontSize="25"  Margin="0,0,0,20" Width="200" Click="Button_Click"/>
+            <Button Background="#8E8B8B" Foreground="Black" HorizontalAlignment="Center" Content="Próxima página" FontSize="25" Margin="0,0,0,20" Width="200" Click="Button_Click"/>
         </StackPanel>
-        <!--<TextBlock Foreground="Black" Text="Usar grafo salvo no computador" FontSize="25" Grid.Column="1" Margin="456,0,170,124" Grid.Row="1" Grid.ColumnSpan="2"/>
-        <ComboBox Header="Selecionar arquivo" FontSize="18" Grid.Column="1" Margin="458,64,0,0" Grid.Row="1" Width="294" Height="80" Grid.ColumnSpan="2"/>
-        <Button Content="Carregar grafo" Background="#8E8B8B" Foreground="Black" Grid.Column="2" Height="81" Width="182" HorizontalAlignment="Center" Grid.Row="1" FontSize="25" Click="Button_CarregarGrafo" Margin="0,62,0,0" VerticalAlignment="Top"/>-->
     </Grid>
 </Page>
