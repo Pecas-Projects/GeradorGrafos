@@ -56,7 +56,10 @@ namespace GeradorGrafosUWP
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(MainPage));
+            if (this.Frame.CanGoBack)
+            {
+                this.Frame.GoBack();
+            }
         }
 
 
@@ -129,7 +132,7 @@ namespace GeradorGrafosUWP
 
                     foreach (Vertice v in grafo.Vertices)
                     {
-                        await escrita.WriteLineAsync(v.id.ToString()+ " " + v.etiqueta);
+                        await escrita.WriteLineAsync(v.id.ToString() + " " + v.etiqueta);
                     }
 
                     if (grafo.Arcos.Count > 0)
@@ -139,7 +142,7 @@ namespace GeradorGrafosUWP
                             await escrita.WriteLineAsync("*Arcs");
                             foreach (Arco a in grafo.Arcos)
                             {
-                                await escrita.WriteLineAsync(a.saida.id+ " " + a.entrada.id + " " + a.peso.ToString());
+                                await escrita.WriteLineAsync(a.saida.id + " " + a.entrada.id + " " + a.peso.ToString());
                             }
                         }
                         else
@@ -150,7 +153,7 @@ namespace GeradorGrafosUWP
                                 await escrita.WriteLineAsync(a.saida.id + " " + a.entrada.id + " " + a.peso.ToString());
                             }
                         }
-                       
+
                     }
                 }
             }
