@@ -82,39 +82,51 @@ namespace GeradorGrafosUWP
 
         private void Button_addVertice(object sender, RoutedEventArgs e)
         {
-            if (inputInformacao.Text == null)
-            {
-                // Aviso de erro
-            }
-            else
+            if (inputInformacao.Text != "")
             {
                 Vertice v = new Vertice();
                 v.id = Grafo.CalculaNumVertices() + 1;
                 v.etiqueta = this.infoVertice;
 
-                Grafo.AdicionaVertice(v);
-                // Adiciona o vértice na lista do front
-                _vertices.Add(v);
+                // Adiciona o vértice na lista do front caso tenha sido adicionado ao grafo
+                if (Grafo.AdicionaVertice(v))
+                    _vertices.Add(v);
 
                 inputInformacao.Text = "";
             }
 
         }
 
+        private void ButtonRemoveVertice(object sender, RoutedEventArgs e)
+        {
+            int idVertice = int.Parse(((Button)sender).Tag.ToString());
+            Vertice v = Grafo.ProcuraVertice(idVertice);
+            Grafo.RemoveVertice(v);
+            // Retira o vértice da lista do front
+            _vertices.Remove(v);
+        }
+
+        private void ButtonRemoveArco(object sender, RoutedEventArgs e)
+        {
+            int idArco = int.Parse(((Button)sender).Tag.ToString());
+            Arco a = Grafo.ProcuraArco(idArco);
+            Grafo.RemoveArco(a);
+            // Retira o arco da lista do front
+            _arcos.Remove(a);
+        }
+
         private void Button_AddArco(object sender, RoutedEventArgs e)
         {
-            if (InputPeso.Text == null || ComboBox_Vertices_Saida.SelectedValue == null || ComboBox_Vertices_Entrada.SelectedValue == null)
-            {
-                Debug.WriteLine("UIUIUUI");
-                // Aviso de erro
-            }
-            else
+            if (ComboBox_Vertices_Saida.SelectedValue != null && ComboBox_Vertices_Entrada.SelectedValue != null)
             {
                 Arco a = new Arco();
+
                 a.id = Grafo.CalculaNumArcos() + 1;
-                a.peso = int.Parse(InputPeso.Text);
                 a.entrada = ComboBox_Vertices_Entrada.SelectedValue as Vertice;
                 a.saida = ComboBox_Vertices_Saida.SelectedValue as Vertice;
+
+                if (InputPeso.Text != "")
+                    a.peso = int.Parse(InputPeso.Text);
 
                 Grafo.AdicionarArco(a);
                 // Adiciona o arco na lista do front
