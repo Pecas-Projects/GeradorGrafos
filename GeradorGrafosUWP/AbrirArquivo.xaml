@@ -9,10 +9,17 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid Background="#C4C4C4">
-        <Button Background="#8E8B8B" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" FontWeight="Bold" Content="&#xE72B;" Foreground="#000" FontSize="30" Padding="10" CornerRadius="100" Margin="66,73,0,0" Click="BotaoVoltar"/>
-        <TextBlock Foreground="Black" Text="GERADOR DE GRAFOS" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,176,0,0"/>
-        <TextBlock Foreground="Black" Text="Usar grafo salvo no computador" FontSize="25" Margin="551,318,562,616"/>
-        <ComboBox Header="Selecionar arquivo" FontSize="18" Margin="486,0,0,0" Width="486" Height="121" VerticalAlignment="Center"/>
-        <Button Content="Carregar grafo" Background="#8E8B8B" Foreground="Black" Height="65" Width="486" FontSize="25" Click="Button_CarregarGrafo" Margin="486,620,0,0" VerticalAlignment="Top"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <Button Background="#8E8B8B" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="Bold" Content="&#xE72B;" Foreground="#000" FontSize="30" Padding="10" CornerRadius="100" Margin="50,0,0,0" Click="BotaoVoltar"/>
+        <TextBlock Foreground="Black" Grid.ColumnSpan="3" Text="GERADOR DE GRAFOS" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Foreground="Black" Text="Clique no botão abaixo para fazer upload do grafo" FontSize="25"/>
+            <Button Margin="0,50,0,0" HorizontalAlignment="Center" Content="Importar arquivo" Background="#8E8B8B" Foreground="Black" Height="65" Width="486" FontSize="25" Click="Button_CarregarGrafo" VerticalAlignment="Top"/>
+            <TextBlock x:Name="NomeArquivo" Margin="0,10,0,0" Visibility="Collapsed" HorizontalAlignment="Center" Foreground="Black" Text="Nenhum arquivo foi selecionado" FontSize="25"/>
+            <Button x:Name="BotaoProx" Margin="0,50,0,0" Visibility="Collapsed" HorizontalAlignment="Center" Content="Próxima página" Background="#8E8B8B" Foreground="Black" Height="65" Width="486" FontSize="25" Click="BotaoProxPag" VerticalAlignment="Top"/>
+        </StackPanel>
     </Grid>
 </Page>

@@ -37,12 +37,38 @@ namespace GeradorGrafosUWP
             this.Frame.Navigate(typeof(PaginaInicial), Grafo);
         }
 
+        private void BotaoProxPag(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(InformacoesGrafo), Grafo);
+        }
+
         private async void Button_CarregarGrafo(object sender, RoutedEventArgs e)
+        {
+            var picker = new Windows.Storage.Pickers.FileOpenPicker();
+            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
+            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary;
+            picker.FileTypeFilter.Add(".txt");
+            picker.FileTypeFilter.Add(".net");
+
+            Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
+            if (file != null)
+            {
+                NomeArquivo.Text = "Arquivo selecionado: " + file.Name;
+                NomeArquivo.Visibility = Visibility.Visible;
+                LeArquivo(file);
+            }
+            else
+            {
+                NomeArquivo.Text = "Nenhum arquivo foi selecionado";
+                BotaoProx.Visibility = Visibility.Collapsed;
+            }
+            
+        }
+
+        private async void LeArquivo(StorageFile arqTxt)
         {
             try
             {
-                StorageFile arqTxt = await ApplicationData.Current.LocalFolder.GetFileAsync("Grafo.txt");
-
                 string arquivoGrafo = "";
 
                 Grafo grafo = new Grafo();
@@ -81,13 +107,12 @@ namespace GeradorGrafosUWP
 
                 this.Grafo = grafo;
 
-                this.Frame.Navigate(typeof(InformacoesGrafo), Grafo);
-
+                BotaoProx.Visibility = Visibility.Visible;
             }
             catch (Exception ex)
             {
-                //Algo no front falando que nao salvou o grafo;
-                Debug.WriteLine("Nenhum grafo salvo");
+                NomeArquivo.Text = "Não foi possível ler o grafo";
+                BotaoProx.Visibility = Visibility.Collapsed;
             }
         }
 
