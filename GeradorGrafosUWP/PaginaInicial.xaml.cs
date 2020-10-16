@@ -23,8 +23,6 @@ namespace GeradorGrafosUWP
     /// </summary>
     public sealed partial class PaginaInicial : Page
     {
-        public Grafo Grafo = new Grafo();
-
         public PaginaInicial()
         {
             this.InitializeComponent();
@@ -32,12 +30,12 @@ namespace GeradorGrafosUWP
 
         private void VaiParaGerarGrafo(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(MainPage), Grafo);
+            this.Frame.Navigate(typeof(MainPage));
         }
 
         private void VaiParaAbrirArquivo(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(AbrirArquivo), Grafo);
+            this.Frame.Navigate(typeof(AbrirArquivo));
         }
     }
     

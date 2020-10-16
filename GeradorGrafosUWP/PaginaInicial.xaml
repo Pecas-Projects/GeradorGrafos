@@ -9,9 +9,25 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid Background="#C4C4C4">
-        <TextBlock Foreground="Black" Text="GERADOR DE GRAFOS" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,176,0,0"/>
-        <TextBlock Foreground="Black" Text="Neste programa você pode criar um novo gravo, ou visualizar as informações de um grafo existente no seu computador" FontSize="22" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,332,0,0" Height="60" Width="1185"/>
-        <Button Content="Gerar um novo grafo" FontSize="22" Width="360" Height="81" Margin="158,570,0,0" VerticalAlignment="Top" Click="VaiParaGerarGrafo"></Button>
-        <Button Content="Carregar um grafo salvo" FontSize="22" Width="360" Height="81" Margin="961,570,0,0" VerticalAlignment="Top" Click="VaiParaAbrirArquivo"></Button>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Foreground="Black" Text="GERADOR DE GRAFOS" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <StackPanel Grid.Row="1" VerticalAlignment="Center">
+            <RichTextBlock Foreground="#000" FontSize="30" TextAlignment="Center" Margin="100,0,100,100">
+                <Paragraph Foreground="#000">Neste programa você pode criar um novo gravo ou importar um já salvo em arquivo para visualizar suas informações e realizar cálculos</Paragraph>
+            </RichTextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button HorizontalAlignment="Stretch" Margin="150,0,150,0" Content="Gerar um novo grafo" FontSize="30" Click="VaiParaGerarGrafo"/>
+                <Button HorizontalAlignment="Stretch" Margin="150,0,150,0" Grid.Column="1" Content="Carregar um grafo salvo" FontSize="30" Click="VaiParaAbrirArquivo"/>
+            </Grid>
+            
+        </StackPanel>
+       
     </Grid>
 </Page>

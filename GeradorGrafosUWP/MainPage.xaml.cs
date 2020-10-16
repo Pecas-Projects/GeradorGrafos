@@ -58,7 +58,10 @@ namespace GeradorGrafosUWP
 
         private void BotaoVoltar(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(PaginaInicial), Grafo);
+            if (this.Frame.CanGoBack)
+            {
+                this.Frame.GoBack();
+            }
         }
 
         private void naoDirigido_Checked(object sender, RoutedEventArgs e)
