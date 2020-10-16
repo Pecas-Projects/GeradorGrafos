@@ -96,6 +96,10 @@ namespace GeradorGrafosCore
                 a.entrada.ListaAdjacencia.Add(a.saida);
             }          
             
+            if(a.peso == 0)
+            {
+                a.peso = 1;
+            }
         }
 
         public Arco ProcuraArco(int idArco)
@@ -261,19 +265,19 @@ namespace GeradorGrafosCore
 
         public int DFS()
         {
-           
+
             int tempo = 0, nComponentes = 0;
 
-            foreach(Vertice v in this.Vertices)
+            foreach (Vertice v in this.Vertices)
             {
                 v.Cor = 'B';
             }
 
             foreach (Vertice v in this.Vertices)
             {
-                if(v.Cor == 'B')
+                if (v.Cor == 'B')
                 {
-                    VisitaDFS( tempo, v);
+                    VisitaDFS(tempo, v);
                 }
             }
             foreach (Vertice v in this.Vertices)
@@ -287,26 +291,26 @@ namespace GeradorGrafosCore
             return nComponentes;
         }
 
-        public void VisitaDFS( int tempo, Vertice v)
+        public void VisitaDFS(int tempo, Vertice v)
         {
             tempo += 1;
             v.Descoberta = tempo;
             v.Cor = 'C';
 
-            foreach(Vertice v1 in v.ListaAdjacencia)
+            foreach (Vertice v1 in v.ListaAdjacencia)
             {
-                if(v1.Cor == 'B')
+                if (v1.Cor == 'B')
                 {
                     v1.Predecssor = v;
-                    VisitaDFS( tempo, v1);
+                    VisitaDFS(tempo, v1);
                 }
             }
 
             v.Cor = 'P';
             tempo += 1;
             v.Fechamento = tempo;
-           
+
         }
-       
+
     }
 }

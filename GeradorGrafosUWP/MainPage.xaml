@@ -93,5 +93,6 @@
             </ComboBox>
             <Button Background="#8E8B8B" Foreground="Black" HorizontalAlignment="Center" Content="Próxima página" FontSize="25"  Margin="0,0,0,20" Width="200" Click="Button_Click"/>
         </StackPanel>
+        <Button Content="Carregar grafo" Background="#8E8B8B" Foreground="Black" Grid.Column="2" Height="81" Width="182" HorizontalAlignment="Center" Grid.Row="1" FontSize="25" Click="Button_CarregarGrafo"/>
     </Grid>
 </Page>
