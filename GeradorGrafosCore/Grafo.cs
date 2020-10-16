@@ -98,6 +98,7 @@ namespace GeradorGrafosCore
                     if (vAdj == vertice)
                     {
                         v.ListaAdjacencia.Remove(vAdj);
+                        break;
                     }
                 }
             }
