@@ -80,6 +80,28 @@ namespace GeradorGrafosCore
             this.Vertices.Remove(v);
         }
 
+        public void RemoveVertice(Vertice vertice)
+        {
+            List<Arco> listaArco = ProcuraArco(vertice);
+
+            foreach (Arco arco in listaArco)
+            {
+                this.Arcos.Remove(arco);
+            }
+
+            foreach (Vertice v in this.Vertices)
+            {
+                foreach (Vertice vAdj in v.ListaAdjacencia)
+                {
+                    if (vAdj == vertice)
+                    {
+                        v.ListaAdjacencia.Remove(vAdj);
+                    }
+                }
+            }
+            this.Vertices.Remove(vertice);
+        }
+
         public int CalculaNumVertices()
         {
             if(this.Vertices == null)
