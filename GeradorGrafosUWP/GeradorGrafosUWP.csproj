@@ -116,8 +116,14 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AbrirArquivo.xaml.cs">
+      <DependentUpon>AbrirArquivo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PaginaInicial.xaml.cs">
+      <DependentUpon>PaginaInicial.xaml</DependentUpon>
     </Compile>
     <Compile Include="InformacoesGrafo.xaml.cs">
       <DependentUpon>InformacoesGrafo.xaml</DependentUpon>
@@ -147,6 +153,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AbrirArquivo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PaginaInicial.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="InformacoesGrafo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
