@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -32,20 +33,19 @@ namespace GeradorGrafosUWP
 
         public Grafo Grafo = new Grafo();
 
+        public ObservableCollection<Vertice> _vertices = new ObservableCollection<Vertice>();
+        public ObservableCollection<Vertice> Vertices
+        {
+            get
+            {
+                return _vertices;
+            }
+        }
+
         public InformacoesGrafo()
         {
+
             this.InitializeComponent();
-
-            teste = new List<string>();
-            teste.Add("teste1");
-            teste.Add("teste2");
-            teste.Add("teste1");
-            teste.Add("teste2");
-            teste.Add("teste1");
-            teste.Add("teste2");
-            teste.Add("teste1");
-            teste.Add("teste2");
-
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -113,6 +113,10 @@ namespace GeradorGrafosUWP
             }
 
 
+            NumArestas.Text = Grafo.CalculaNumArcos().ToString();
+
+            ObservableCollection<Vertice> aux = new ObservableCollection<Vertice>(Grafo.Vertices);
+            _vertices = aux;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -126,7 +130,7 @@ namespace GeradorGrafosUWP
 
         private void CalculaCaminhoMinimo(object sender, RoutedEventArgs e)
         {
-            int aux = this.Grafo.CaminhoMinimoDijkstra(this.Grafo.Vertices[0], this.Grafo.Vertices[1]);
+            int aux = this.Grafo.CaminhoMinimoDijkstra(Vertice1.SelectedValue as Vertice, Vertice2.SelectedValue as Vertice);
             CaminhoMinimo.Text = aux.ToString();
         }
 
@@ -220,9 +224,9 @@ namespace GeradorGrafosUWP
             }
         }
 
-        private void ButtonCalularComponentes(object sender, RoutedEventArgs e)
+        private void BotaoCalularComponentes(object sender, RoutedEventArgs e)
         {
-            //nComponentes.Text = Grafo.DFS().ToString();
+            NumeroDeComponentes.Text = Grafo.DFS().ToString();
         }
 
         private void NumVertices_SelectionChanged(object sender, RoutedEventArgs e)

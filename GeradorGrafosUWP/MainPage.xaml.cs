@@ -83,7 +83,10 @@ namespace GeradorGrafosUWP
             if (inputInformacao.Text != "")
             {
                 Vertice v = new Vertice();
-                v.id = Grafo.CalculaNumVertices() + 1;
+                if(Grafo.Vertices.Count > 0)
+                {
+                    v.id = Grafo.Vertices.Last().id + 1;
+                }
                 v.etiqueta = this.infoVertice;
 
                 // Adiciona o vértice na lista do front caso tenha sido adicionado ao grafo
@@ -98,9 +101,14 @@ namespace GeradorGrafosUWP
         private void ButtonRemoveVertice(object sender, RoutedEventArgs e)
         {
             int idVertice = int.Parse(((Button)sender).Tag.ToString());
-            Vertice v = Grafo.ProcuraVertice(idVertice);
-            Grafo.RemoveVertice(v);
+            Vertice v = Grafo.ProcuraVertice(idVertice);          
             // Retira o vértice da lista do front
+            List<Arco> arcosRemovidos = new List<Arco>(Grafo.ProcuraArco(v));
+            foreach(Arco a in arcosRemovidos)
+            {
+                _arcos.Remove(a);
+            }
+            Grafo.RemoveVertice(v);
             _vertices.Remove(v);
         }
 
@@ -119,7 +127,11 @@ namespace GeradorGrafosUWP
             {
                 Arco a = new Arco();
 
-                a.id = Grafo.CalculaNumArcos() + 1;
+                if (Grafo.Arcos.Count > 0)
+                {
+                    a.id = Grafo.Arcos.Last().id + 1;
+                }
+
                 a.entrada = ComboBox_Vertices_Entrada.SelectedValue as Vertice;
                 a.saida = ComboBox_Vertices_Saida.SelectedValue as Vertice;
 

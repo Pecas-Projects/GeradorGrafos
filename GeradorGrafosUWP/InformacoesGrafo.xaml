@@ -39,7 +39,7 @@
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="1">
                         <TextBlock Text="Arestas" FontSize="20" Foreground="Black" HorizontalAlignment="Center"/>
                         <StackPanel Background="#C4C4C4" Width="100" Margin="0,5,0,0">
-                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Text="0"/>
+                            <TextBlock x:Name="NumArestas" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Text="0"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>
@@ -52,10 +52,10 @@
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0">
                         <TextBlock Text="Componentes" FontSize="20" HorizontalAlignment="Center" Foreground="Black"/>
                         <StackPanel Background="#C4C4C4" Width="100" Margin="0,5,0,0">
-                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Text="0"/>
+                            <TextBlock x:Name="NumeroDeComponentes" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Text="0"/>
                         </StackPanel>
                     </StackPanel>
-                    <Button Grid.Row="2" Grid.Column="2" Background="#C4C4C4" Foreground="Black" HorizontalAlignment="Stretch" Content="Calcular" FontSize="20" Margin="10,0,20,0" />
+                    <Button Grid.Row="2" Grid.Column="2" Background="#C4C4C4" Foreground="Black" HorizontalAlignment="Stretch" Content="Calcular" FontSize="20" Margin="10,0,20,0" Click="BotaoCalularComponentes"/>
                 </Grid>
                 <StackPanel Height="1" Background="Black" Margin="20"/>
                 <StackPanel>
@@ -65,19 +65,29 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <ComboBox Background="#C4C4C4" Header="Vértice 1" FontSize="20" ItemsSource="{x:Bind teste}" Margin="20,0,10,0" HorizontalAlignment="Stretch">
+                        <ComboBox x:Name="Vertice1" Background="#C4C4C4" Header="Vértice 1" FontSize="20" ItemsSource="{x:Bind Vertices}" Margin="20,0,10,0" HorizontalAlignment="Stretch">
                             <ComboBox.HeaderTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding}" Foreground="Black" HorizontalAlignment="Center"/>
                                 </DataTemplate>
                             </ComboBox.HeaderTemplate>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding etiqueta}" Foreground="Black" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Grid.Column="1" Background="#C4C4C4" Header="Vértice 2" FontSize="20" ItemsSource="{x:Bind teste}" Margin="10,0,20,0" HorizontalAlignment="Stretch">
+                        <ComboBox x:Name="Vertice2" Grid.Column="1" Background="#C4C4C4" Header="Vértice 2" FontSize="20" ItemsSource="{x:Bind Vertices}" Margin="10,0,20,0" HorizontalAlignment="Stretch">
                             <ComboBox.HeaderTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding}" Foreground="Black" HorizontalAlignment="Center"/>
                                 </DataTemplate>
                             </ComboBox.HeaderTemplate>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding etiqueta}" Foreground="Black" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                         </ComboBox>
                     </Grid>
                     <Button Background="#C4C4C4" Foreground="Black" HorizontalAlignment="Stretch" Content="Calcular" FontSize="20" Margin="20" Click="CalculaCaminhoMinimo"/>
@@ -97,11 +107,11 @@
                             <StackPanel Background="#C4C4C4" Width="100">
                                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Padding="10" Text="ID"/>
                             </StackPanel>
-                            <ListView ItemsSource="{x:Bind teste}" Background="#C4C4C4">
+                            <ListView ItemsSource="{x:Bind Vertices}" Background="#C4C4C4">
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="x:String">
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
-                                            <TextBlock Text="{Binding}" FontSize="20" Foreground="Black"/>
+                                            <TextBlock Text="{Binding id}" FontSize="20" Foreground="Black"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
@@ -111,11 +121,11 @@
                             <StackPanel Background="#C4C4C4" Width="100">
                                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Padding="10" Foreground="Black" Text="Etiqueta"/>
                             </StackPanel>
-                            <ListView ItemsSource="{x:Bind teste}" Background="#C4C4C4" >
+                            <ListView ItemsSource="{x:Bind Vertices}" Background="#C4C4C4" >
                                 <ListView.ItemTemplate>
-                                    <DataTemplate x:DataType="x:String">
+                                    <DataTemplate>
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10">
-                                            <TextBlock Text="{Binding}" FontSize="20" Foreground="Black" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="{Binding etiqueta}" FontSize="20" Foreground="Black" HorizontalAlignment="Center"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>

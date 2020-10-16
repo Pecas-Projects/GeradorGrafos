@@ -24,6 +24,7 @@ namespace GeradorGrafosCore
             this.ListaAdjacencia = new List<Vertice>();
             this.PosX = r.Next(800);
             this.PosY = r.Next(600);
+            this.id = 1;
         }
     }
 

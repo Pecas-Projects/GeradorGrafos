@@ -86,6 +86,7 @@ namespace GeradorGrafosCore
         {
             List<Arco> listaArco = ProcuraArco(vertice);
 
+
             foreach (Arco arco in listaArco)
             {
                 this.Arcos.Remove(arco);
@@ -98,6 +99,7 @@ namespace GeradorGrafosCore
                     if (vAdj == vertice)
                     {
                         v.ListaAdjacencia.Remove(vAdj);
+                        break;
                     }
                 }
             }
@@ -163,6 +165,11 @@ namespace GeradorGrafosCore
                 {
                     return true;
                 }
+
+                if(!this.dirigido && a.saida == entrada && a.entrada == saida)
+                {
+                    return true;
+                }
             }
 
             return false;
@@ -173,6 +180,11 @@ namespace GeradorGrafosCore
             foreach (Arco a in this.Arcos)
             {
                 if (a.entrada == entrada && a.saida == saida)
+                {
+                    return a;
+                }
+
+                if (!this.dirigido && a.saida == entrada && a.entrada == saida)
                 {
                     return a;
                 }
@@ -202,7 +214,6 @@ namespace GeradorGrafosCore
                 }
             }
             this.Arcos.Remove(a);
-            //mexer na lista de adjacencia dos vértices envolvidos
         }
 
         public void RemoveArco(Arco arco)
@@ -223,7 +234,6 @@ namespace GeradorGrafosCore
                 }
             }
             this.Arcos.Remove(arco);
-            //mexer na lista de adjacencia dos vértices envolvidos
         }
 
         public int CalculaNumArcos()
