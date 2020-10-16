@@ -78,11 +78,6 @@ namespace GeradorGrafosUWP
             this.Frame.Navigate(typeof(InformacoesGrafo), Grafo);
         }
 
-        private void TextBox_Informacao(object sender, TextChangedEventArgs e)
-        {
-            this.infoVertice = inputInformacao.Text;
-        }
-
         private void Button_addVertice(object sender, RoutedEventArgs e)
         {
             if (inputInformacao.Text != "")
@@ -137,6 +132,16 @@ namespace GeradorGrafosUWP
 
                 InputPeso.Text = "";
             }
+        }
+
+        private void NomeGrafo_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Grafo.Nome = NomeGrafo.Text;
+        }
+
+        private void inputInformacao_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.infoVertice = inputInformacao.Text;
         }
     }
 }

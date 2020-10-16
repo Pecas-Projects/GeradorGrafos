@@ -26,7 +26,7 @@
             <RadioButton Foreground="Black" Content="Grafo não dirigido" GroupName="TipoGrafo" FontSize="25" IsChecked="True" Checked="naoDirigido_Checked"/>
             <RadioButton Foreground="Black" Content="Grafo dirigido" GroupName="TipoGrafo" FontSize="25" Checked="dirigido_Checked"/>
         </StackPanel>
-        <TextBox HorizontalAlignment="Left" Height="70" Grid.Row="1" Grid.Column="1" Foreground="Black" Header="Nome do grafo" x:Name="NomeGrafo" Margin="50,0,0,0" FontSize="20" Width="200" Background="White" TextChanged="TextBox_Informacao">
+        <TextBox HorizontalAlignment="Left" Height="70" Grid.Row="1" Grid.Column="1" Foreground="Black" Header="Nome do grafo" x:Name="NomeGrafo" Margin="50,0,0,0" FontSize="20" Width="200" Background="White" TextChanged="NomeGrafo_TextChanged">
             <TextBox.HeaderTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding}" Foreground="Black" />
@@ -36,7 +36,7 @@
         <StackPanel Grid.Row="2" VerticalAlignment="Center" Margin="50,0,0,0">
             <TextBlock Foreground="Black" Text="Criar vértice" FontSize="25" />
             <StackPanel Orientation="Horizontal">
-                <TextBox Foreground="Black" Header="Informação" x:Name="inputInformacao" FontSize="20" Height="70" Width="200" Background="White" TextChanged="TextBox_Informacao">
+                <TextBox Foreground="Black" Header="Informação" x:Name="inputInformacao" FontSize="20" Height="70" Width="200" Background="White" TextChanged="inputInformacao_TextChanged">
                     <TextBox.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding}" Foreground="Black" />
