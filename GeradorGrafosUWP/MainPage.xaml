@@ -20,6 +20,7 @@
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <Button Background="#8E8B8B" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="Bold" Content="&#xE72B;" Foreground="#000" FontSize="30" Padding="10" CornerRadius="100" Margin="50,0,0,0" Click="BotaoVoltar"/>
         <TextBlock Foreground="Black" Grid.ColumnSpan="3" Text="GERADOR DE GRAFOS" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <StackPanel Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="50,0,0,0">
             <RadioButton Foreground="Black" Content="Grafo não dirigido" GroupName="TipoGrafo" FontSize="25" IsChecked="True" Checked="naoDirigido_Checked"/>
@@ -56,7 +57,7 @@
             </ListView>
         </StackPanel>
 
-        
+
         <StackPanel Grid.Row="3" Grid.Column="2" VerticalAlignment="Bottom">
             <ComboBox Background="#8E8B8B" x:Name="FontsCombo" Header="Estrutura utilizada" HorizontalAlignment="Center" FontSize="25"  Margin="0,0,0,20" Width="200" ItemsSource="{x:Bind estruturas}">
                 <ComboBox.HeaderTemplate>
