@@ -101,6 +101,15 @@ namespace GeradorGrafosUWP
             _vertices.Remove(v);
         }
 
+        private void ButtonRemoveArco(object sender, RoutedEventArgs e)
+        {
+            int idArco = int.Parse(((Button)sender).Tag.ToString());
+            Arco a = Grafo.ProcuraArco(idArco);
+            Grafo.RemoveArco(a);
+            // Retira o arco da lista do front
+            _arcos.Remove(a);
+        }
+
         private void Button_AddArco(object sender, RoutedEventArgs e)
         {
             if (ComboBox_Vertices_Saida.SelectedValue != null && ComboBox_Vertices_Entrada.SelectedValue != null)

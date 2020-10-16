@@ -203,6 +203,27 @@ namespace GeradorGrafosCore
             //mexer na lista de adjacencia dos vértices envolvidos
         }
 
+        public void RemoveArco(Arco arco)
+        {
+            foreach (Vertice v in this.Vertices)
+            {
+                if (arco.saida == v)
+                {
+                    arco.saida.ListaAdjacencia.Remove(v);
+                }
+
+                if (!this.dirigido)
+                {
+                    if (arco.entrada == v)
+                    {
+                        arco.entrada.ListaAdjacencia.Remove(v);
+                    }
+                }
+            }
+            this.Arcos.Remove(arco);
+            //mexer na lista de adjacencia dos vértices envolvidos
+        }
+
         public int CalculaNumArcos()
         {
             if (this.Arcos == null)
