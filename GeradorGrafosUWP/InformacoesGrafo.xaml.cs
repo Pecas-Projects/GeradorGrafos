@@ -33,6 +33,8 @@ namespace GeradorGrafosUWP
 
         public Grafo Grafo = new Grafo();
 
+        public StorageFile NomeArqs { get; set; }
+
         public ObservableCollection<Vertice> _vertices = new ObservableCollection<Vertice>();
         public ObservableCollection<Vertice> Vertices
         {
@@ -48,13 +50,22 @@ namespace GeradorGrafosUWP
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
             this.Grafo = e.Parameter as Grafo;
             
             NumVertices.Text = Grafo.CalculaNumVertices().ToString();
+
+            try
+            {
+                NomeArqs = await ApplicationData.Current.LocalFolder.GetFileAsync("Nomes.txt");
+            }
+            catch
+            {
+                NomeArqs = await ApplicationData.Current.LocalFolder.CreateFileAsync("Nomes.txt");
+            }
 
             foreach (Arco a in Grafo.Arcos)
             {
@@ -140,32 +151,37 @@ namespace GeradorGrafosUWP
             string conteudo = "";
             try
             {
-                StorageFile arqTxt = await ApplicationData.Current.LocalFolder.GetFileAsync("Grafo.txt");
+                StorageFile arqTxt = await ApplicationData.Current.LocalFolder.GetFileAsync(Grafo.Nome + ".txt");
 
                 await arqTxt.DeleteAsync();
 
-                StorageFile arquivoTxt = await ApplicationData.Current.LocalFolder.CreateFileAsync("Grafo.txt");
+                StorageFile arquivoTxt = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + ".txt");
 
-                StorageFile arqPajek = await ApplicationData.Current.LocalFolder.GetFileAsync("GrafoPajek.net");
+                StorageFile arqPajek = await ApplicationData.Current.LocalFolder.GetFileAsync(Grafo.Nome+ "Pajek" + ".net");
 
                 await arqPajek.DeleteAsync();
 
-                StorageFile arquivoPajek = await ApplicationData.Current.LocalFolder.CreateFileAsync("GrafoPajek.net");
+                StorageFile arquivoPajek = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Pajek" + ".net");
 
                 EscreverArquivo(arquivoTxt, this.Grafo);
 
                 EscreverArquivo(arquivoPajek, this.Grafo);
+
+                using (StreamWriter escrita = new StreamWriter(await NomeArqs.OpenStreamForWriteAsync()))
+                {
+                    await escrita.WriteLineAsync(Grafo.Nome);
+                }
 
                 using (StreamReader leitura = new StreamReader(await arquivoTxt.OpenStreamForReadAsync()))
                 {
                     conteudo = leitura.ReadToEnd();
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                StorageFile arquivoTxt = await ApplicationData.Current.LocalFolder.CreateFileAsync("Grafo.txt");
+                StorageFile arquivoTxt = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + ".txt");
 
-                StorageFile arquivoPajek = await ApplicationData.Current.LocalFolder.CreateFileAsync("GrafoPajek.net");
+                StorageFile arquivoPajek = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Pajek" + ".net");
 
                 EscreverArquivo(arquivoTxt, this.Grafo);
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -25,12 +26,50 @@ namespace GeradorGrafosUWP
     /// </summary>
     public sealed partial class AbrirArquivo : Page
     {
+
+        public Grafo Grafo = new Grafo();
+        public List<string> NomesGrafos { get; set; }
+
+        public StorageFile NomeArqs { get; set; }
+
         public AbrirArquivo()
         {
             this.InitializeComponent();
+
+            LerArquivoDeNomes();
         }
 
-        public Grafo Grafo = new Grafo();
+        private async void LerArquivoDeNomes()
+        {
+            try
+            {
+                NomeArqs = await ApplicationData.Current.LocalFolder.GetFileAsync("Nomes.txt");
+            }
+            catch
+            {
+                NomeArqs = await ApplicationData.Current.LocalFolder.CreateFileAsync("Nomes.txt");
+            }
+
+            string conteudo = "";
+
+            using (StreamReader leitura = new StreamReader(await NomeArqs.OpenStreamForReadAsync()))
+            {
+                conteudo = leitura.ReadToEnd();
+            }
+
+            if (!conteudo.Equals(""))
+            {
+                string[] lista = conteudo.Split("\r\n");
+
+                foreach (string nome in lista)
+                {
+                    if (!nome.Equals(""))
+                    {
+                        NomesGrafos.Add(nome);
+                    }
+                }
+            }
+        }
 
         private void BotaoVoltar(object sender, RoutedEventArgs e)
         {
