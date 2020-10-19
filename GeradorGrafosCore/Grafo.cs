@@ -246,7 +246,7 @@ namespace GeradorGrafosCore
         }
 
         public void InicializaFonte(List<int> d, List<int> dq, List<Vertice> p)
-        {
+        { 
             //i = 0 -> índice valor da fonte (s)
             for(int i = 0; i < this.Vertices.Count(); i++)
             {
@@ -259,64 +259,93 @@ namespace GeradorGrafosCore
             d[0] = 0;
         }
 
-        public int RetornaPeso(Vertice i, Vertice j)
+        public int RetornaPeso(Vertice j, Vertice i)
         {
             Arco a = new Arco(); 
             a = this.ProcuraArco2(i, j); 
 
             if(a == null)
             {
-                return infinito;
+                return infinito; //se não encontrar um arco que ligue os vértices informados
             }
 
             return a.peso;
 
         }
 
-        public void Relaxamento(Vertice j, Vertice i, List<Vertice> p, List<int> d)
-        {
+        public void Relaxamento(Vertice j, Vertice i, List<Vertice> p, List<int> d, List<int> dq)
+        { // realiza a comparação das distâncias dos vértices informados
             int di = this.Vertices.IndexOf(i);
             int dj = this.Vertices.IndexOf(j);
-            int comparador = d[dj] + RetornaPeso(j, i);
+            int comparador = d[di] + RetornaPeso(i, j);
             
-            if (d[di] > comparador)
+            if (d[dj] > comparador)
             {
-                
-                d[di] = comparador;
-                p[di] = j;
+                dq[dj] = comparador;
+                d[dj] = comparador;
+                p[dj] = i;
             }
+        }
+
+        public bool listaVazia(List<Vertice> q) //verifica se a lista ainda possui algum vértice a ser visitado
+        {
+            foreach(Vertice v in q)
+            {
+                if(v != null)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public int CaminhoMinimoDijkstra(Vertice s, Vertice k)
         {
-            List<Vertice> q = new List<Vertice>(this.Vertices);
+            List<Vertice> q = new List<Vertice>(this.Vertices); //lista de vértices a serem visitados
             
-            List<int> d = new List<int>();
-            List<int> dq = new List<int>();
+            List<int> d = new List<int>(); // lista de distância dos vértices
+            List<int> dq = new List<int>(); // lista de distância dos vértices com remoção de elementos
 
-            List<Vertice> p = new List<Vertice>();
+            List<Vertice> p = new List<Vertice>(); // lista de predecessores dos vértices
 
-            List<Vertice> S = new List<Vertice>();
+            List<Vertice> S = new List<Vertice>(); //lsta de vértices já fechados
 
             this.InicializaFonte(d, dq, p);
 
-            while (q != null)
+            while (!listaVazia(q))
             {
+                // extraindo o vértice de menor distância
                 Vertice j = new Vertice();
                 int indice = dq.IndexOf(dq.Min());
                 j = q[indice];
-                q.RemoveAt(indice);
-                dq.RemoveAt(indice);
+                q[indice] = null;
+                dq[indice] = infinito;
                 S.Add(j);
+                
+                // verifica se é o vértice procurado e já retorna sua distância
+                // otimização de tempo de código
                 if(j == k)
                 {
                     return d[indice];
                 }
+
+                //percorrendo a lista de adjacência do vértice extraído
                 foreach(Vertice v in j.ListaAdjacencia)
                 {
-                    this.Relaxamento(v, j, p, d);
+                    this.Relaxamento(v, j, p, d, dq);
                 }
+
             }
+
+            //percorrendo todos os vértices para retornar o caminho mínimo entre os vértices informados
+            /*for(int index = 0; index < d.Count(); index++)
+            {
+                if (this.Vertices[index] == k)
+                {
+                    return d[index];
+                }
+            } */
+
             return -1;
         }
 
