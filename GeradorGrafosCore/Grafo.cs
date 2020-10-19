@@ -11,17 +11,27 @@ namespace GeradorGrafosCore
         public List<Vertice> Vertices { get; set; }
         public List<Arco> Arcos { get; set; }
         public bool dirigido { get; set; }
+        public string Nome { get; set; }
 
         public Grafo()
         {
             this.Vertices = new List<Vertice>();
             this.Arcos = new List<Arco>();
             this.dirigido = false;
+            this.Nome = "Grafo";
         }
 
-        public void AdicionaVertice( Vertice v)
+        public bool AdicionaVertice( Vertice v)
         {
-            this.Vertices.Add(v);
+            Vertice aux = new Vertice();
+            aux = ProcuraVertice(v.etiqueta);
+            if(aux == null)
+            {
+                this.Vertices.Add(v);
+                return true;
+            }
+            //se já existir um vértice com essa etiqueta ele não poderá ser adicionado
+            return false;
         }
 
         public Vertice ProcuraVertice(int idVertice)
@@ -59,7 +69,41 @@ namespace GeradorGrafosCore
                 this.Arcos.Remove(arco);
             }
 
+            foreach (Vertice vertice in this.Vertices)
+            {
+                foreach(Vertice vAdj in vertice.ListaAdjacencia)
+                {
+                    if(vAdj == v)
+                    {
+                        vertice.ListaAdjacencia.Remove(vAdj);
+                    }
+                }
+            }
             this.Vertices.Remove(v);
+        }
+
+        public void RemoveVertice(Vertice vertice)
+        {
+            List<Arco> listaArco = ProcuraArco(vertice);
+
+
+            foreach (Arco arco in listaArco)
+            {
+                this.Arcos.Remove(arco);
+            }
+
+            foreach (Vertice v in this.Vertices)
+            {
+                foreach (Vertice vAdj in v.ListaAdjacencia)
+                {
+                    if (vAdj == vertice)
+                    {
+                        v.ListaAdjacencia.Remove(vAdj);
+                        break;
+                    }
+                }
+            }
+            this.Vertices.Remove(vertice);
         }
 
         public int CalculaNumVertices()
@@ -80,6 +124,10 @@ namespace GeradorGrafosCore
                 a.entrada.ListaAdjacencia.Add(a.saida);
             }          
             
+            if(a.peso == 0)
+            {
+                a.peso = 1;
+            }
         }
 
         public Arco ProcuraArco(int idArco)
@@ -117,6 +165,11 @@ namespace GeradorGrafosCore
                 {
                     return true;
                 }
+
+                if(!this.dirigido && a.saida == entrada && a.entrada == saida)
+                {
+                    return true;
+                }
             }
 
             return false;
@@ -130,6 +183,11 @@ namespace GeradorGrafosCore
                 {
                     return a;
                 }
+
+                if (!this.dirigido && a.saida == entrada && a.entrada == saida)
+                {
+                    return a;
+                }
             }
 
             return null;
@@ -139,9 +197,43 @@ namespace GeradorGrafosCore
         {
             Arco a = new Arco();
             a = ProcuraArco(idArco);
-            this.Arcos.Remove(a);
 
-            //mexer na lista de adjacencia dos vértices envolvidos
+            foreach(Vertice v in this.Vertices)
+            {
+                if(a.saida == v)
+                {
+                    a.saida.ListaAdjacencia.Remove(v);
+                }
+
+                if (!this.dirigido)
+                {
+                    if(a.entrada == v)
+                    {
+                        a.entrada.ListaAdjacencia.Remove(v);
+                    }
+                }
+            }
+            this.Arcos.Remove(a);
+        }
+
+        public void RemoveArco(Arco arco)
+        {
+            foreach (Vertice v in this.Vertices)
+            {
+                if (arco.saida == v)
+                {
+                    arco.saida.ListaAdjacencia.Remove(v);
+                }
+
+                if (!this.dirigido)
+                {
+                    if (arco.entrada == v)
+                    {
+                        arco.entrada.ListaAdjacencia.Remove(v);
+                    }
+                }
+            }
+            this.Arcos.Remove(arco);
         }
 
         public int CalculaNumArcos()
@@ -255,6 +347,55 @@ namespace GeradorGrafosCore
             } */
 
             return -1;
+        }
+
+        public int DFS()
+        {
+
+            int tempo = 0, nComponentes = 0;
+
+            foreach (Vertice v in this.Vertices)
+            {
+                v.Cor = 'B';
+            }
+
+            foreach (Vertice v in this.Vertices)
+            {
+                if (v.Cor == 'B')
+                {
+                    VisitaDFS(tempo, v);
+                }
+            }
+            foreach (Vertice v in this.Vertices)
+            {
+                if (v.Predecssor == null)
+                {
+                    nComponentes++;
+                }
+            }
+
+            return nComponentes;
+        }
+
+        public void VisitaDFS(int tempo, Vertice v)
+        {
+            tempo += 1;
+            v.Descoberta = tempo;
+            v.Cor = 'C';
+
+            foreach (Vertice v1 in v.ListaAdjacencia)
+            {
+                if (v1.Cor == 'B')
+                {
+                    v1.Predecssor = v;
+                    VisitaDFS(tempo, v1);
+                }
+            }
+
+            v.Cor = 'P';
+            tempo += 1;
+            v.Fechamento = tempo;
+
         }
 
     }

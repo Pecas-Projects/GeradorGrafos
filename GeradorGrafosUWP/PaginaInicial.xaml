@@ -1,0 +1,33 @@
+﻿<Page
+    x:Class="GeradorGrafosUWP.PaginaInicial"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GeradorGrafosUWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Background="#C4C4C4">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Foreground="Black" Text="GERADOR DE GRAFOS" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <StackPanel Grid.Row="1" VerticalAlignment="Center">
+            <RichTextBlock Foreground="#000" FontSize="30" TextAlignment="Center" Margin="100,0,100,100">
+                <Paragraph Foreground="#000">Neste programa você pode criar um novo gravo ou importar um já salvo em arquivo para visualizar suas informações e realizar cálculos</Paragraph>
+            </RichTextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button HorizontalAlignment="Stretch" Margin="150,0,150,0" Content="Gerar um novo grafo" FontSize="30" Click="VaiParaGerarGrafo"/>
+                <Button HorizontalAlignment="Stretch" Margin="150,0,150,0" Grid.Column="1" Content="Carregar um grafo salvo" FontSize="30" Click="VaiParaAbrirArquivo"/>
+            </Grid>
+            
+        </StackPanel>
+       
+    </Grid>
+</Page>

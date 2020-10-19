@@ -1,6 +1,8 @@
 ﻿using GeradorGrafosCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -8,6 +10,7 @@ using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -25,21 +28,40 @@ namespace GeradorGrafosUWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private Vertice Vertice = new Vertice();
         public Arco Arco = new Arco();
-
         public Grafo Grafo = new Grafo();
-        public List<string> Estruturas { get; set; }
+
         private string infoVertice { get; set; }
+
+        public ObservableCollection<Vertice> _vertices = new ObservableCollection<Vertice>();
+        public ObservableCollection<Vertice> Vertices
+        {
+            get
+            {
+                return _vertices;
+            }
+        }
+
+        public ObservableCollection<Arco> _arcos = new ObservableCollection<Arco>();
+        public ObservableCollection<Arco> Arcos
+        {
+            get
+            {
+                return _arcos;
+            }
+        }
 
         public MainPage()
         {
             this.InitializeComponent();
+        }
 
-            Estruturas = new List<string>();
-            Estruturas.Add("Lista de adjacência");
-            Estruturas.Add("Matriz de adjacência");
-
+        private void BotaoVoltar(object sender, RoutedEventArgs e)
+        {
+            if (this.Frame.CanGoBack)
+            {
+                this.Frame.GoBack();
+            }
         }
 
         private void naoDirigido_Checked(object sender, RoutedEventArgs e)
@@ -54,62 +76,84 @@ namespace GeradorGrafosUWP
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(InformacoesGrafo), Grafo);
-         }
-
-        private void TextBox_Informacao(object sender, TextChangedEventArgs e)
-        {
-            this.infoVertice = inputInformacao.Text;
         }
 
         private void Button_addVertice(object sender, RoutedEventArgs e)
         {
-            if(inputInformacao.Text == null)
+            if (inputInformacao.Text != "")
             {
-                // Aviso de erro
-            }
-            else
-            {
-                int idVertice = Grafo.CalculaNumVertices() + 1;
-
                 Vertice v = new Vertice();
-
-                v.id = idVertice;
+                if(Grafo.Vertices.Count > 0)
+                {
+                    v.id = Grafo.Vertices.Last().id + 1;
+                }
                 v.etiqueta = this.infoVertice;
 
-                Grafo.AdicionaVertice(v);
-
-                ComboBox_Vertices_Saida.Items.Add(v.etiqueta);
-
-                ComboBox_Vertices_Entrada.Items.Add(v.etiqueta);
+                // Adiciona o vértice na lista do front caso tenha sido adicionado ao grafo
+                if (Grafo.AdicionaVertice(v))
+                    _vertices.Add(v);
 
                 inputInformacao.Text = "";
-
             }
 
         }
 
+        private void ButtonRemoveVertice(object sender, RoutedEventArgs e)
+        {
+            int idVertice = int.Parse(((Button)sender).Tag.ToString());
+            Vertice v = Grafo.ProcuraVertice(idVertice);          
+            // Retira o vértice da lista do front
+            List<Arco> arcosRemovidos = new List<Arco>(Grafo.ProcuraArco(v));
+            foreach(Arco a in arcosRemovidos)
+            {
+                _arcos.Remove(a);
+            }
+            Grafo.RemoveVertice(v);
+            _vertices.Remove(v);
+        }
+
+        private void ButtonRemoveArco(object sender, RoutedEventArgs e)
+        {
+            int idArco = int.Parse(((Button)sender).Tag.ToString());
+            Arco a = Grafo.ProcuraArco(idArco);
+            Grafo.RemoveArco(a);
+            // Retira o arco da lista do front
+            _arcos.Remove(a);
+        }
+
         private void Button_AddArco(object sender, RoutedEventArgs e)
         {
-            if (InputPeso.Text == null || ComboBox_Vertices_Saida.SelectedValue == null || ComboBox_Vertices_Entrada.SelectedValue == null)
+            if (ComboBox_Vertices_Saida.SelectedValue != null && ComboBox_Vertices_Entrada.SelectedValue != null)
             {
-                Debug.WriteLine("UIUIUUI");
-                // Aviso de erro
-            }
-            else
-            {
-                int idArco = Grafo.CalculaNumArcos() + 1;
-
                 Arco a = new Arco();
 
-                a.id = idArco;
-                a.peso = int.Parse(InputPeso.Text);
-                a.entrada = Grafo.ProcuraVertice(ComboBox_Vertices_Entrada.SelectedValue.ToString());
-                a.saida = Grafo.ProcuraVertice(ComboBox_Vertices_Saida.SelectedValue.ToString());
+                if (Grafo.Arcos.Count > 0)
+                {
+                    a.id = Grafo.Arcos.Last().id + 1;
+                }
+
+                a.entrada = ComboBox_Vertices_Entrada.SelectedValue as Vertice;
+                a.saida = ComboBox_Vertices_Saida.SelectedValue as Vertice;
+
+                if (InputPeso.Text != "")
+                    a.peso = int.Parse(InputPeso.Text);
 
                 Grafo.AdicionarArco(a);
+                // Adiciona o arco na lista do front
+                _arcos.Add(a);
 
                 InputPeso.Text = "";
             }
+        }
+
+        private void NomeGrafo_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Grafo.Nome = NomeGrafo.Text;
+        }
+
+        private void inputInformacao_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.infoVertice = inputInformacao.Text;
         }
     }
 }
