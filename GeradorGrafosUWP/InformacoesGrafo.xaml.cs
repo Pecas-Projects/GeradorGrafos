@@ -133,9 +133,24 @@ namespace GeradorGrafosUWP
                 arco.StrokeThickness = 2;
 
                 TextBlock peso = new TextBlock();
-                peso.Margin = new Thickness((arco.X1 + arco.X2) / 2,(arco.Y1 + arco.Y2) / 2, 0, 0);
+                peso.Margin = new Thickness((arco.X1 + arco.X2) / 2, (arco.Y1 + arco.Y2) / 2, 0, 0);
                 peso.Foreground = new SolidColorBrush(Colors.White);
                 peso.Text = a.peso.ToString();
+
+                if (a.saida == a.entrada)
+                {
+                    StackPanel autoRel = new StackPanel();
+                    autoRel.CornerRadius = new CornerRadius(50);
+                    autoRel.Width = 15;
+                    autoRel.Height = 15;
+                    autoRel.Margin = new Thickness(a.saida.PosX, a.saida.PosY, 0, 0);
+                    autoRel.BorderThickness = new Thickness(2);
+                    autoRel.BorderBrush = new SolidColorBrush(Colors.Black);
+
+                    peso.Margin = new Thickness(a.saida.PosX + 10, a.saida.PosY + 10, 0, 0);
+
+                    PainelGrafo.Children.Add(autoRel);
+                }
 
                 PainelGrafo.Children.Add(arco);
                 PainelGrafo.Children.Add(seta);
