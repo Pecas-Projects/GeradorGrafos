@@ -52,14 +52,14 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <ComboBox Background="#C4C4C4" Header="Vértice 1" FontSize="20" ItemsSource="{x:Bind teste}" Margin="20,0,20,0" HorizontalAlignment="Stretch">
+                <ComboBox x:Name="Combo_Box_Vertice_1" Background="#C4C4C4" Header="Vértice 1" FontSize="20" Margin="20,0,20,0" HorizontalAlignment="Stretch">
                     <ComboBox.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding}" Foreground="Black" />
                         </DataTemplate>
                     </ComboBox.HeaderTemplate>
                 </ComboBox>
-                <ComboBox Grid.Column="1" Background="#C4C4C4" Header="Vértice 2" FontSize="20" ItemsSource="{x:Bind teste}" Margin="20,0,20,0" HorizontalAlignment="Stretch">
+                <ComboBox x:Name="Combo_Box_Vertice_2" Grid.Column="1" Background="#C4C4C4" Header="Vértice 2" FontSize="20"  Margin="20,0,20,0" HorizontalAlignment="Stretch">
                     <ComboBox.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding}" Foreground="Black" />

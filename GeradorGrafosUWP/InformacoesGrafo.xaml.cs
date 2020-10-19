@@ -33,7 +33,7 @@ namespace GeradorGrafosUWP
             teste = new List<string>();
             teste.Add("teste1");
             teste.Add("teste2");
-            
+           
 
             this.InitializeComponent();
         }
@@ -42,6 +42,12 @@ namespace GeradorGrafosUWP
         {
             base.OnNavigatedTo(e);
             this.Grafo = e.Parameter as Grafo;
+
+            foreach(Vertice v in this.Grafo.Vertices)
+            {
+                Combo_Box_Vertice_1.Items.Add(v.etiqueta);
+                Combo_Box_Vertice_2.Items.Add(v.etiqueta);
+            }           
 
             NumVertices.Text = Grafo.CalculaNumVertices().ToString();
         }
@@ -53,8 +59,23 @@ namespace GeradorGrafosUWP
 
         private void CalculaCaminhoMinimo(object sender, RoutedEventArgs e)
         {
-            int aux = this.Grafo.CaminhoMinimoDijkstra(this.Grafo.Vertices[0], this.Grafo.Vertices[1]);
-            CaminhoMinimo.Text = aux.ToString();
+            string v1 = Combo_Box_Vertice_1.SelectedValue.ToString();
+            string v2 = Combo_Box_Vertice_2.SelectedValue.ToString();
+            if (v1 == null || v2 == null)
+            {
+                Console.WriteLine("não selecionou os valores!");
+            }
+            else
+            {
+                Vertice a = this.Grafo.ProcuraVertice(v1);
+                Vertice b = this.Grafo.ProcuraVertice(v2);
+
+                int CaminhoMinimoValue = this.Grafo.CaminhoMinimoDijkstra(a, b);
+                CaminhoMinimo.Text = CaminhoMinimoValue.ToString();
+
+            }
+            /*int aux = this.Grafo.CaminhoMinimoDijkstra(this.Grafo.Vertices[0], this.Grafo.Vertices[1]);
+            CaminhoMinimo.Text = aux.ToString(); */
         }
 
 
