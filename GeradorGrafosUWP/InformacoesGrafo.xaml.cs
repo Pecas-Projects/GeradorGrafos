@@ -42,9 +42,9 @@ namespace GeradorGrafosUWP
             }
         }
 
+
         public InformacoesGrafo()
         {
-
             this.InitializeComponent();
         }
 
@@ -185,8 +185,18 @@ namespace GeradorGrafosUWP
 
         private void CalculaCaminhoMinimo(object sender, RoutedEventArgs e)
         {
-            int aux = this.Grafo.CaminhoMinimoDijkstra(Vertice1.SelectedValue as Vertice, Vertice2.SelectedValue as Vertice);
-            CaminhoMinimo.Text = aux.ToString();
+            Vertice a = Vertice1.SelectedValue as Vertice;
+            Vertice b = Vertice2.SelectedValue as Vertice;
+            if (a == null || b == null)
+            {
+                Console.WriteLine("não selecionou os vértices!");
+            }
+            else
+            {
+                int CaminhoMinimoValue = this.Grafo.CaminhoMinimoDijkstra(a, b);
+                CaminhoMinimo.Text = CaminhoMinimoValue.ToString();
+
+            }
         }
 
 
