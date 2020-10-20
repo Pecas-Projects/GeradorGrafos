@@ -1,6 +1,7 @@
 ﻿using GeradorGrafosCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -26,48 +27,39 @@ namespace GeradorGrafosUWP
     /// </summary>
     public sealed partial class AbrirArquivo : Page
     {
-
         public Grafo Grafo = new Grafo();
-        public List<string> NomesGrafos { get; set; }
 
-        public StorageFile NomeArqs { get; set; }
+        public ObservableCollection<StorageFile> _arquivos = new ObservableCollection<StorageFile>();
+        public ObservableCollection<StorageFile> Arquivos
+        {
+            get
+            {
+                return _arquivos;
+            }
+        }
 
         public AbrirArquivo()
         {
             this.InitializeComponent();
 
-            LerArquivoDeNomes();
+            LerArquivosLocais();
         }
 
-        private async void LerArquivoDeNomes()
+        private async void LerArquivosLocais()
         {
             try
             {
-                NomeArqs = await ApplicationData.Current.LocalFolder.GetFileAsync("Nomes.txt");
+                // Busca todos os arquivos que estão no armazenamento local
+                IReadOnlyList<StorageFile> localFiles = await ApplicationData.Current.LocalFolder.GetFilesAsync();
+                foreach (StorageFile file in localFiles)
+                {
+                    // Adiciona os arquivos na combobox
+                    _arquivos.Add(file);
+                }
             }
             catch
             {
-                NomeArqs = await ApplicationData.Current.LocalFolder.CreateFileAsync("Nomes.txt");
-            }
-
-            string conteudo = "";
-
-            using (StreamReader leitura = new StreamReader(await NomeArqs.OpenStreamForReadAsync()))
-            {
-                conteudo = leitura.ReadToEnd();
-            }
-
-            if (!conteudo.Equals(""))
-            {
-                string[] lista = conteudo.Split("\r\n");
-
-                foreach (string nome in lista)
-                {
-                    if (!nome.Equals(""))
-                    {
-                        NomesGrafos.Add(nome);
-                    }
-                }
+                Debug.WriteLine("Ocorreu um erro ao procurar os arquivos locais");
             }
         }
 
@@ -104,7 +96,7 @@ namespace GeradorGrafosUWP
                 NomeArquivo.Text = "Nenhum arquivo foi selecionado";
                 BotaoProx.Visibility = Visibility.Collapsed;
             }
-            
+
         }
 
         private async void LeArquivo(StorageFile arqTxt)
@@ -218,6 +210,14 @@ namespace GeradorGrafosUWP
                     });
                 }
             }
+        }
+
+        private void ArquivosBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            StorageFile arq = ((ComboBox)sender).SelectedValue as StorageFile;
+            NomeArquivo.Text = "Arquivo selecionado: " + arq.Name;
+            NomeArquivo.Visibility = Visibility.Visible;
+            LeArquivo(arq);
         }
     }
 }

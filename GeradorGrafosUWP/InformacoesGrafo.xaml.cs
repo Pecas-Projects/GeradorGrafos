@@ -33,8 +33,6 @@ namespace GeradorGrafosUWP
 
         public Grafo Grafo = new Grafo();
 
-        public StorageFile NomeArqs { get; set; }
-
         public ObservableCollection<Vertice> _vertices = new ObservableCollection<Vertice>();
         public ObservableCollection<Vertice> Vertices
         {
@@ -57,15 +55,6 @@ namespace GeradorGrafosUWP
             this.Grafo = e.Parameter as Grafo;
             
             NumVertices.Text = Grafo.CalculaNumVertices().ToString();
-
-            try
-            {
-                NomeArqs = await ApplicationData.Current.LocalFolder.GetFileAsync("Nomes.txt");
-            }
-            catch
-            {
-                NomeArqs = await ApplicationData.Current.LocalFolder.CreateFileAsync("Nomes.txt");
-            }
 
             foreach (Arco a in Grafo.Arcos)
             {
@@ -222,11 +211,6 @@ namespace GeradorGrafosUWP
 
                 EscreverArquivo(arquivoPajek, this.Grafo);
 
-                using (StreamWriter escrita = new StreamWriter(await NomeArqs.OpenStreamForWriteAsync()))
-                {
-                    await escrita.WriteLineAsync(Grafo.Nome);
-                }
-
                 using (StreamReader leitura = new StreamReader(await arquivoTxt.OpenStreamForReadAsync()))
                 {
                     conteudo = leitura.ReadToEnd();
@@ -242,10 +226,10 @@ namespace GeradorGrafosUWP
 
                 EscreverArquivo(arquivoPajek, this.Grafo);
 
-                using (StreamReader leitura = new StreamReader(await arquivoTxt.OpenStreamForReadAsync()))
-                {
-                    conteudo = leitura.ReadToEnd();
-                }
+                //using (StreamReader leitura = new StreamReader(await arquivoTxt.OpenStreamForReadAsync()))
+                //{
+                //    conteudo = leitura.ReadToEnd();
+                //}
 
             }
 
