@@ -33,8 +33,6 @@ namespace GeradorGrafosUWP
 
         public Grafo Grafo = new Grafo();
 
-        public StorageFile NomeArqs { get; set; }
-
         public ObservableCollection<Vertice> _vertices = new ObservableCollection<Vertice>();
         public ObservableCollection<Vertice> Vertices
         {
@@ -58,47 +56,93 @@ namespace GeradorGrafosUWP
             
             NumVertices.Text = Grafo.CalculaNumVertices().ToString();
 
-            try
-            {
-                NomeArqs = await ApplicationData.Current.LocalFolder.GetFileAsync("Nomes.txt");
-            }
-            catch
-            {
-                NomeArqs = await ApplicationData.Current.LocalFolder.CreateFileAsync("Nomes.txt");
-            }
-
             foreach (Arco a in Grafo.Arcos)
             {
+                int x1 = a.saida.PosX;
+                int y1 = a.saida.PosY;
+                int x2 = a.entrada.PosX;
+                int y2 = a.entrada.PosY;
+                int angulo = 0;
+
+                Polygon seta = new Polygon();
+
+                if (Grafo.dirigido)
+                {
+                    if (a.saida.PosX > a.entrada.PosX)
+                    {
+                        x1 -= 15;
+                        x2 += 15;
+                    }
+                    else if (a.saida.PosX < a.entrada.PosX)
+                    {
+                        x1 += 15;
+                        x2 -= 15;
+                    }
+                    if (a.saida.PosY > a.entrada.PosY)
+                    {
+                        y1 -= 15;
+                        y2 += 15;
+                    }
+                    else if (a.saida.PosY < a.entrada.PosY)
+                    {
+                        y1 += 15;
+                        y2 -= 15;
+                    }
+
+                    if (a.saida.PosX - a.entrada.PosX > Math.Abs(a.saida.PosY - a.entrada.PosY))
+                        angulo = 315;
+                    else if (a.entrada.PosX - a.saida.PosX > Math.Abs(a.saida.PosY - a.entrada.PosY))
+                        angulo = 135;
+                    else if (a.entrada.PosY - a.saida.PosY > Math.Abs(a.saida.PosX - a.entrada.PosX))
+                        angulo = 225;
+                    else if (a.saida.PosY - a.entrada.PosY > Math.Abs(a.saida.PosX - a.entrada.PosX))
+                        angulo = 45;
+
+                    PointCollection points = new PointCollection();
+                    points.Add(new Point(0, 0));
+                    points.Add(new Point(0, 5));
+                    points.Add(new Point(5, 0));
+                    seta.Points = points;
+                    seta.Stroke = new SolidColorBrush(Colors.Black);
+                    seta.Fill = new SolidColorBrush(Colors.Black);
+                    seta.Margin = new Thickness(-1.75 + x2, -1.75 + y2, 0, 0);
+                    RotateTransform rotation = new RotateTransform();
+                    rotation.Angle = angulo;
+                    rotation.CenterX = 2.5;
+                    rotation.CenterY = 2.5;
+                    seta.RenderTransform = rotation;
+                }
+
                 Line arco = new Line();
-                arco.X1 = a.saida.PosX;
-                arco.Y1 = a.saida.PosY;
-                arco.X2 = a.entrada.PosX;
-                arco.Y2 = a.entrada.PosY;
+                arco.X1 = x1;
+                arco.Y1 = y1;
+                arco.X2 = x2;
+                arco.Y2 = y2;
                 arco.Stroke = new SolidColorBrush(Colors.Black);
                 arco.StrokeThickness = 2;
 
                 TextBlock peso = new TextBlock();
-                peso.Margin = new Thickness((arco.X1 + arco.X2) / 2,(arco.Y1 + arco.Y2) / 2, 0, 0);
+                peso.Margin = new Thickness((arco.X1 + arco.X2) / 2, (arco.Y1 + arco.Y2) / 2, 0, 0);
                 peso.Foreground = new SolidColorBrush(Colors.White);
                 peso.Text = a.peso.ToString();
 
-                //Polygon seta = new Polygon();
-                //PointCollection points = new PointCollection();
-                //points.Add(new Point(0, 0));
-                //points.Add(new Point(0, 5));
-                //points.Add(new Point(5, 0));
-                //seta.Points = points;
-                //seta.Stroke = new SolidColorBrush(Colors.Black);
-                //seta.Fill = new SolidColorBrush(Colors.Black);
-                //seta.Margin = new Thickness(-1.75, -1.75, 0, 0);
-                //RotateTransform rotation = new RotateTransform();
-                //rotation.Angle = 100;
-                //rotation.CenterX = 2.5;
-                //rotation.CenterY = 2.5;
-                //seta.RenderTransform = rotation;
+                if (a.saida == a.entrada)
+                {
+                    StackPanel autoRel = new StackPanel();
+                    autoRel.CornerRadius = new CornerRadius(50);
+                    autoRel.Width = 15;
+                    autoRel.Height = 15;
+                    autoRel.Margin = new Thickness(a.saida.PosX, a.saida.PosY, 0, 0);
+                    autoRel.BorderThickness = new Thickness(2);
+                    autoRel.BorderBrush = new SolidColorBrush(Colors.Black);
+
+                    peso.Margin = new Thickness(a.saida.PosX + 10, a.saida.PosY + 10, 0, 0);
+
+                    PainelGrafo.Children.Add(autoRel);
+                }
 
                 PainelGrafo.Children.Add(arco);
-                //PainelGrafo.Children.Add(seta);
+                PainelGrafo.Children.Add(seta);
                 PainelGrafo.Children.Add(peso);
             }
 
@@ -177,11 +221,6 @@ namespace GeradorGrafosUWP
 
                 EscreverArquivo(arquivoPajek, this.Grafo);
 
-                using (StreamWriter escrita = new StreamWriter(await NomeArqs.OpenStreamForWriteAsync()))
-                {
-                    await escrita.WriteLineAsync(Grafo.Nome);
-                }
-
                 using (StreamReader leitura = new StreamReader(await arquivoTxt.OpenStreamForReadAsync()))
                 {
                     conteudo = leitura.ReadToEnd();
@@ -197,10 +236,10 @@ namespace GeradorGrafosUWP
 
                 EscreverArquivo(arquivoPajek, this.Grafo);
 
-                using (StreamReader leitura = new StreamReader(await arquivoTxt.OpenStreamForReadAsync()))
-                {
-                    conteudo = leitura.ReadToEnd();
-                }
+                //using (StreamReader leitura = new StreamReader(await arquivoTxt.OpenStreamForReadAsync()))
+                //{
+                //    conteudo = leitura.ReadToEnd();
+                //}
 
             }
 
