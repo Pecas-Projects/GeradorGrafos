@@ -13,6 +13,7 @@ namespace GeradorGrafosCore
         public bool dirigido { get; set; }
         public string Nome { get; set; }
         List<int> distancia = null;
+        public int aux { get; set; }
 
         public Grafo()
         {
@@ -472,7 +473,7 @@ namespace GeradorGrafosCore
                 }
             }
 
-            return nComponentes;
+            return nComponentes - this.aux ;
         }
 
         public void VisitaDFS(int tempo, Vertice v)
@@ -481,14 +482,31 @@ namespace GeradorGrafosCore
             v.Descoberta = tempo;
             v.Cor = 'C';
 
-            foreach (Vertice v1 in v.ListaAdjacencia)
+            if (v.ListaAdjacencia.Count == 0 && this.dirigido == true)
             {
-                if (v1.Cor == 'B')
+                foreach (Vertice v2 in Vertices)
                 {
-                    v1.Predecssor = v;
-                    VisitaDFS(tempo, v1);
+                    if(v2.Cor == 'B')
+                    {
+                        foreach (Vertice v3 in v2.ListaAdjacencia)
+                        {
+                            if (v == v3) this.aux++;
+                        }
+                    }
+                    
                 }
             }
+            
+
+                foreach (Vertice v1 in v.ListaAdjacencia)
+                {
+                    if (v1.Cor == 'B')
+                    {
+                        v1.Predecssor = v;
+                        VisitaDFS(tempo, v1);
+                    }
+                }
+            
 
             v.Cor = 'P';
             tempo += 1;
