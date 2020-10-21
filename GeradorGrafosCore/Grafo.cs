@@ -11,13 +11,16 @@ namespace GeradorGrafosCore
         public List<Vertice> Vertices { get; set; }
         public List<Arco> Arcos { get; set; }
         public bool dirigido { get; set; }
+        public bool ponderado { get; set; }
         public string Nome { get; set; }
+        List<int> distancia = null;
 
         public Grafo()
         {
             this.Vertices = new List<Vertice>();
             this.Arcos = new List<Arco>();
             this.dirigido = false;
+            this.ponderado = false;
             this.Nome = "Grafo";
         }
 
@@ -127,6 +130,11 @@ namespace GeradorGrafosCore
             if(a.peso == 0)
             {
                 a.peso = 1;
+            }
+
+            if(a.peso > 1 && !this.ponderado)
+            {
+                this.ponderado = true;
             }
         }
 
@@ -267,7 +275,28 @@ namespace GeradorGrafosCore
             d[index] = 0;
         }
 
-        public int RetornaPeso(Vertice j, Vertice i)
+        
+        public void InicializaFonteBelmanFord(List<int> d, Vertice x)
+        {
+
+            foreach (Vertice v in this.Vertices)
+            {
+                v.Predecssor = null;
+
+                if(x.id == v.id) //se for o vértice de origem a distância inicializa como 0
+                {
+                    d.Add(0);
+                }
+
+                else //se não for é inicializada como infinito
+                {
+                    d.Add(infinito);
+                }       
+
+            }
+        }
+
+        public int RetornaPeso(Vertice i, Vertice j)
         {
             Arco a = new Arco(); 
             a = this.ProcuraArco2(i, j); 
@@ -310,15 +339,31 @@ namespace GeradorGrafosCore
         /// <returns>true, para quando todos os elementos são iguais a null, false, se há algum que não é null</returns>
         public bool listaVazia(List<Vertice> q) 
         {
-            foreach(Vertice v in q)
+            foreach (Vertice v in q)
             {
-                if(v != null)
+                if (v != null)
                 {
                     return false;
                 }
             }
             return true;
         }
+
+      
+        public void RelaxamentoBelmanFloyd(Vertice j, Vertice i,  List<int> d)
+        {
+            int di = this.Vertices.IndexOf(i);
+            int dj = this.Vertices.IndexOf(j);
+            int comparador = d[dj] + RetornaPeso(j, i);
+
+            if (d[di] > comparador)
+            {
+
+                d[di] = comparador;
+                i.Predecssor = j;
+            }
+        }
+      
 
         /// <summary>
         /// Algoritmo de Caminho Mínimo utilizando a lógica de Dijkstra
@@ -371,6 +416,68 @@ namespace GeradorGrafosCore
             }
 
             return infinito; //não foi encontrado algum caminho que leve s à k
+        }
+
+        public bool CaminhoMinimoBelmanFord(Vertice v, List<int>distancia)
+        {
+            
+            this.InicializaFonteBelmanFord(distancia, v);
+
+            foreach(Arco a in Arcos) //relaxa todos os arcos
+            {
+                this.RelaxamentoBelmanFloyd(a.saida, a.entrada, distancia);
+            }
+
+            foreach(Arco a in Arcos)
+            {
+                Vertice x = a.entrada;
+                Vertice y = a.saida;
+                int dx = 0, dy = 0;
+
+                foreach(Vertice vertice in Vertices)
+                {
+                    if(vertice.id == x.id)
+                    {
+                        dx = Vertices.IndexOf(vertice);
+                    }
+                    if (vertice.id == y.id)
+                    {
+                        dy = Vertices.IndexOf(vertice);
+                    }
+
+                }
+
+                if((distancia[dy] + a.peso) < distancia[dx])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public int calculaCaminho(Vertice origem, Vertice destino, List<int> distancia)
+        {
+            int index = 0;
+
+            if(this.CaminhoMinimoBelmanFord(origem, distancia))
+            {
+                foreach(Vertice v in Vertices)
+                {
+                    if(v.id == destino.id)
+                    {
+                        index = Vertices.IndexOf(v);
+                    }
+                }
+
+                return distancia[index];
+            }
+            else
+            {
+                return -1;
+            }
+            
+           
         }
 
         public int DFS()
