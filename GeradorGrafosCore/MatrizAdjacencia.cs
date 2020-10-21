@@ -4,19 +4,22 @@ using System.Text;
 
 namespace GeradorGrafosCore
 {
-    class MatrizAdjacencia
+    public class MatrizAdjacencia
     {
         public List<List<int>> Matriz { get; set; }
 
+        public MatrizAdjacencia()
+        {
+            this.Matriz = new List<List<int>>();
+        }
 
         public MatrizAdjacencia GeraMatrizAdjacenciaVazia(Grafo g)
         {
-            List<int> linha = new List<int>();
 
             foreach(Vertice i in g.Vertices)
             {
-                linha = null;
-                foreach(Vertice j in g.Vertices)
+                List<int> linha = new List<int>();
+                foreach (Vertice j in g.Vertices)
                 {
                     if (g.ProcuraArco(i, j))
                     {

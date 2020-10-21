@@ -31,6 +31,7 @@ namespace GeradorGrafosUWP
     {
         public List<string> teste { get; set; }
         public Grafo Grafo = new Grafo();
+        public MatrizAdjacencia Matriz = new MatrizAdjacencia();
 
         public ObservableCollection<Vertice> _vertices = new ObservableCollection<Vertice>();
         public ObservableCollection<Vertice> Vertices
@@ -233,7 +234,7 @@ namespace GeradorGrafosUWP
         /// <param name="e"></param>
         private async void Button_SalvarArquivo(object sender, RoutedEventArgs e)
         {
-            string conteudo = "";
+
             try
             {
                 StorageFile arqTxt = await ApplicationData.Current.LocalFolder.GetFileAsync(Grafo.Nome + ".txt");
@@ -250,13 +251,17 @@ namespace GeradorGrafosUWP
                 // Cria o arquivo em pajek
                 StorageFile arquivoPajek = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Pajek" + ".net");
 
+                StorageFile arqMatriz = await ApplicationData.Current.LocalFolder.GetFileAsync(Grafo.Nome + "Matriz.txt");
+                // Apaga o arquivo .txt caso já exista
+                await arqTxt.DeleteAsync();
+
+                // Cria o arquivo .txt
+                StorageFile arquivoMatriz = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Matriz.txt");
+
                 EscreverArquivo(arquivoTxt, this.Grafo);
                 EscreverArquivo(arquivoPajek, this.Grafo);
+                EscreverMatriz(arquivoMatriz, this.Grafo);
 
-                using (StreamReader leitura = new StreamReader(await arquivoTxt.OpenStreamForReadAsync()))
-                {
-                    conteudo = leitura.ReadToEnd();
-                }
             }
             // Caso os arquivos não existam para realizar a exclusão, apenas realiza a criação
             catch
@@ -267,13 +272,33 @@ namespace GeradorGrafosUWP
                 StorageFile arquivoPajek = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Pajek" + ".net");
                 EscreverArquivo(arquivoPajek, this.Grafo);
 
-                //using (StreamReader leitura = new StreamReader(await arquivoTxt.OpenStreamForReadAsync()))
-                //{
-                //    conteudo = leitura.ReadToEnd();
-                //}
+                StorageFile arquivoMatriz = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Matriz.txt");
+                EscreverMatriz(arquivoMatriz, this.Grafo);
 
             }
 
+        }
+
+        private async void EscreverMatriz(StorageFile arquivoMatriz, Grafo grafo)
+        {
+            this.Matriz = Matriz.GeraMatrizAdjacenciaVazia(grafo);
+
+            foreach (List<int> lista in Matriz.Matriz)
+            {
+                string linha = "";
+
+                foreach (int letra in lista)
+                {
+                    linha += letra.ToString() + " ";
+                }
+
+                using (StreamWriter escrita = new StreamWriter(await arquivoMatriz.OpenStreamForWriteAsync()))
+                {
+                    await escrita.WriteLineAsync(linha);
+                }
+            }
+
+            
         }
 
         /// <summary>
@@ -297,7 +322,7 @@ namespace GeradorGrafosUWP
 
                     foreach (Vertice v in grafo.Vertices)
                     {
-                        await escrita.WriteLineAsync(v.id.ToString() + " " + v.etiqueta);
+                        await escrita.WriteLineAsync(v.id.ToString() + " " + "\"" + v.etiqueta + "\"");
                     }
 
                     if (grafo.Arcos.Count > 0)
