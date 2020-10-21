@@ -320,6 +320,10 @@ namespace GeradorGrafosCore
                 Vertice j = new Vertice();
                 int indice = dq.IndexOf(dq.Min());
                 j = q[indice];
+                if (j == null)
+                { //imposisbilidade de calcular
+                    return infinito;
+                }
                 q[indice] = null;
                 dq[indice] = infinito;
                 S.Add(j);
@@ -339,7 +343,7 @@ namespace GeradorGrafosCore
 
             }
 
-            return -1;
+            return infinito;
         }
 
         public int DFS()
