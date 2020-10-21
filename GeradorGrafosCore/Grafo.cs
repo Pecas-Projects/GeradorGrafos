@@ -11,6 +11,7 @@ namespace GeradorGrafosCore
         public List<Vertice> Vertices { get; set; }
         public List<Arco> Arcos { get; set; }
         public bool dirigido { get; set; }
+        public bool ponderado { get; set; }
         public string Nome { get; set; }
         List<int> distancia = null;
 
@@ -19,6 +20,7 @@ namespace GeradorGrafosCore
             this.Vertices = new List<Vertice>();
             this.Arcos = new List<Arco>();
             this.dirigido = false;
+            this.ponderado = false;
             this.Nome = "Grafo";
         }
 
@@ -128,6 +130,11 @@ namespace GeradorGrafosCore
             if(a.peso == 0)
             {
                 a.peso = 1;
+            }
+
+            if(a.peso > 1 && !this.ponderado)
+            {
+                this.ponderado = true;
             }
         }
 
