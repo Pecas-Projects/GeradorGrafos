@@ -245,9 +245,8 @@ namespace GeradorGrafosCore
             return this.Arcos.Count;
         }
 
-        public void InicializaFonte(List<int> d, List<int> dq, List<Vertice> p)
+        public void InicializaFonte(List<int> d, List<int> dq, List<Vertice> p, int index)
         { 
-            //i = 0 -> índice valor da fonte (s)
             for(int i = 0; i < this.Vertices.Count(); i++)
             {
                 Vertice v = new Vertice();
@@ -255,8 +254,9 @@ namespace GeradorGrafosCore
                 d.Add(infinito);
                 p.Add(v);
             }
-            dq[0] = 0;
-            d[0] = 0;
+            // inicializando o valor da distância ao vértice de origem -> 0
+            dq[index] = 0;
+            d[index] = 0;
         }
 
         public int RetornaPeso(Vertice j, Vertice i)
@@ -310,7 +310,9 @@ namespace GeradorGrafosCore
 
             List<Vertice> S = new List<Vertice>(); //lsta de vértices já fechados
 
-            this.InicializaFonte(d, dq, p);
+            int origem = q.IndexOf(s);
+
+            this.InicializaFonte(d, dq, p, origem);
 
             while (!listaVazia(q))
             {
@@ -336,15 +338,6 @@ namespace GeradorGrafosCore
                 }
 
             }
-
-            //percorrendo todos os vértices para retornar o caminho mínimo entre os vértices informados
-            /*for(int index = 0; index < d.Count(); index++)
-            {
-                if (this.Vertices[index] == k)
-                {
-                    return d[index];
-                }
-            } */
 
             return -1;
         }
