@@ -241,6 +241,21 @@ namespace GeradorGrafosCore
             return this.Arcos.Count;
         }
 
+
+        public double CalculaGrauMedio()
+        {
+            double grau = 0;
+            if (!this.dirigido)
+            {
+                grau = 2 * (CalculaNumArcos()) / CalculaNumVertices();
+            }
+            else
+            {
+                grau = (CalculaNumArcos()) / CalculaNumVertices();
+            }
+            return grau;
+        }
+
         /// <summary>
         /// inicializando as listas de distâncias e predecessores
         /// </summary>
