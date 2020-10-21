@@ -41,6 +41,15 @@ namespace GeradorGrafosUWP
             }
         }
 
+        public ObservableCollection<Arco> _arcos = new ObservableCollection<Arco>();
+        public ObservableCollection<Arco> Arcos
+        {
+            get
+            {
+                return _arcos;
+            }
+        }
+
         public InformacoesGrafo()
         {
             this.InitializeComponent();
@@ -58,6 +67,10 @@ namespace GeradorGrafosUWP
             // Preenche a lista do front com os vértices
             ObservableCollection<Vertice> aux = new ObservableCollection<Vertice>(Grafo.Vertices);
             _vertices = aux;
+
+            // Preenche a lista do front com os arcos
+            ObservableCollection<Arco> auxArc = new ObservableCollection<Arco>(Grafo.Arcos);
+            _arcos = auxArc;
 
             ImprimeGrafo();
         }

@@ -18,7 +18,7 @@ namespace GeradorGrafosCore
                 linha = null;
                 foreach(Vertice j in g.Vertices)
                 {
-                    if (g.ProcuraArco(i, j))
+                    if (g.ProcuraArco(i, j) != null)
                     {
                         linha.Add(1);
                     }
