@@ -165,25 +165,13 @@ namespace GeradorGrafosCore
             return listaArcos;
         }
 
-        public bool ProcuraArco(Vertice entrada, Vertice saida)
-        {
-            foreach (Arco a in this.Arcos)
-            {
-                if (a.entrada == entrada && a.saida == saida)
-                {
-                    return true;
-                }
-
-                if(!this.dirigido && a.saida == entrada && a.entrada == saida)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public Arco ProcuraArco2(Vertice entrada, Vertice saida)
+        /// <summary>
+        /// Procura um arco que ligue os vértices passados como parâmetros
+        /// </summary>
+        /// <param name="entrada">vértice de entrada</param>
+        /// <param name="saida">vértice de saída</param>
+        /// <returns>retorna o arco encontrado no caso deste existir, se não, retorna null</returns>
+        public Arco ProcuraArco(Vertice entrada, Vertice saida)
         {
             foreach (Arco a in this.Arcos)
             {
@@ -299,7 +287,7 @@ namespace GeradorGrafosCore
         public int RetornaPeso(Vertice i, Vertice j)
         {
             Arco a = new Arco(); 
-            a = this.ProcuraArco2(i, j); 
+            a = this.ProcuraArco(i, j); 
 
             if(a == null)
             {
