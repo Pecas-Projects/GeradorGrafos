@@ -281,23 +281,22 @@ namespace GeradorGrafosUWP
 
         private async void EscreverMatriz(StorageFile arquivoMatriz, Grafo grafo)
         {
-            this.Matriz = Matriz.GeraMatrizAdjacenciaVazia(grafo);
-
-            foreach (List<int> lista in Matriz.Matriz)
+            using (StreamWriter escrita = new StreamWriter(await arquivoMatriz.OpenStreamForWriteAsync()))
             {
-                string linha = "";
+                await escrita.WriteLineAsync("Matriz Adjacencia\n");
+                this.Matriz = Matriz.GeraMatrizAdjacenciaVazia(grafo);
 
-                foreach (int letra in lista)
+                foreach (List<int> lista in Matriz.Matriz)
                 {
-                    linha += letra.ToString() + " ";
-                }
+                    string linha = "";
 
-                using (StreamWriter escrita = new StreamWriter(await arquivoMatriz.OpenStreamForWriteAsync()))
-                {
+                    foreach (int letra in lista)
+                    {
+                        linha += letra.ToString() + " ";
+                    }
                     await escrita.WriteLineAsync(linha);
                 }
             }
-
             
         }
 

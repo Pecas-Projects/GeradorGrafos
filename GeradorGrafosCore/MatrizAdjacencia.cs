@@ -25,6 +25,10 @@ namespace GeradorGrafosCore
                     {
                         linha.Add(1);
                     }
+                    else
+                    {
+                        linha.Add(0);
+                    }
                 }
                 Matriz.Add(linha);
             }
