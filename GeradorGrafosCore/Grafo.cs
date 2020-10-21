@@ -245,6 +245,13 @@ namespace GeradorGrafosCore
             return this.Arcos.Count;
         }
 
+        /// <summary>
+        /// inicializando as listas de distâncias e predecessores
+        /// </summary>
+        /// <param name="d">lista de distâncias (sem exclusão)</param>
+        /// <param name="dq">lista de distâncias (com exclusão)</param>
+        /// <param name="p">lista de predecessores</param>
+        /// <param name="index">índice que o vértice de origem ocupa nessas listas</param>
         public void InicializaFonte(List<int> d, List<int> dq, List<Vertice> p, int index)
         { 
             for(int i = 0; i < this.Vertices.Count(); i++)
@@ -254,6 +261,7 @@ namespace GeradorGrafosCore
                 d.Add(infinito);
                 p.Add(v);
             }
+
             // inicializando o valor da distância ao vértice de origem -> 0
             dq[index] = 0;
             d[index] = 0;
@@ -273,21 +281,34 @@ namespace GeradorGrafosCore
 
         }
 
+        /// <summary>
+        /// realiza a comparação das distâncias dos vértices informados
+        /// </summary>
+        /// <param name="j">vértice de entrada</param>
+        /// <param name="i">vértice de saída</param>
+        /// <param name="p">lista de predecessores</param>
+        /// <param name="d">lista de distâncias (sem exclusão)</param>
+        /// <param name="dq">lista de distâncias (com exclusão)</param>
         public void Relaxamento(Vertice j, Vertice i, List<Vertice> p, List<int> d, List<int> dq)
-        { // realiza a comparação das distâncias dos vértices informados
+        { 
             int di = this.Vertices.IndexOf(i);
             int dj = this.Vertices.IndexOf(j);
             int comparador = d[di] + RetornaPeso(i, j);
             
             if (d[dj] > comparador)
-            {
+            { //atualizando o valor da distância de i à j para o menor que foi encontrado até o momento
                 dq[dj] = comparador;
                 d[dj] = comparador;
                 p[dj] = i;
             }
         }
 
-        public bool listaVazia(List<Vertice> q) //verifica se a lista ainda possui algum vértice a ser visitado
+        /// <summary>
+        /// verifica se a lista ainda possui algum vértice a ser visitado
+        /// </summary>
+        /// <param name="q">lista de vértices</param>
+        /// <returns>true, para quando todos os elementos são iguais a null, false, se há algum que não é null</returns>
+        public bool listaVazia(List<Vertice> q) 
         {
             foreach(Vertice v in q)
             {
@@ -299,6 +320,12 @@ namespace GeradorGrafosCore
             return true;
         }
 
+        /// <summary>
+        /// Algoritmo de Caminho Mínimo utilizando a lógica de Dijkstra
+        /// </summary>
+        /// <param name="s">vértice de origem (source)</param>
+        /// <param name="k">vértice que deseja chegar</param>
+        /// <returns>o valor do caminho mínimo entre os vértices indicados</returns>
         public int CaminhoMinimoDijkstra(Vertice s, Vertice k)
         {
             List<Vertice> q = new List<Vertice>(this.Vertices); //lista de vértices a serem visitados
@@ -310,9 +337,9 @@ namespace GeradorGrafosCore
 
             List<Vertice> S = new List<Vertice>(); //lsta de vértices já fechados
 
-            int origem = q.IndexOf(s);
+            int origem = q.IndexOf(s); //index do vértice de origem na lista q
 
-            this.InicializaFonte(d, dq, p, origem);
+            this.InicializaFonte(d, dq, p, origem); //inicializando os valores (lista de vértices, distâncias e predecessores)
 
             while (!listaVazia(q))
             {
@@ -343,7 +370,7 @@ namespace GeradorGrafosCore
 
             }
 
-            return infinito;
+            return infinito; //não foi encontrado algum caminho que leve s à k
         }
 
         public int DFS()
