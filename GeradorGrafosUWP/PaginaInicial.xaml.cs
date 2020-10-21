@@ -28,11 +28,21 @@ namespace GeradorGrafosUWP
             this.InitializeComponent();
         }
 
+        /// <summary>
+        /// Navega para a tela de criação do grafo
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void VaiParaGerarGrafo(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(MainPage));
         }
 
+        /// <summary>
+        /// Navega para a tela de upload de arquivos
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void VaiParaAbrirArquivo(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(AbrirArquivo));

@@ -45,6 +45,9 @@ namespace GeradorGrafosUWP
             LerArquivosLocais();
         }
 
+        /// <summary>
+        /// Lê os arquivos de grafos que se encontram na pasta local do projeto
+        /// </summary>
         private async void LerArquivosLocais()
         {
             try
@@ -63,6 +66,11 @@ namespace GeradorGrafosUWP
             }
         }
 
+        /// <summary>
+        /// Navega para a tela anterior
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BotaoVoltar(object sender, RoutedEventArgs e)
         {
             if (this.Frame.CanGoBack)
@@ -71,11 +79,21 @@ namespace GeradorGrafosUWP
             }
         }
 
+        /// <summary>
+        /// Navega para a página onde são exibidas as informações do grafo
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BotaoProxPag(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(InformacoesGrafo), Grafo);
         }
 
+        /// <summary>
+        /// Navega pelos arquivos do computador para fazer upload
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Button_CarregarGrafo(object sender, RoutedEventArgs e)
         {
             var picker = new Windows.Storage.Pickers.FileOpenPicker();
@@ -99,6 +117,10 @@ namespace GeradorGrafosUWP
 
         }
 
+        /// <summary>
+        /// Lê o grafo presente no arquivo
+        /// </summary>
+        /// <param name="arqTxt">Arquivo que contém o grafo</param>
         private async void LeArquivo(StorageFile arqTxt)
         {
             try
@@ -212,6 +234,11 @@ namespace GeradorGrafosUWP
             }
         }
 
+        /// <summary>
+        /// Seleciona um arquivo na pasta local do projeto
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ArquivosBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             StorageFile arq = ((ComboBox)sender).SelectedValue as StorageFile;

@@ -30,7 +30,6 @@ namespace GeradorGrafosUWP
     public sealed partial class InformacoesGrafo : Page
     {
         public List<string> teste { get; set; }
-
         public Grafo Grafo = new Grafo();
 
         public ObservableCollection<Vertice> _vertices = new ObservableCollection<Vertice>();
@@ -42,20 +41,33 @@ namespace GeradorGrafosUWP
             }
         }
 
-
         public InformacoesGrafo()
         {
             this.InitializeComponent();
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
             this.Grafo = e.Parameter as Grafo;
-            
-            NumVertices.Text = Grafo.CalculaNumVertices().ToString();
 
+            NumVertices.Text = Grafo.CalculaNumVertices().ToString();
+            NumArestas.Text = Grafo.CalculaNumArcos().ToString();
+
+            // Preenche a lista do front com os vértices
+            ObservableCollection<Vertice> aux = new ObservableCollection<Vertice>(Grafo.Vertices);
+            _vertices = aux;
+
+            ImprimeGrafo();
+        }
+
+        /// <summary>
+        /// Imprime o grafo na tela
+        /// </summary>
+        private void ImprimeGrafo()
+        {
+            // Imprime os arcos
             foreach (Arco a in Grafo.Arcos)
             {
                 int x1 = a.saida.PosX;
@@ -66,8 +78,10 @@ namespace GeradorGrafosUWP
 
                 Polygon seta = new Polygon();
 
+                // Troca os arcos por setas no caso de grafos dirigidos
                 if (Grafo.dirigido)
                 {
+                    // Coloca as coordenadas corretas para que a seta não fique dentro do vértice
                     if (a.saida.PosX > a.entrada.PosX)
                     {
                         x1 -= 15;
@@ -89,6 +103,7 @@ namespace GeradorGrafosUWP
                         y2 -= 15;
                     }
 
+                    // Define o angulo correto para a cabeça da seta
                     if (a.saida.PosX - a.entrada.PosX > Math.Abs(a.saida.PosY - a.entrada.PosY))
                         angulo = 315;
                     else if (a.entrada.PosX - a.saida.PosX > Math.Abs(a.saida.PosY - a.entrada.PosY))
@@ -98,6 +113,7 @@ namespace GeradorGrafosUWP
                     else if (a.saida.PosY - a.entrada.PosY > Math.Abs(a.saida.PosX - a.entrada.PosX))
                         angulo = 45;
 
+                    // Cria a cabeça da seta
                     PointCollection points = new PointCollection();
                     points.Add(new Point(0, 0));
                     points.Add(new Point(0, 5));
@@ -113,6 +129,7 @@ namespace GeradorGrafosUWP
                     seta.RenderTransform = rotation;
                 }
 
+                // Cria o arco
                 Line arco = new Line();
                 arco.X1 = x1;
                 arco.Y1 = y1;
@@ -121,13 +138,16 @@ namespace GeradorGrafosUWP
                 arco.Stroke = new SolidColorBrush(Colors.Black);
                 arco.StrokeThickness = 2;
 
+                // Cria um texto que mostrará o peso da ligação
                 TextBlock peso = new TextBlock();
                 peso.Margin = new Thickness((arco.X1 + arco.X2) / 2, (arco.Y1 + arco.Y2) / 2, 0, 0);
                 peso.Foreground = new SolidColorBrush(Colors.White);
                 peso.Text = a.peso.ToString();
 
+                // Imprime um auto laço caso exista
                 if (a.saida == a.entrada)
                 {
+                    // Cria um círculo que representa o auto laço
                     StackPanel autoRel = new StackPanel();
                     autoRel.CornerRadius = new CornerRadius(50);
                     autoRel.Width = 15;
@@ -136,6 +156,7 @@ namespace GeradorGrafosUWP
                     autoRel.BorderThickness = new Thickness(2);
                     autoRel.BorderBrush = new SolidColorBrush(Colors.Black);
 
+                    // Muda as coordenadas do texto do peso para que não fique dentro do vértice
                     peso.Margin = new Thickness(a.saida.PosX + 10, a.saida.PosY + 10, 0, 0);
 
                     PainelGrafo.Children.Add(autoRel);
@@ -146,8 +167,10 @@ namespace GeradorGrafosUWP
                 PainelGrafo.Children.Add(peso);
             }
 
+            // Imprime os vértices
             foreach (Vertice v in Grafo.Vertices)
             {
+                // Cria o vértice
                 StackPanel vertice = new StackPanel();
                 vertice.CornerRadius = new CornerRadius(50);
                 vertice.Width = 25;
@@ -157,6 +180,7 @@ namespace GeradorGrafosUWP
                 vertice.BorderThickness = new Thickness(1);
                 vertice.BorderBrush = new SolidColorBrush(Colors.Black);
 
+                // Cria um texto que mostrará a etiqueta do vértice
                 TextBlock etiqueta = new TextBlock();
                 etiqueta.HorizontalAlignment = HorizontalAlignment.Center;
                 etiqueta.VerticalAlignment = VerticalAlignment.Center;
@@ -166,14 +190,13 @@ namespace GeradorGrafosUWP
 
                 PainelGrafo.Children.Add(vertice);
             }
-
-
-            NumArestas.Text = Grafo.CalculaNumArcos().ToString();
-
-            ObservableCollection<Vertice> aux = new ObservableCollection<Vertice>(Grafo.Vertices);
-            _vertices = aux;
         }
 
+        /// <summary>
+        /// Navega para a tela anterior
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (this.Frame.CanGoBack)
@@ -182,14 +205,18 @@ namespace GeradorGrafosUWP
             }
         }
 
-
+        /// <summary>
+        /// Calcula o caminho mínimo entre dois vértices
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CalculaCaminhoMinimo(object sender, RoutedEventArgs e)
         {
             Vertice a = Vertice1.SelectedValue as Vertice;
             Vertice b = Vertice2.SelectedValue as Vertice;
             if (a == null || b == null)
             {
-                Console.WriteLine("não selecionou os vértices!");
+                Console.WriteLine("Não selecionou os vértices!");
             }
             else
             {
@@ -199,26 +226,31 @@ namespace GeradorGrafosUWP
             }
         }
 
-
+        /// <summary>
+        /// Salva o grafo em arquivos
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Button_SalvarArquivo(object sender, RoutedEventArgs e)
         {
             string conteudo = "";
             try
             {
                 StorageFile arqTxt = await ApplicationData.Current.LocalFolder.GetFileAsync(Grafo.Nome + ".txt");
-
+                // Apaga o arquivo .txt caso já exista
                 await arqTxt.DeleteAsync();
 
+                // Cria o arquivo .txt
                 StorageFile arquivoTxt = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + ".txt");
 
-                StorageFile arqPajek = await ApplicationData.Current.LocalFolder.GetFileAsync(Grafo.Nome+ "Pajek" + ".net");
-
+                StorageFile arqPajek = await ApplicationData.Current.LocalFolder.GetFileAsync(Grafo.Nome + "Pajek" + ".net");
+                // Apaga o arquivo em pajek caso exista
                 await arqPajek.DeleteAsync();
 
+                // Cria o arquivo em pajek
                 StorageFile arquivoPajek = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Pajek" + ".net");
 
                 EscreverArquivo(arquivoTxt, this.Grafo);
-
                 EscreverArquivo(arquivoPajek, this.Grafo);
 
                 using (StreamReader leitura = new StreamReader(await arquivoTxt.OpenStreamForReadAsync()))
@@ -226,14 +258,13 @@ namespace GeradorGrafosUWP
                     conteudo = leitura.ReadToEnd();
                 }
             }
+            // Caso os arquivos não existam para realizar a exclusão, apenas realiza a criação
             catch
             {
                 StorageFile arquivoTxt = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + ".txt");
-
-                StorageFile arquivoPajek = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Pajek" + ".net");
-
                 EscreverArquivo(arquivoTxt, this.Grafo);
 
+                StorageFile arquivoPajek = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Pajek" + ".net");
                 EscreverArquivo(arquivoPajek, this.Grafo);
 
                 //using (StreamReader leitura = new StreamReader(await arquivoTxt.OpenStreamForReadAsync()))
@@ -245,7 +276,11 @@ namespace GeradorGrafosUWP
 
         }
 
-
+        /// <summary>
+        /// Preenche os arquivos com o grafo
+        /// </summary>
+        /// <param name="arquivo"></param>
+        /// <param name="grafo"></param>
         private async void EscreverArquivo(StorageFile arquivo, Grafo grafo)
         {
             using (StreamWriter escrita = new StreamWriter(await arquivo.OpenStreamForWriteAsync()))
@@ -289,14 +324,14 @@ namespace GeradorGrafosUWP
             }
         }
 
+        /// <summary>
+        /// Calcula a quantidade de componentes do grafo
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BotaoCalularComponentes(object sender, RoutedEventArgs e)
         {
             NumeroDeComponentes.Text = Grafo.DFS().ToString();
-        }
-
-        private void NumVertices_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

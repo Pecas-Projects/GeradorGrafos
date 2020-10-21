@@ -36,7 +36,7 @@
         <StackPanel Grid.Row="2" VerticalAlignment="Center" Margin="50,0,0,0">
             <TextBlock Foreground="Black" Text="Criar vértice" FontSize="25" />
             <StackPanel Orientation="Horizontal">
-                <TextBox Foreground="Black" Header="Informação" x:Name="inputInformacao" FontSize="20" Height="70" Width="200" Background="White" TextChanged="inputInformacao_TextChanged">
+                <TextBox Foreground="Black" Header="Informação" x:Name="inputInformacao" FontSize="20" Height="70" Width="200" Background="White">
                     <TextBox.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding}" Foreground="Black" />
