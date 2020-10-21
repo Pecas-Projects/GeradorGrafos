@@ -31,7 +31,7 @@ namespace GeradorGrafosUWP
     {
         public List<string> teste { get; set; }
         public Grafo Grafo = new Grafo();
-        public MatrizAdjacencia Matriz = new MatrizAdjacencia();
+        public Matriz Matriz = new Matriz();
 
         public ObservableCollection<Vertice> _vertices = new ObservableCollection<Vertice>();
         public ObservableCollection<Vertice> Vertices
