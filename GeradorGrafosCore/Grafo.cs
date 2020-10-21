@@ -253,6 +253,20 @@ namespace GeradorGrafosCore
             return this.Arcos.Count;
         }
 
+        public double CalculaGrauMedio()
+        {
+            double grau = 0;
+            if (!this.dirigido)
+            {
+                grau = 2 * (CalculaNumArcos()) / CalculaNumVertices();
+            }
+            else
+            {
+                grau = (CalculaNumArcos()) / CalculaNumVertices();
+            }
+            return grau;
+        }
+
         public void InicializaFonte(List<int> d, List<int> dq, List<Vertice> p)
         { 
             //i = 0 -> índice valor da fonte (s)
