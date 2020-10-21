@@ -311,14 +311,16 @@ namespace GeradorGrafosCore
 
         public bool listaVazia(List<Vertice> q) //verifica se a lista ainda possui algum vértice a ser visitado
         {
-            foreach(Vertice v in q)
+            foreach (Vertice v in q)
             {
-                if(v != null)
+                if (v != null)
                 {
                     return false;
                 }
             }
             return true;
+        }
+
         public void RelaxamentoBelmanFloyd(Vertice j, Vertice i,  List<int> d)
         {
             int di = this.Vertices.IndexOf(i);
