@@ -127,17 +127,6 @@
                 </ListView>
             </StackPanel>
         </ScrollViewer>
-        <StackPanel Grid.Row="3" Grid.Column="2" VerticalAlignment="Bottom">
-            <ComboBox Background="#8E8B8B" x:Name="FontsCombo" Header="Estrutura utilizada" HorizontalAlignment="Center" FontSize="20" Margin="0,0,0,20" Height="70" Width="200">
-                <ComboBox.HeaderTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}" Foreground="Black" />
-                    </DataTemplate>
-                </ComboBox.HeaderTemplate>
-                <x:String>Lista de adjacência</x:String>
-                <x:String>Matriz de adjacência</x:String>
-            </ComboBox>
-            <Button Background="#8E8B8B" Foreground="Black" HorizontalAlignment="Center" Content="Próxima página" FontSize="25" Margin="0,0,0,20" Width="200" Click="Button_Click"/>
-        </StackPanel>
+        <Button Grid.Row="3" Grid.Column="2" VerticalAlignment="Bottom" Background="#8E8B8B" Foreground="Black" HorizontalAlignment="Center" Content="Próxima página" FontSize="25" Margin="0,0,0,20" Width="200" Click="Button_Click"/>
     </Grid>
 </Page>
