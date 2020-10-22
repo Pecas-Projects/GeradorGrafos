@@ -424,26 +424,26 @@ namespace GeradorGrafosCore
             return true;
         }
 
-        public int calculaCaminho(Vertice origem, Vertice destino)
+        public int calculaCaminho(Vertice origem, Vertice destino) 
         {
             List<int> distancia = new List<int>();
             int index = 0;
 
-            if(this.CaminhoMinimoBelmanFord(origem, distancia))
+            if(this.CaminhoMinimoBelmanFord(origem, distancia)) //se o caminho calculado for válido
             {
                 foreach(Vertice v in Vertices)
                 {
-                    if(v.id == destino.id)
+                    if(v.id == destino.id) //procurar onde está 
                     {
-                        index = Vertices.IndexOf(v);
+                        index = Vertices.IndexOf(v); 
                     }
                 }
 
-                return distancia[index];
+                return distancia[index]; //retorna distância 
             }
             else
             {
-                return infinito;
+                return infinito; //se não retorna infinito 
             }
            
         }
