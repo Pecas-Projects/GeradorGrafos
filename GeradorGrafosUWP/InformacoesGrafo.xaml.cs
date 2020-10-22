@@ -212,16 +212,34 @@ namespace GeradorGrafosUWP
         /// <param name="e"></param>
         private void CalculaCaminhoMinimo(object sender, RoutedEventArgs e)
         {
+          
             Vertice a = Vertice1.SelectedValue as Vertice;
             Vertice b = Vertice2.SelectedValue as Vertice;
+
             if (a == null || b == null)
             {
                 Console.WriteLine("Não selecionou os vértices!");
             }
             else
             {
-                int CaminhoMinimoValue = this.Grafo.CaminhoMinimoDijkstra(a, b);
-                CaminhoMinimo.Text = CaminhoMinimoValue.ToString();
+                if (this.Grafo.qualCaminho())
+                {
+                    int CaminhoMinimoValue = this.Grafo.CaminhoMinimoDijkstra(a, b);
+                    CaminhoMinimo.Text = CaminhoMinimoValue.ToString();
+                }
+                else
+                {
+                    int x = this.Grafo.calculaCaminho(a, b);
+
+                    if (x == 2147483647 / 2)
+                    {
+                        CaminhoMinimo.Text = "Impossível";
+                    }
+                    else
+                    {
+                        CaminhoMinimo.Text = x.ToString();
+                    }
+                }
 
             }
         }

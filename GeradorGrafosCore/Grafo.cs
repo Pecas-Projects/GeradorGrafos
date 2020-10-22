@@ -424,8 +424,9 @@ namespace GeradorGrafosCore
             return true;
         }
 
-        public int calculaCaminho(Vertice origem, Vertice destino, List<int> distancia)
+        public int calculaCaminho(Vertice origem, Vertice destino)
         {
+            List<int> distancia = new List<int>();
             int index = 0;
 
             if(this.CaminhoMinimoBelmanFord(origem, distancia))
@@ -442,9 +443,8 @@ namespace GeradorGrafosCore
             }
             else
             {
-                return -1;
+                return infinito;
             }
-            
            
         }
 
@@ -453,27 +453,27 @@ namespace GeradorGrafosCore
 
             int tempo = 0, nComponentes = 0;
 
-            foreach (Vertice v in this.Vertices)
+            foreach (Vertice v in this.Vertices) //inicializa todos os vértice como brancos
             {
                 v.Cor = 'B';
             }
 
-            foreach (Vertice v in this.Vertices)
+            foreach (Vertice v in this.Vertices) // percorre todos os vértice do grafo 
             {
-                if (v.Cor == 'B')
+                if (v.Cor == 'B') //se ele não foi descoberto ainda visitaDFS é chamada
                 {
                     VisitaDFS(tempo, v);
                 }
             }
-            foreach (Vertice v in this.Vertices)
+            foreach (Vertice v in this.Vertices) // percorre todos os vértice do grafo 
             {
-                if (v.Predecssor == null)
+                if (v.Predecssor == null) //se o predecessor for nulo soma 1 no número de componentes
                 {
                     nComponentes++;
                 }
             }
 
-            return nComponentes - this.aux ;
+            return nComponentes - this.aux ; //subtrai de nComponentes o número de falsos componentes
         }
 
         public void VisitaDFS(int tempo, Vertice v)
@@ -482,15 +482,19 @@ namespace GeradorGrafosCore
             v.Descoberta = tempo;
             v.Cor = 'C';
 
-            if (v.ListaAdjacencia.Count == 0 && this.dirigido == true)
+            //filtra os os vértices que tem como predecessor null, mas não indicam outro componente 
+            if (v.ListaAdjacencia.Count == 0 && this.dirigido == true) //se o grafo for dirigido e o vértice v tiver lista de adjacência vazia
             {
-                foreach (Vertice v2 in Vertices)
+                foreach (Vertice v2 in Vertices) // percorre todos os vértices do grafo
                 {
-                    if(v2.Cor == 'B')
+                    if(v2.Cor == 'B') //se um vértice v2 não foi descoberto ainda 
                     {
-                        foreach (Vertice v3 in v2.ListaAdjacencia)
+                        foreach (Vertice v3 in v2.ListaAdjacencia) //percorre a lista de adjacência de v2
                         {
-                            if (v == v3) this.aux++;
+                            if (v == v3)// se achar o vertice v nela então v2 não pertence a outro componente
+                            {
+                                this.aux++;// soma 1 na varável auxiliar que conta os falsos componentes
+                            }
                         }
                     }
                     
@@ -498,11 +502,12 @@ namespace GeradorGrafosCore
             }
             
 
-                foreach (Vertice v1 in v.ListaAdjacencia)
+                foreach (Vertice v1 in v.ListaAdjacencia) // percorre a lista de adjacência
                 {
-                    if (v1.Cor == 'B')
-                    {
-                        v1.Predecssor = v;
+                    if (v1.Cor == 'B') //se um vértice v1 não foi descoberto ainda 
+
+                {
+                    v1.Predecssor = v;
                         VisitaDFS(tempo, v1);
                     }
                 }
@@ -512,6 +517,25 @@ namespace GeradorGrafosCore
             tempo += 1;
             v.Fechamento = tempo;
 
+        }
+
+        public bool qualCaminho() //escolha automática entre os algoritmos de caminho mínimo 
+        {
+            if (this.dirigido == true)
+            {
+                foreach (Arco a in Arcos)
+                {
+                    if(a.peso < 0)
+                    {
+                        return false; // se o grafo for dirigido e tiver pelo menos um arco com peso negativo ele calcula por BellmanFord
+                    }
+                }
+                return true; // se não ele calcula por Dijkstra
+            }
+            else
+            {
+                return true; // se não ele calcula por Dijkstra
+            }
         }
 
     }
