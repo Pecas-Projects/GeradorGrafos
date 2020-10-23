@@ -331,9 +331,9 @@ namespace GeradorGrafosUWP
             using (StreamWriter escrita = new StreamWriter(await arquivoMatriz.OpenStreamForWriteAsync()))
             {
                 await escrita.WriteLineAsync("Matriz Adjacencia\n");
-                this.Matriz = Matriz.GeraMatrizAdjacenciaVazia(grafo);
+                Matriz.GeraMatrizAdjacencia(grafo);
 
-                foreach (List<int> lista in Matriz.Matriz)
+                foreach (List<int> lista in Matriz.MatrizAdjacencia)
                 {
                     string linha = "";
 
