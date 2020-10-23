@@ -58,7 +58,7 @@ namespace GeradorGrafosCore
                         linha.Add(infinito);
                     }
                 }
-                this.MatrizAdjacencia.Add(linha);
+                this.MatrizCusto.Add(linha);
             }
         }
     }
