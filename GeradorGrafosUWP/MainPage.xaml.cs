@@ -110,7 +110,7 @@ namespace GeradorGrafosUWP
                 Vertice v = new Vertice();
 
                 // Acrescenta corretamente o id do novo vértice para que este não se repita
-                if(Grafo.Vertices.Count > 0)
+                if (Grafo.Vertices.Count > 0)
                 {
                     v.id = Grafo.Vertices.Last().id + 1;
                 }
@@ -133,11 +133,11 @@ namespace GeradorGrafosUWP
         private void ButtonRemoveVertice(object sender, RoutedEventArgs e)
         {
             int idVertice = int.Parse(((Button)sender).Tag.ToString());
-            Vertice v = Grafo.ProcuraVertice(idVertice);     
-            
+            Vertice v = Grafo.ProcuraVertice(idVertice);
+
             List<Arco> arcosRemovidos = new List<Arco>(Grafo.ProcuraArco(v));
             // Remove da lista do front os arcos que continham o vértice removido
-            foreach(Arco a in arcosRemovidos)
+            foreach (Arco a in arcosRemovidos)
             {
                 _arcos.Remove(a);
             }
@@ -183,8 +183,9 @@ namespace GeradorGrafosUWP
                 a.saida = ComboBox_Vertices_Saida.SelectedValue as Vertice;
 
                 // Adiciona o peso que o usuário digitou ou permanece 1 por padrão
-                if (InputPeso.Text != "")
-                    a.peso = int.Parse(InputPeso.Text);
+                int peso = a.peso;
+                int.TryParse(InputPeso.Text, out peso);
+                a.peso = peso;
 
                 Grafo.AdicionarArco(a);
                 // Adiciona o arco na lista do front
