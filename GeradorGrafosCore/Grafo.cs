@@ -121,7 +121,9 @@ namespace GeradorGrafosCore
         public void AdicionarArco(Arco a)
         {
             this.Arcos.Add(a);
+
             a.saida.ListaAdjacencia.Add(a.entrada);
+
             if (!this.dirigido)
             {
                 a.entrada.ListaAdjacencia.Add(a.saida);

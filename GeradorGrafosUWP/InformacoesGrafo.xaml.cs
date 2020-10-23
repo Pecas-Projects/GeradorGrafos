@@ -31,6 +31,7 @@ namespace GeradorGrafosUWP
     {
         public List<string> teste { get; set; }
         public Grafo Grafo = new Grafo();
+        public Matriz Matriz = new Matriz();
 
         public ObservableCollection<Vertice> _vertices = new ObservableCollection<Vertice>();
         public ObservableCollection<Vertice> Vertices
@@ -246,7 +247,7 @@ namespace GeradorGrafosUWP
         /// <param name="e"></param>
         private async void Button_SalvarArquivo(object sender, RoutedEventArgs e)
         {
-            string conteudo = "";
+
             try
             {
                 StorageFile arqTxt = await ApplicationData.Current.LocalFolder.GetFileAsync(Grafo.Nome + ".txt");
@@ -263,13 +264,24 @@ namespace GeradorGrafosUWP
                 // Cria o arquivo em pajek
                 StorageFile arquivoPajek = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Pajek" + ".net");
 
+                StorageFile arqMatriz = await ApplicationData.Current.LocalFolder.GetFileAsync(Grafo.Nome + "Matriz.txt");
+                // Apaga o arquivo .txt caso já exista
+                await arqTxt.DeleteAsync();
+
+                // Cria o arquivo .txt
+                StorageFile arquivoMatriz = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Matriz.txt");
+
+                StorageFile arqInfo = await ApplicationData.Current.LocalFolder.GetFileAsync("Info_" + Grafo.Nome + ".txt");
+                // Apaga o arquivo .txt caso já exista
+                await arqTxt.DeleteAsync();
+
+                // Cria o arquivo .txt
+                StorageFile arquivoInfo = await ApplicationData.Current.LocalFolder.CreateFileAsync("Info_" + Grafo.Nome + ".txt");
+
                 EscreverArquivo(arquivoTxt, this.Grafo);
                 EscreverArquivo(arquivoPajek, this.Grafo);
-
-                using (StreamReader leitura = new StreamReader(await arquivoTxt.OpenStreamForReadAsync()))
-                {
-                    conteudo = leitura.ReadToEnd();
-                }
+                EscreverMatriz(arquivoMatriz, this.Grafo);
+                EscreverInfoGrafos(arquivoInfo, this.Grafo);
             }
             // Caso os arquivos não existam para realizar a exclusão, apenas realiza a criação
             catch
@@ -277,16 +289,75 @@ namespace GeradorGrafosUWP
                 StorageFile arquivoTxt = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + ".txt");
                 EscreverArquivo(arquivoTxt, this.Grafo);
 
-                StorageFile arquivoPajek = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Pajek" + ".net");
+                StorageFile arquivoPajek = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Pajek.net");
                 EscreverArquivo(arquivoPajek, this.Grafo);
 
-                //using (StreamReader leitura = new StreamReader(await arquivoTxt.OpenStreamForReadAsync()))
-                //{
-                //    conteudo = leitura.ReadToEnd();
-                //}
+                StorageFile arquivoMatriz = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Matriz.txt");
+                EscreverMatriz(arquivoMatriz, this.Grafo);
 
+                StorageFile arquivoInfo = await ApplicationData.Current.LocalFolder.CreateFileAsync("Info_" + Grafo.Nome + ".txt");
+                EscreverInfoGrafos(arquivoInfo, this.Grafo);
             }
 
+        }
+
+        private async void EscreverInfoGrafos(StorageFile arquivoInfo, Grafo grafo)
+        {
+            using (StreamWriter escrita = new StreamWriter(await arquivoInfo.OpenStreamForWriteAsync()))
+            {
+                await escrita.WriteLineAsync("Diretorio: " + arquivoInfo.Path);
+                await escrita.WriteLineAsync("Nome do grafo: " + grafo.Nome);
+                await escrita.WriteLineAsync("Nome do arquivo Txt correspondente: " + grafo.Nome + ".txt");
+                await escrita.WriteLineAsync("Nome do arquivo Pajek correspondente: " + grafo.Nome+ "Pajek.net");
+                await escrita.WriteLineAsync("Nome do arquivo de Informações correspondente: " + "Info_" + Grafo.Nome + ".txt");
+
+                DateTime hoje = DateTime.Now;
+
+                await escrita.WriteLineAsync("Data e hora da cração destes arquivos: " + hoje.ToString());
+                await escrita.WriteLineAsync("\n");
+                await escrita.WriteLineAsync("* Características do grafo");
+                await escrita.WriteLineAsync("\n");
+                if (grafo.dirigido)
+                {
+                await escrita.WriteLineAsync("Grafo dirigido");
+                }
+                else
+                {
+                    await escrita.WriteLineAsync("Grafo não dirigido");
+                }
+                await escrita.WriteLineAsync("n = |V| = " + grafo.CalculaNumVertices().ToString());
+                if (!grafo.dirigido)
+                {
+                    await escrita.WriteLineAsync("m = |E| = " + grafo.CalculaNumArcos().ToString());
+
+                }
+                else
+                {
+                    await escrita.WriteLineAsync("m = |A| = " + grafo.CalculaNumArcos().ToString());
+                }
+                await escrita.WriteLineAsync("Quantidade de componente: " + Grafo.DFS().ToString());
+            }
+        }
+
+        private async void EscreverMatriz(StorageFile arquivoMatriz, Grafo grafo)
+        {
+            using (StreamWriter escrita = new StreamWriter(await arquivoMatriz.OpenStreamForWriteAsync()))
+            {
+                await escrita.WriteLineAsync("Matriz Adjacencia\n");
+                Matriz.GeraMatrizAdjacencia(grafo);
+
+                foreach (List<int> lista in Matriz.MatrizAdjacencia)
+                {
+                    string linha = "";
+
+                    foreach (int letra in lista)
+                    {
+                        linha += letra.ToString() + " ";
+                    }
+                    await escrita.WriteLineAsync(linha);
+                }
+            }
+            
         }
 
         /// <summary>
@@ -310,7 +381,7 @@ namespace GeradorGrafosUWP
 
                     foreach (Vertice v in grafo.Vertices)
                     {
-                        await escrita.WriteLineAsync(v.id.ToString() + " " + v.etiqueta);
+                        await escrita.WriteLineAsync(v.id.ToString() + " " + "\"" + v.etiqueta + "\"");
                     }
 
                     if (grafo.Arcos.Count > 0)

@@ -127,13 +127,6 @@ namespace GeradorGrafosUWP
             {
                 string arquivoGrafo = "";
 
-                Grafo grafo = new Grafo();
-
-                List<Vertice> verticesList = new List<Vertice>();
-
-                List<Arco> arcosList = new List<Arco>();
-
-
                 using (StreamReader leitura = new StreamReader(await arqTxt.OpenStreamForReadAsync()))
                 {
                     arquivoGrafo = leitura.ReadToEnd();
@@ -147,32 +140,27 @@ namespace GeradorGrafosUWP
 
                 if (arcos[0].Equals("Edges"))
                 {
-                    grafo.dirigido = false;
+                    this.Grafo.dirigido = false;
                 }
                 else if (arcos[0].Equals("Arcs"))
                 {
-                    grafo.dirigido = true;
+                    this.Grafo.dirigido = true;
                 }
 
-                BuscarVertices(verticesList, vertices);
+                BuscarVertices(Grafo, vertices);
 
-                BuscarArcos(arcosList, verticesList, arcos);
-
-                grafo.Arcos = arcosList;
-                grafo.Vertices = verticesList;
-
-                this.Grafo = grafo;
+                BuscarArcos(Grafo, arcos);
 
                 BotaoProx.Visibility = Visibility.Visible;
             }
-            catch (Exception ex)
+            catch 
             {
                 NomeArquivo.Text = "Não foi possível ler o grafo";
                 BotaoProx.Visibility = Visibility.Collapsed;
             }
         }
 
-        private void BuscarArcos(List<Arco> arcosList, List<Vertice> verticesList, string[] arcos)
+        private void BuscarArcos(Grafo grafo, string[] arcos)
         {
             int ID = 0;
             for (int v = 1; v < arcos.Length; v++)
@@ -191,29 +179,16 @@ namespace GeradorGrafosUWP
 
                     ID++;
 
-                    foreach (Vertice ver in verticesList)
-                    {
-
-                        if (ver.id == SaidaId)
-                        {
-                            arcoAux.saida = ver;
-
-                        }
-
-                        if (ver.id == EntradaId)
-                        {
-                            arcoAux.entrada = ver;
-                        }
-                    }
-
+                    arcoAux.saida = grafo.ProcuraVertice(SaidaId);
+                    arcoAux.entrada = grafo.ProcuraVertice(EntradaId);
                     arcoAux.id = ID;
                     arcoAux.peso = Peso;
-                    arcosList.Add(arcoAux);
+                    grafo.AdicionarArco(arcoAux);
                 }
             }
         }
 
-        private void BuscarVertices(List<Vertice> verticesList, string[] vertices)
+        private void BuscarVertices(Grafo grafo, string[] vertices)
         {
             for (int v = 0; v < vertices.Length; v++)
             {
@@ -225,7 +200,7 @@ namespace GeradorGrafosUWP
 
                     string etiquetaVertice = ver[1];
 
-                    verticesList.Add(new Vertice
+                    grafo.AdicionaVertice(new Vertice
                     {
                         id = idVertice,
                         etiqueta = etiquetaVertice
