@@ -325,6 +325,14 @@ namespace GeradorGrafosUWP
                 {
                     await escrita.WriteLineAsync("Grafo não dirigido");
                 }
+                if (grafo.ponderado)
+                {
+                    await escrita.WriteLineAsync("Grafo ponderado");
+                }
+                else
+                {
+                    await escrita.WriteLineAsync("Grafo não ponderado");
+                }
                 await escrita.WriteLineAsync("n = |V| = " + grafo.CalculaNumVertices().ToString());
                 if (!grafo.dirigido)
                 {
@@ -355,6 +363,25 @@ namespace GeradorGrafosUWP
                         linha += letra.ToString() + " ";
                     }
                     await escrita.WriteLineAsync(linha);
+                }
+
+                await escrita.WriteLineAsync("\n");
+
+                if (grafo.ponderado)
+                {
+                    await escrita.WriteLineAsync("Matriz de Custo\n");
+                    Matriz.GeraMatrizCusto(grafo);
+
+                    foreach (List<int> lista in Matriz.MatrizCusto)
+                    {
+                        string linha = "";
+
+                        foreach (int letra in lista)
+                        {
+                            linha += letra.ToString() + " ";
+                        }
+                        await escrita.WriteLineAsync(linha);
+                    }
                 }
             }
             

@@ -24,7 +24,7 @@ namespace GeradorGrafosCore
                 List<int> linha = new List<int>();
                 foreach (Vertice j in g.Vertices)
                 {
-                    if (g.ProcuraArco(i, j))
+                    if (g.ProcuraArco(i, j) != null)
                     {
                         linha.Add(1);
                     }
@@ -47,7 +47,7 @@ namespace GeradorGrafosCore
                 List<int> linha = new List<int>();
                 foreach (Vertice j in g.Vertices)
                 {
-                    a = g.ProcuraArco2(i, j);
+                    a = g.ProcuraArco(i, j);
 
                     if (a != null)
                     {
