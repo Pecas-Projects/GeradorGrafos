@@ -326,13 +326,12 @@ namespace GeradorGrafosCore
         {
             int di = this.Vertices.IndexOf(i);
             int dj = this.Vertices.IndexOf(j);
-            int comparador = d[dj] + RetornaPeso(j, i);
+            int comparador = d[dj] + RetornaPeso(j, i); //comoparador recebe a distância do vértice j mais o peso o arco
 
-            if (d[di] > comparador)
+            if (d[di] > comparador) // se a distância do vértice i for maior que a de comparador
             {
-
-                d[di] = comparador;
-                i.Predecssor = j;
+                d[di] = comparador; // a distância de i passa a ser igual a comparador
+                i.Predecssor = j; //j se torna predecessor de i
             }
         }
 
@@ -391,7 +390,8 @@ namespace GeradorGrafosCore
             
             this.InicializaFonteBelmanFord(distancia, v);
 
-            foreach(Arco a in Arcos) //relaxa todos os arcos
+            //relaxa todos os arcos
+            foreach (Arco a in Arcos) 
             {
                 this.RelaxamentoBelmanFloyd(a.saida, a.entrada, distancia);
             }
@@ -402,7 +402,8 @@ namespace GeradorGrafosCore
                 Vertice y = a.saida;
                 int dx = 0, dy = 0;
 
-                foreach(Vertice vertice in Vertices)
+                //pega a distância dos vértices de entrada e saída no vetor de distâncias
+                foreach(Vertice vertice in Vertices) 
                 {
                     if(vertice.id == x.id)
                     {
@@ -415,13 +416,14 @@ namespace GeradorGrafosCore
 
                 }
 
+                //não pode fazer o cálculo
                 if((distancia[dy] + a.peso) < distancia[dx])
                 {
                     return false;
                 }
             }
 
-            return true;
+            return true; //retorna true quando é possível calcular o caminho
         }
 
         public int calculaCaminho(Vertice origem, Vertice destino) 
