@@ -19,12 +19,17 @@ namespace GeradorGrafosCore
 
         public Vertice()
         {
-            Random r = new Random();
             this.Predecssor = null;
             this.ListaAdjacencia = new List<Vertice>();
+            this.id = 1;
+            AtualizaCoordenadas();
+        }
+        
+        public void AtualizaCoordenadas()
+        {
+            Random r = new Random();
             this.PosX = r.Next(800);
             this.PosY = r.Next(600);
-            this.id = 1;
         }
     }
 

@@ -20,8 +20,12 @@
         <StackPanel Background="#020431" Orientation="Horizontal"/>
         <StackPanel Grid.Column="1" Grid.RowSpan="5" Grid.ColumnSpan="2" Background="#020431" Orientation="Horizontal"/>
         <Button Background="#DB4922" Foreground="White" HorizontalAlignment="Right" Content="Salvar grafo" FontSize="20" Width="200" Margin="0,0,50,0" Click="Button_SalvarArquivo"/>
-        <Button Background="#DB4922" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="Bold" Content="&#xE72B;" Foreground="White" FontSize="30" Padding="10" CornerRadius="100" Margin="50,0,0,0" Click="Button_Click"/>
-        <TextBlock Foreground="White" Grid.Column="1" Text="Infromações do Grafo" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <Button Margin="50,0,0,0" Background="#DB4922" FontFamily="Segoe MDL2 Assets" FontWeight="Bold" Content="&#xE72B;" Foreground="White" FontSize="30" Padding="10" CornerRadius="100" Click="Button_Click"/>
+            <Button Margin="50,0,0,0" Background="#DB4922" FontFamily="Segoe MDL2 Assets" FontWeight="Bold" Content="&#xE72C;" Foreground="White" FontSize="30" Padding="10" CornerRadius="100" Click="AtualizaGrafo"/>
+        </StackPanel>
+        
+        <TextBlock Foreground="White" Grid.Column="1" Text="Informações do Grafo" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Canvas x:Name="PainelGrafo" Grid.Row="1" Width="800" Height="600"/>
         <ScrollViewer Grid.Row="1" Grid.Column="1">
             <StackPanel>
