@@ -81,6 +81,11 @@ namespace GeradorGrafosUWP
         /// </summary>
         private void ImprimeGrafo()
         {
+            PainelGrafo.Children.Clear();
+
+            foreach (Vertice v in Grafo.Vertices)
+                v.AtualizaCoordenadas();
+
             // Imprime os arcos
             foreach (Arco a in Grafo.Arcos)
             {
@@ -225,7 +230,7 @@ namespace GeradorGrafosUWP
         /// <param name="e"></param>
         private void CalculaCaminhoMinimo(object sender, RoutedEventArgs e)
         {
-          
+
             Vertice a = Vertice1.SelectedValue as Vertice;
             Vertice b = Vertice2.SelectedValue as Vertice;
 
@@ -325,7 +330,7 @@ namespace GeradorGrafosUWP
                 await escrita.WriteLineAsync("Diretorio: " + arquivoInfo.Path);
                 await escrita.WriteLineAsync("Nome do grafo: " + grafo.Nome);
                 await escrita.WriteLineAsync("Nome do arquivo Txt correspondente: " + grafo.Nome + ".txt");
-                await escrita.WriteLineAsync("Nome do arquivo Pajek correspondente: " + grafo.Nome+ "Pajek.net");
+                await escrita.WriteLineAsync("Nome do arquivo Pajek correspondente: " + grafo.Nome + "Pajek.net");
                 await escrita.WriteLineAsync("Nome do arquivo de Informações correspondente: " + "Info_" + Grafo.Nome + ".txt");
 
                 DateTime hoje = DateTime.Now;
@@ -335,7 +340,7 @@ namespace GeradorGrafosUWP
                 await escrita.WriteLineAsync("* Características do grafo");
                 if (grafo.dirigido)
                 {
-                await escrita.WriteLineAsync("Grafo dirigido");
+                    await escrita.WriteLineAsync("Grafo dirigido");
                 }
                 else
                 {
@@ -400,7 +405,7 @@ namespace GeradorGrafosUWP
                     }
                 }
             }
-            
+
         }
 
         /// <summary>
@@ -459,6 +464,11 @@ namespace GeradorGrafosUWP
         private void BotaoCalularComponentes(object sender, RoutedEventArgs e)
         {
             NumeroDeComponentes.Text = Grafo.DFS().ToString();
+        }
+
+        private void AtualizaGrafo(object sender, RoutedEventArgs e)
+        {
+            ImprimeGrafo();
         }
     }
 }
