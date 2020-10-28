@@ -306,7 +306,7 @@ namespace GeradorGrafosCore
         public int RetornaPeso(Vertice i, Vertice j)
         {
             Arco a = new Arco(); 
-            a = this.ProcuraArco(i, j); 
+            a = this.ProcuraArco(j, i); 
 
             if(a == null)
             {
