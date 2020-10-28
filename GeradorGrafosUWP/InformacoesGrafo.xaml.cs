@@ -215,10 +215,7 @@ namespace GeradorGrafosUWP
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Frame.CanGoBack)
-            {
-                this.Frame.GoBack();
-            }
+            this.Frame.Navigate(typeof(MainPage), Grafo);
         }
 
         /// <summary>

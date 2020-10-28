@@ -54,6 +54,31 @@ namespace GeradorGrafosUWP
             this.InitializeComponent();
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            this.Grafo = e.Parameter as Grafo;
+
+            if (Grafo != null)
+            {
+                NomeGrafo.Text = Grafo.Nome;
+                NaoDirigido.IsChecked = !Grafo.dirigido;
+                Dirigido.IsChecked = Grafo.dirigido;
+
+                // Preenche a lista do front com os vértices
+                ObservableCollection<Vertice> aux = new ObservableCollection<Vertice>(Grafo.Vertices);
+                _vertices = aux;
+
+                // Preenche a lista do front com os arcos
+                ObservableCollection<Arco> auxArc = new ObservableCollection<Arco>(Grafo.Arcos);
+                _arcos = auxArc;
+            }
+            else
+                this.Grafo = new Grafo();
+
+        }
+
         /// <summary>
         /// Navega para a página anterior
         /// </summary>
@@ -61,10 +86,7 @@ namespace GeradorGrafosUWP
         /// <param name="e"></param>
         private void BotaoVoltar(object sender, RoutedEventArgs e)
         {
-            if (this.Frame.CanGoBack)
-            {
-                this.Frame.GoBack();
-            }
+            this.Frame.Navigate(typeof(PaginaInicial));
         }
 
         /// <summary>
