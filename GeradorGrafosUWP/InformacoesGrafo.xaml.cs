@@ -334,7 +334,6 @@ namespace GeradorGrafosUWP
                 await escrita.WriteLineAsync("Data e hora da cração destes arquivos: " + hoje.ToString());
                 await escrita.WriteLineAsync("\n");
                 await escrita.WriteLineAsync("* Características do grafo");
-                await escrita.WriteLineAsync("\n");
                 if (grafo.dirigido)
                 {
                 await escrita.WriteLineAsync("Grafo dirigido");

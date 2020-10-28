@@ -13,8 +13,9 @@ namespace GeradorGrafosCore
         public bool dirigido { get; set; }
         public bool ponderado { get; set; }
         public string Nome { get; set; }
-        List<int> distancia = null;
-        public int aux { get; set; }
+
+        List<int> distancia = new List<int>();
+        public int aux { get; set; } = 0;
 
         public Grafo()
         {
@@ -490,6 +491,7 @@ namespace GeradorGrafosCore
 
         public int DFS()
         {
+            this.aux = 0;
 
             int tempo = 0, nComponentes = 0;
 
