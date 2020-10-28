@@ -286,12 +286,12 @@ namespace GeradorGrafosUWP
                 // Cria o arquivo em pajek
                 StorageFile arquivoPajek = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Pajek" + ".net");
 
-                StorageFile arqMatriz = await ApplicationData.Current.LocalFolder.GetFileAsync(Grafo.Nome + "Matriz.txt");
+                StorageFile arqMatrizAdj = await ApplicationData.Current.LocalFolder.GetFileAsync(Grafo.Nome + "MDA.txt");
                 // Apaga o arquivo .txt caso já exista
                 await arqTxt.DeleteAsync();
 
                 // Cria o arquivo .txt
-                StorageFile arquivoMatriz = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Matriz.txt");
+                StorageFile arquivoMDA = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "MDA.txt");
 
                 StorageFile arqInfo = await ApplicationData.Current.LocalFolder.GetFileAsync("Info_" + Grafo.Nome + ".txt");
                 // Apaga o arquivo .txt caso já exista
@@ -300,9 +300,24 @@ namespace GeradorGrafosUWP
                 // Cria o arquivo .txt
                 StorageFile arquivoInfo = await ApplicationData.Current.LocalFolder.CreateFileAsync("Info_" + Grafo.Nome + ".txt");
 
+                if (this.Grafo.ponderado)
+                {
+                    StorageFile arqMatrizCusto = await ApplicationData.Current.LocalFolder.GetFileAsync(Grafo.Nome + "MDC.txt");
+                    // Apaga o arquivo .txt caso já exista
+                    await arqTxt.DeleteAsync();
+
+                    // Cria o arquivo .txt
+                    StorageFile arquivoMDC = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "MDC.txt");
+
+                    EscreverMatrizCusto(arquivoMDC, this.Grafo);
+                }
+               
+
+               
+
                 EscreverArquivo(arquivoTxt, this.Grafo);
                 EscreverArquivo(arquivoPajek, this.Grafo);
-                EscreverMatriz(arquivoMatriz, this.Grafo);
+                EscreverMatrizAdj(arquivoMDA, this.Grafo);
                 EscreverInfoGrafos(arquivoInfo, this.Grafo);
             }
             // Caso os arquivos não existam para realizar a exclusão, apenas realiza a criação
@@ -314,13 +329,59 @@ namespace GeradorGrafosUWP
                 StorageFile arquivoPajek = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Pajek.net");
                 EscreverArquivo(arquivoPajek, this.Grafo);
 
-                StorageFile arquivoMatriz = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Matriz.txt");
-                EscreverMatriz(arquivoMatriz, this.Grafo);
-
                 StorageFile arquivoInfo = await ApplicationData.Current.LocalFolder.CreateFileAsync("Info_" + Grafo.Nome + ".txt");
                 EscreverInfoGrafos(arquivoInfo, this.Grafo);
+
+                StorageFile arquivoMDA = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "MDA.txt");
+                EscreverMatrizAdj(arquivoMDA, this.Grafo);
+
+                if (this.Grafo.ponderado)
+                {
+                    StorageFile arquivoMDC = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "MDC.txt");
+                    EscreverMatrizCusto(arquivoMDC, this.Grafo);
+                }
             }
 
+        }
+
+        private async void EscreverMatrizCusto(StorageFile arquivoMDC, Grafo grafo)
+        {
+
+            using (StreamWriter escrita = new StreamWriter(await arquivoMDC.OpenStreamForWriteAsync()))
+            {
+                Matriz.GeraMatrizCusto(grafo);
+
+                foreach (List<int> lista in Matriz.MatrizCusto)
+                {
+                    string linha = "";
+
+                    foreach (int letra in lista)
+                    {
+                        linha += letra.ToString() + " ";
+                    }
+                    await escrita.WriteLineAsync(linha);
+                }
+            }
+               
+        }
+
+        private async void EscreverMatrizAdj(StorageFile arquivoMDA, Grafo grafo)
+        {
+            using (StreamWriter escrita = new StreamWriter(await arquivoMDA.OpenStreamForWriteAsync()))
+            {
+                Matriz.GeraMatrizAdjacencia(grafo);
+
+                foreach (List<int> lista in Matriz.MatrizAdjacencia)
+                {
+                    string linha = "";
+
+                    foreach (int letra in lista)
+                    {
+                        linha += letra.ToString() + " ";
+                    }
+                    await escrita.WriteLineAsync(linha);
+                }
+            }
         }
 
         private async void EscreverInfoGrafos(StorageFile arquivoInfo, Grafo grafo)
@@ -367,47 +428,6 @@ namespace GeradorGrafosUWP
                 await escrita.WriteLineAsync("Quantidade de componente: " + Grafo.DFS().ToString());
             }
         }
-
-        private async void EscreverMatriz(StorageFile arquivoMatriz, Grafo grafo)
-        {
-            using (StreamWriter escrita = new StreamWriter(await arquivoMatriz.OpenStreamForWriteAsync()))
-            {
-                await escrita.WriteLineAsync("Matriz Adjacencia\n");
-                Matriz.GeraMatrizAdjacencia(grafo);
-
-                foreach (List<int> lista in Matriz.MatrizAdjacencia)
-                {
-                    string linha = "";
-
-                    foreach (int letra in lista)
-                    {
-                        linha += letra.ToString() + " ";
-                    }
-                    await escrita.WriteLineAsync(linha);
-                }
-
-                await escrita.WriteLineAsync("\n");
-
-                if (grafo.ponderado)
-                {
-                    await escrita.WriteLineAsync("Matriz de Custo\n");
-                    Matriz.GeraMatrizCusto(grafo);
-
-                    foreach (List<int> lista in Matriz.MatrizCusto)
-                    {
-                        string linha = "";
-
-                        foreach (int letra in lista)
-                        {
-                            linha += letra.ToString() + " ";
-                        }
-                        await escrita.WriteLineAsync(linha);
-                    }
-                }
-            }
-
-        }
-
         /// <summary>
         /// Preenche os arquivos com o grafo
         /// </summary>
