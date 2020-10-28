@@ -104,7 +104,7 @@
         </ScrollViewer>
         <ScrollViewer Grid.Row="3" Grid.Column="1">
             <StackPanel Margin="50,20,0,0">
-                <TextBlock Text="Arestas adicionadas" FontSize="25" />
+                <TextBlock Text="Arestas adicionadas" FontSize="25" Foreground="Black"/>
                 <ListView ItemsSource="{x:Bind Arcos}" Background="White">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="local1:Arco">

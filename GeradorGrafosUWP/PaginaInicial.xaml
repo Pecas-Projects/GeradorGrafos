@@ -23,8 +23,8 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button HorizontalAlignment="Stretch" Margin="150,0,150,0" Content="Gerar um novo grafo" FontSize="30" Click="VaiParaGerarGrafo"/>
-                <Button HorizontalAlignment="Stretch" Margin="150,0,150,0" Grid.Column="1" Content="Carregar um grafo salvo" FontSize="30" Click="VaiParaAbrirArquivo"/>
+                <Button HorizontalAlignment="Stretch" Margin="150,0,150,0" Content="Gerar um novo grafo" FontSize="30" Click="VaiParaGerarGrafo" Foreground="Black"/>
+                <Button HorizontalAlignment="Stretch" Margin="150,0,150,0" Grid.Column="1" Content="Carregar um grafo salvo" FontSize="30" Click="VaiParaAbrirArquivo" Foreground="Black"/>
             </Grid>
             
         </StackPanel>
