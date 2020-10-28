@@ -8,22 +8,22 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Background="#C4C4C4">
+    <Grid Background="#020431">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
-        <Button Background="#8E8B8B" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="Bold" Content="&#xE72B;" Foreground="#000" FontSize="30" Padding="10" CornerRadius="100" Margin="50,0,0,0" Click="BotaoVoltar"/>
-        <TextBlock Foreground="Black" Text="GERADOR DE GRAFOS" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Background="#DB4922" VerticalAlignment="Center" FontFamily="Segoe MDL2 Assets" FontWeight="Bold" Content="&#xE72B;" Foreground="White" FontSize="30" Padding="10" CornerRadius="100" Margin="50,0,0,0" Click="BotaoVoltar"/>
+        <TextBlock Foreground="White" Text="GERADOR DE GRAFOS" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         
         <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <RichTextBlock Foreground="#000" FontSize="30" TextAlignment="Center" Margin="100,0,100,0">
-                <Paragraph Foreground="#000">Selecione um dos grafos salvos recentemente ou clique no botão de importar para fazer upload do grafo</Paragraph>
+            <RichTextBlock Foreground="White" FontSize="30" TextAlignment="Center" Margin="100,0,100,0">
+                <Paragraph Foreground="White">Selecione um dos grafos salvos recentemente ou clique no botão de importar para fazer upload do grafo</Paragraph>
             </RichTextBlock>
             <ComboBox x:Name="ArquivosBox" Foreground="Black" Header="Recentes" Margin="0,50,0,0" HorizontalAlignment="Center" FontSize="30" Width="486" Height="100" Background="White" ItemsSource="{x:Bind Arquivos}" SelectionChanged="ArquivosBox_SelectionChanged">
                 <ComboBox.HeaderTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding}" Foreground="Black" />
+                        <TextBlock Text="{Binding}" Foreground="White" />
                     </DataTemplate>
                 </ComboBox.HeaderTemplate>
                 <ComboBox.ItemTemplate>
@@ -32,9 +32,9 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <Button Margin="0,50,0,0" HorizontalAlignment="Center" Content="Importar arquivo" Background="#8E8B8B" Foreground="Black" Height="65" Width="486" FontSize="30" Click="Button_CarregarGrafo" VerticalAlignment="Top"/>
-            <TextBlock x:Name="NomeArquivo" Margin="0,10,0,0" Visibility="Collapsed" HorizontalAlignment="Center" Foreground="Black" Text="Nenhum arquivo foi selecionado" FontSize="30"/>
-            <Button x:Name="BotaoProx" Margin="0,50,0,0" Visibility="Collapsed" HorizontalAlignment="Center" Content="Próxima página" Background="#8E8B8B" Foreground="Black" Height="65" Width="486" FontSize="30" Click="BotaoProxPag" VerticalAlignment="Top"/>
+            <Button Margin="0,50,0,0" HorizontalAlignment="Center" Content="Importar arquivo" Background="#DB4922" Foreground="White" Height="65" Width="486" FontSize="30" Click="Button_CarregarGrafo" VerticalAlignment="Top"/>
+            <TextBlock x:Name="NomeArquivo" Margin="0,10,0,0" Visibility="Collapsed" HorizontalAlignment="Center" Foreground="White" Text="Nenhum arquivo foi selecionado" FontSize="30"/>
+            <Button x:Name="BotaoProx" Margin="0,50,0,0" Visibility="Collapsed" HorizontalAlignment="Center" Content="Próxima página" Background="#DB4922" Foreground="White" Height="65" Width="486" FontSize="30" Click="BotaoProxPag" VerticalAlignment="Top"/>
         </StackPanel>
     </Grid>
 </Page>

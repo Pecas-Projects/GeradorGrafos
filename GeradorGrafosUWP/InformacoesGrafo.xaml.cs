@@ -156,6 +156,7 @@ namespace GeradorGrafosUWP
                 TextBlock peso = new TextBlock();
                 peso.Margin = new Thickness((arco.X1 + arco.X2) / 2, (arco.Y1 + arco.Y2) / 2, 0, 0);
                 peso.Foreground = new SolidColorBrush(Colors.White);
+                peso.FontSize = 20;
                 peso.Text = a.peso.ToString();
 
                 // Imprime um auto laço caso exista
@@ -190,7 +191,7 @@ namespace GeradorGrafosUWP
                 vertice.Width = 25;
                 vertice.Height = 25;
                 vertice.Margin = new Thickness(-12.5 + v.PosX, -12.5 + v.PosY, 0, 0);
-                vertice.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x8E, 0x8B, 0x8B));
+                vertice.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xDB, 0x49, 0x22));
                 vertice.BorderThickness = new Thickness(1);
                 vertice.BorderBrush = new SolidColorBrush(Colors.Black);
 
@@ -198,6 +199,7 @@ namespace GeradorGrafosUWP
                 TextBlock etiqueta = new TextBlock();
                 etiqueta.HorizontalAlignment = HorizontalAlignment.Center;
                 etiqueta.VerticalAlignment = VerticalAlignment.Center;
+                etiqueta.Foreground = new SolidColorBrush(Colors.White);
                 etiqueta.Text = v.id.ToString();
 
                 vertice.Children.Add(etiqueta);

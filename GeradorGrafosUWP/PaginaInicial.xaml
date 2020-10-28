@@ -8,23 +8,23 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Background="#C4C4C4">
+    <Grid Background="#020431">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
-        <TextBlock Foreground="Black" Text="GERADOR DE GRAFOS" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Foreground="White" Text="GERADOR DE GRAFOS" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <StackPanel Grid.Row="1" VerticalAlignment="Center">
-            <RichTextBlock Foreground="#000" FontSize="30" TextAlignment="Center" Margin="100,0,100,100">
-                <Paragraph Foreground="#000">Neste programa você pode criar um novo gravo ou importar um já salvo em arquivo para visualizar suas informações e realizar cálculos</Paragraph>
+            <RichTextBlock Foreground="White" FontSize="30" TextAlignment="Center" Margin="100,0,100,100">
+                <Paragraph Foreground="White">Neste programa você pode criar um novo gravo ou importar um já salvo em arquivo para visualizar suas informações e realizar cálculos</Paragraph>
             </RichTextBlock>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button HorizontalAlignment="Stretch" Margin="150,0,150,0" Content="Gerar um novo grafo" FontSize="30" Click="VaiParaGerarGrafo"/>
-                <Button HorizontalAlignment="Stretch" Margin="150,0,150,0" Grid.Column="1" Content="Carregar um grafo salvo" FontSize="30" Click="VaiParaAbrirArquivo"/>
+                <Button HorizontalAlignment="Stretch" Margin="150,0,150,0" Content="Gerar um novo grafo" FontSize="30" Click="VaiParaGerarGrafo" Foreground="White" Background="#DB4922"/>
+                <Button HorizontalAlignment="Stretch" Margin="150,0,150,0" Grid.Column="1" Content="Carregar um grafo salvo" FontSize="30" Click="VaiParaAbrirArquivo" Foreground="White" Background="#DB4922"/>
             </Grid>
             
         </StackPanel>
