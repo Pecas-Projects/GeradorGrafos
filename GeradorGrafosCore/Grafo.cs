@@ -465,7 +465,7 @@ namespace GeradorGrafosCore
             return true; //retorna true quando é possível calcular o caminho
         }
 
-        public int calculaCaminho(Vertice origem, Vertice destino) 
+        public int calculaCustoCaminho(Vertice origem, Vertice destino) //retorna a distância do caminho mínimo de Bellman-Ford
         {
             List<int> distancia = new List<int>();
             int index = 0;
@@ -487,6 +487,37 @@ namespace GeradorGrafosCore
                 return infinito; //se não retorna infinito 
             }
            
+        }
+
+        public List<string> calculaArcosCaminho(Vertice origem, Vertice destino) //retorna os arcos do caminho mínimo de Bellman-Ford
+        {
+            List<string> caminho = new List<string>();
+            Vertice aux = destino;
+
+            if (this.CaminhoMinimoBelmanFord(origem, distancia)) //se o caminho calculado for válido
+            {
+                while (true)
+                {
+                    if (aux.Predecssor == null) break; //se for null chegou ao vértice de origem
+                    else
+                    {
+                        Vertice antecessor = aux.Predecssor;
+                        string arco = antecessor.id.ToString() + " - " + aux.id.ToString();
+                        caminho.Add(arco);
+                        aux = antecessor;
+                    }
+                }
+
+                caminho.Reverse();
+
+                return caminho; //retorna a lista com os arcos
+                
+            }
+            else
+            {
+                return caminho; //se o caminho não for válido retorna a lista vazia
+            }
+
         }
 
         public int DFS()
