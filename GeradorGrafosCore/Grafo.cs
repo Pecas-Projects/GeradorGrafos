@@ -465,7 +465,7 @@ namespace GeradorGrafosCore
             return true; //retorna true quando é possível calcular o caminho
         }
 
-        public int calculaCaminho(Vertice origem, Vertice destino) 
+        public int calculaCustoCaminho(Vertice origem, Vertice destino) //retorna a distância do caminho mínimo de Bellman-Ford
         {
             List<int> distancia = new List<int>();
             int index = 0;
@@ -489,60 +489,122 @@ namespace GeradorGrafosCore
            
         }
 
+        public List<string> calculaArcosCaminho(Vertice origem, Vertice destino) //retorna os arcos do caminho mínimo de Bellman-Ford
+        {
+            List<string> caminho = new List<string>();
+            Vertice aux = destino;
+
+            if (this.CaminhoMinimoBelmanFord(origem, distancia)) //se o caminho calculado for válido
+            {
+                while (true)
+                {
+                    if (aux.Predecssor == null) break; //se for null chegou ao vértice de origem
+                    else
+                    {
+                        Vertice antecessor = aux.Predecssor;
+                        string arco = antecessor.id.ToString() + " - " + aux.id.ToString();
+                        caminho.Add(arco);
+                        aux = antecessor;
+                    }
+                }
+
+                caminho.Reverse();
+
+                return caminho; //retorna a lista com os arcos
+                
+            }
+            else
+            {
+                return caminho; //se o caminho não for válido retorna a lista vazia
+            }
+
+        }
+
         public int DFS()
         {
             this.aux = 0;
 
             int tempo = 0, nComponentes = 0;
 
-            foreach (Vertice v in this.Vertices) //inicializa todos os vértice como brancos
+            if (this.dirigido == true)
             {
-                v.Cor = 'B';
-            }
+                Grafo grafo = new Grafo { Vertices = this.Vertices, Arcos = this.Arcos };
 
-            foreach (Vertice v in this.Vertices) // percorre todos os vértice do grafo 
-            {
-                if (v.Cor == 'B') //se ele não foi descoberto ainda visitaDFS é chamada
+                foreach (Vertice v in grafo.Vertices)
                 {
-                    VisitaDFS(tempo, v);
-                }
-            }
-            foreach (Vertice v in this.Vertices) // percorre todos os vértice do grafo 
-            {
-                if (v.Predecssor == null) //se o predecessor for nulo soma 1 no número de componentes
-                {
-                    nComponentes++;
-                }
-            }
+                    foreach (Vertice v1 in v.ListaAdjacencia)
+                    {
+                        bool existe = false;
 
-            return nComponentes - this.aux ; //subtrai de nComponentes o número de falsos componentes
+                        foreach (Vertice v2 in v1.ListaAdjacencia)
+                        {
+                            if (v2 == v) existe = true;
+                        }
+
+                        if (existe == false)
+                        {
+                            v1.ListaAdjacencia.Add(v);
+                        }
+                    }
+                }
+
+                foreach (Vertice v in grafo.Vertices) //inicializa todos os vértice como brancos
+                {
+                    v.Cor = 'B';
+                }
+
+                foreach (Vertice v in grafo.Vertices) // percorre todos os vértice do grafo 
+                {
+                    if (v.Cor == 'B') //se ele não foi descoberto ainda visitaDFS é chamada
+                    {
+                        VisitaDFS(tempo, v, grafo);
+                    }
+                }
+                foreach (Vertice v in grafo.Vertices) // percorre todos os vértice do grafo 
+                {
+                    if (v.Predecssor == null) //se o predecessor for nulo soma 1 no número de componentes
+                    {
+                        nComponentes++;
+                    }
+                }
+
+                return nComponentes; //subtrai de nComponentes o número de falsos componentes
+
+            }
+            else
+            {
+
+                foreach (Vertice v in this.Vertices) //inicializa todos os vértice como brancos
+                {
+                    v.Cor = 'B';
+                }
+
+                foreach (Vertice v in this.Vertices) // percorre todos os vértice do grafo 
+                {
+                    if (v.Cor == 'B') //se ele não foi descoberto ainda visitaDFS é chamada
+                    {
+                        VisitaDFS(tempo, v, this);
+                    }
+                }
+                foreach (Vertice v in this.Vertices) // percorre todos os vértice do grafo 
+                {
+                    if (v.Predecssor == null) //se o predecessor for nulo soma 1 no número de componentes
+                    {
+                        nComponentes++;
+                    }
+                }
+
+                return nComponentes; //subtrai de nComponentes o número de falsos componentes
+            }
         }
 
-        public void VisitaDFS(int tempo, Vertice v)
+        public void VisitaDFS(int tempo, Vertice v, Grafo g)
         {
             tempo += 1;
             v.Descoberta = tempo;
             v.Cor = 'C';
 
-            //filtra os os vértices que tem como predecessor null, mas não indicam outro componente 
-            if (v.ListaAdjacencia.Count == 0 && this.dirigido == true) //se o grafo for dirigido e o vértice v tiver lista de adjacência vazia
-            {
-                foreach (Vertice v2 in Vertices) // percorre todos os vértices do grafo
-                {
-                    if(v2.Cor == 'B') //se um vértice v2 não foi descoberto ainda 
-                    {
-                        foreach (Vertice v3 in v2.ListaAdjacencia) //percorre a lista de adjacência de v2
-                        {
-                            if (v == v3)// se achar o vertice v nela então v2 não pertence a outro componente
-                            {
-                                this.aux++;// soma 1 na varável auxiliar que conta os falsos componentes
-                            }
-                        }
-                    }
-                    
-                }
-            }
-            
+               
 
                 foreach (Vertice v1 in v.ListaAdjacencia) // percorre a lista de adjacência
                 {
@@ -550,7 +612,7 @@ namespace GeradorGrafosCore
 
                 {
                     v1.Predecssor = v;
-                        VisitaDFS(tempo, v1);
+                        VisitaDFS(tempo, v1, g);
                     }
                 }
             

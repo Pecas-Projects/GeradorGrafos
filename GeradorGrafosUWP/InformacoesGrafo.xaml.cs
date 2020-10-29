@@ -247,7 +247,7 @@ namespace GeradorGrafosUWP
                 }
                 else
                 {
-                    int x = this.Grafo.calculaCaminho(a, b);
+                    int x = this.Grafo.calculaCustoCaminho(a, b);
 
                     if (x == 2147483647 / 2)
                     {
@@ -256,6 +256,13 @@ namespace GeradorGrafosUWP
                     else
                     {
                         CaminhoMinimo.Text = x.ToString();
+                        List<string> caminhos = this.Grafo.calculaArcosCaminho(a, b);
+                        int totalArcos = caminhos.Count;
+
+                        foreach(string arco in caminhos) //substituir por algo no front
+                        {
+                            Debug.WriteLine(arco);
+                        }
                     }
                 }
 
