@@ -242,8 +242,8 @@ namespace GeradorGrafosUWP
             {
                 if (this.Grafo.qualCaminho())
                 {
-                    int CaminhoMinimoValue = this.Grafo.CaminhoMinimoDijkstra(a, b);
-                    CaminhoMinimo.Text = CaminhoMinimoValue.ToString();
+                    List<string> CaminhoMinimoValue = this.Grafo.CaminhoMinimoDijkstra(a, b);
+                    CaminhoMinimo.Text = CaminhoMinimoValue[0].ToString();
                 }
                 else
                 {
