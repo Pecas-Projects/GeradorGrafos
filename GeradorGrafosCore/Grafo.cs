@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Windows.Networking.PushNotifications;
 
 namespace GeradorGrafosCore
 {
@@ -377,8 +378,15 @@ namespace GeradorGrafosCore
         /// <param name="s">vértice de origem (source)</param>
         /// <param name="k">vértice que deseja chegar</param>
         /// <returns>o valor do caminho mínimo entre os vértices indicados</returns>
-        public int CaminhoMinimoDijkstra(Vertice s, Vertice k)
+        public List<string> CaminhoMinimoDijkstra(Vertice s, Vertice k)
         {
+            List<string> retorno = new List<string>();
+
+
+            for(int i = 0; i < 3; i++){
+                retorno.Add("");
+            }
+
             List<Vertice> q = new List<Vertice>(this.Vertices); //lista de vértices a serem visitados
             
             List<int> d = new List<int>(); // lista de distância dos vértices
@@ -399,18 +407,32 @@ namespace GeradorGrafosCore
                 int indice = dq.IndexOf(dq.Min());
                 j = q[indice];
                 if (j == null)
-                { //imposisbilidade de calcular
-                    return infinito;
+                { //impossibilidade de calcular
+                    retorno[0] = "Infinito";
+                    retorno[1] = $"-";
+
+                    return retorno;
                 }
                 q[indice] = null;
                 dq[indice] = infinito;
                 S.Add(j);
+                retorno[2] += j.etiqueta + " -> ";
                 
                 // verifica se é o vértice procurado e já retorna sua distância
                 // otimização de tempo de código
                 if(j == k)
                 {
-                    return d[indice];
+                    int count = 0;
+                    foreach(Vertice v in S)
+                    {
+                        if(ProcuraArco(j, v) != null)
+                        {
+                            count++;
+                        }
+                    }
+                    retorno[0] = d[indice].ToString();
+                    retorno[1] = count.ToString();
+                    return retorno;
                 }
 
                 //percorrendo a lista de adjacência do vértice extraído
@@ -421,7 +443,12 @@ namespace GeradorGrafosCore
 
             }
 
-            return infinito; //não foi encontrado algum caminho que leve s à k
+            //não foi encontrado algum caminho que leve s à k
+
+            retorno[0] = "Infinito";
+            retorno[1] = $"-";
+
+            return retorno; 
         }
 
         public bool CaminhoMinimoBelmanFord(Vertice v, List<int>distancia)
