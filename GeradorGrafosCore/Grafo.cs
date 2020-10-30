@@ -408,15 +408,16 @@ namespace GeradorGrafosCore
                 j = q[indice];
                 if (j == null)
                 { //impossibilidade de calcular
-                    retorno[0] = "Infinito";
+                    retorno[0] = "-";
                     retorno[1] = $"-";
+                    retorno[2] = "Não há caminhos";
 
                     return retorno;
                 }
                 q[indice] = null;
                 dq[indice] = infinito;
                 S.Add(j);
-                retorno[2] += j.etiqueta + " -> ";
+                //retorno[2] += p[indice].etiqueta + " -> ";
                 
                 // verifica se é o vértice procurado e já retorna sua distância
                 // otimização de tempo de código
@@ -430,8 +431,24 @@ namespace GeradorGrafosCore
                             count++;
                         }
                     }
-                    retorno[0] = d[indice].ToString();
-                    retorno[1] = count.ToString();
+                    if(d[indice] == infinito)
+                    {
+                        retorno[0] = "-";
+                        retorno[1] = $"-";
+                        retorno[2] = "Não há caminhos";
+                    }
+                    else
+                    {
+                        retorno[0] = d[indice].ToString();
+                        retorno[1] = count.ToString();
+                        retorno[2] = j.etiqueta;
+                        while(p[indice].etiqueta != null)
+                        {
+                            retorno[2] = p[indice].etiqueta + " -> " + retorno[2];
+                            indice = this.Vertices.IndexOf(p[indice]);
+                        }
+                    }
+                    
                     return retorno;
                 }
 
@@ -445,8 +462,9 @@ namespace GeradorGrafosCore
 
             //não foi encontrado algum caminho que leve s à k
 
-            retorno[0] = "Infinito";
+            retorno[0] = "-";
             retorno[1] = $"-";
+            retorno[2] = "Não há caminhos";
 
             return retorno; 
         }
