@@ -260,15 +260,19 @@ namespace GeradorGrafosUWP
                     }
                     else
                     {
-                        CaminhoMinimoArcos.Text = x.ToString();
+                        CaminhoMinimoCusto.Text = x.ToString();
                         List<string> caminhos = this.Grafo.calculaArcosCaminho(a, b);
                         int totalArcos = caminhos.Count;
                         CaminhoMinimoArcos.Text = totalArcos.ToString();
+                        string cam = "";
 
                         foreach(string arco in caminhos) //substituir por algo no front
                         {
-                            Debug.WriteLine(arco);
+                            cam += arco + " -> ";
                         }
+
+                        cam = cam.Remove(cam.Length - 4);
+                        CaminhoMinimoCaminho.Text = cam;
                     }
                 }
 

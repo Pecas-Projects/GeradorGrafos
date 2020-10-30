@@ -95,18 +95,42 @@
                         </ComboBox>
                     </Grid>
                     <Button Background="#DB4922" Foreground="White" HorizontalAlignment="Stretch" Content="Calcular" FontSize="20" Margin="20" Click="CalculaCaminhoMinimo"/>
-                    <Grid>
-                        <TextBlock FontSize="20" Foreground="White" Text="Arcos" Margin="20,0,10,0" />
-                        <StackPanel x:Name="LabelArcos" Background="White" Margin="78,0,214,0">
-                            <TextBlock x:Name="CaminhoMinimoArcos" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Text="0"/>
-                        </StackPanel>
-                        <TextBlock FontSize="20" Foreground="White" Text="Custo" Margin="223,0,17,0" />
-                        <StackPanel x:Name="LabelCusto" Background="White" Margin="286,0,22,0">
-                            <TextBlock x:Name="CaminhoMinimoCusto" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Text="0"/>
-                        </StackPanel>
-
+                    
+                    <Grid >
+                        <Grid Margin="20, 0, 0, 0">
+                            <TextBlock x:Name="ArcosText" FontSize="20" Foreground="White" Text="Arcos" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                        </Grid>
+                        <Grid Margin="80, 0, 0, 0">
+                            <StackPanel x:Name="LabelArcos" Background="White" VerticalAlignment="Center" HorizontalAlignment="Center" Width="250">
+                                <TextBlock x:Name="CaminhoMinimoArcos" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Text="0"/>
+                            </StackPanel>
+                        </Grid>
+                        
                     </Grid>
-
+                    <Grid>
+                        <Grid Margin="0, 20, 0, 0">
+                            <Grid Margin="20, 0, 0, 0">
+                                <TextBlock x:Name="CustoText" FontSize="20" Foreground="White" Text="Custo" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100" />
+                            </Grid>
+                            <Grid Margin="80, 0, 0, 0">
+                                <StackPanel x:Name="LabelCusto" Background="White" VerticalAlignment="Center" HorizontalAlignment="Center" Width="250" >
+                                    <TextBlock x:Name="CaminhoMinimoCusto" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Text="0"/>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid>
+                        <Grid Margin="0, 20, 0, 0">
+                                <Grid Margin="20, 0, 0, 0">
+                                    <TextBlock x:Name="CaminhoText" FontSize="20" Foreground="White" Text="Caminho" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100" />
+                                </Grid>
+                                <Grid Margin="80, 0, 0, 0">
+                                    <StackPanel x:Name="LabelCaminho" Background="White" VerticalAlignment="Center" HorizontalAlignment="Center" Width="250" Height="100">
+                                        <TextBlock x:Name="CaminhoMinimoCaminho" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Text="-"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </Grid>
                 </StackPanel>
                 <StackPanel Height="1" Background="White" Margin="20"/>
                 <StackPanel>
