@@ -244,8 +244,10 @@ namespace GeradorGrafosUWP
                 {
                     List<string> CaminhoMinimoValue = this.Grafo.CaminhoMinimoDijkstra(a, b);
 
+                    
                     CaminhoMinimoCusto.Text = CaminhoMinimoValue[0];
                     CaminhoMinimoArcos.Text = CaminhoMinimoValue[1];
+                    CaminhoMinimoCaminho.Text = CaminhoMinimoValue[2];
                 }
                 else
                 {
@@ -253,8 +255,8 @@ namespace GeradorGrafosUWP
 
                     if (x == 2147483647 / 2)
                     {
-                        CaminhoMinimoArcos.Text = "-";
-                        CaminhoMinimoCusto.Text = "Impossível";
+                        CaminhoMinimoArcos.Text = "Não há caminho";
+                        CaminhoMinimoCusto.Text = "-";
                     }
                     else
                     {

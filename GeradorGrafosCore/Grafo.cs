@@ -435,7 +435,7 @@ namespace GeradorGrafosCore
                     {
                         retorno[0] = "-";
                         retorno[1] = $"-";
-                        retorno[2] = "Não há caminhos";
+                        retorno[2] = "Não há caminho";
                     }
                     else
                     {
@@ -464,7 +464,7 @@ namespace GeradorGrafosCore
 
             retorno[0] = "-";
             retorno[1] = $"-";
-            retorno[2] = "Não há caminhos";
+            retorno[2] = "Não há caminho";
 
             return retorno; 
         }
