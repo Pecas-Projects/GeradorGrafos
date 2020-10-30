@@ -410,7 +410,7 @@ namespace GeradorGrafosCore
                 { //impossibilidade de calcular
                     retorno[0] = "-";
                     retorno[1] = $"-";
-                    retorno[2] = "Não há caminhos";
+                    retorno[2] = "Não há caminho";
 
                     return retorno;
                 }

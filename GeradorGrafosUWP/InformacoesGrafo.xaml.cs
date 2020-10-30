@@ -255,24 +255,39 @@ namespace GeradorGrafosUWP
 
                     if (x == 2147483647 / 2)
                     {
-                        CaminhoMinimoArcos.Text = "Não há caminho";
+                        CaminhoMinimoCaminho.Text = "Não há caminho";
                         CaminhoMinimoCusto.Text = "-";
+                        CaminhoMinimoArcos.Text = "-";
                     }
                     else
                     {
+                        string cam = "";
                         CaminhoMinimoCusto.Text = x.ToString();
                         List<string> caminhos = this.Grafo.calculaArcosCaminho(a, b);
                         int totalArcos = caminhos.Count;
                         CaminhoMinimoArcos.Text = totalArcos.ToString();
-                        string cam = "";
 
-                        foreach(string arco in caminhos) //substituir por algo no front
+                        if( a == b)
                         {
-                            cam += arco + " -> ";
+                            CaminhoMinimoCaminho.Text = a.etiqueta;
                         }
+                        else
+                        { 
+                            
 
-                        cam = cam.Remove(cam.Length - 4);
-                        CaminhoMinimoCaminho.Text = cam;
+                            foreach (string arco in caminhos) //substituir por algo no front
+                            {
+                                cam += arco + " -> ";
+                            }
+
+                            if (cam != "")
+                            {
+                                cam = cam.Remove(cam.Length - 4);
+                            }
+                            
+                            CaminhoMinimoCaminho.Text = cam;
+                        }
+                        
                     }
                 }
 
