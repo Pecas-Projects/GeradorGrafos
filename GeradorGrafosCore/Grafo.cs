@@ -407,9 +407,9 @@ namespace GeradorGrafosCore
                 int indice = dq.IndexOf(dq.Min());
                 j = q[indice];
                 if (j == null)
-                { //imposisbilidade de calcular
+                { //impossibilidade de calcular
                     retorno[0] = "Infinito";
-                    retorno[1] = $"Não há caminhos que liguem {s.etiqueta} à {k.etiqueta}!";
+                    retorno[1] = $"-";
 
                     return retorno;
                 }
@@ -422,8 +422,16 @@ namespace GeradorGrafosCore
                 // otimização de tempo de código
                 if(j == k)
                 {
+                    int count = 0;
+                    foreach(Vertice v in S)
+                    {
+                        if(ProcuraArco(j, v) != null)
+                        {
+                            count++;
+                        }
+                    }
                     retorno[0] = d[indice].ToString();
-                    retorno[1] = S.Count().ToString();
+                    retorno[1] = count.ToString();
                     return retorno;
                 }
 
@@ -438,7 +446,7 @@ namespace GeradorGrafosCore
             //não foi encontrado algum caminho que leve s à k
 
             retorno[0] = "Infinito";
-            retorno[1] = $"Não há caminhos que liguem {s.etiqueta} à {k.etiqueta}!";
+            retorno[1] = $"-";
 
             return retorno; 
         }
