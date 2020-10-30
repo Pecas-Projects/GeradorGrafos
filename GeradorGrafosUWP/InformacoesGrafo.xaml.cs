@@ -243,7 +243,9 @@ namespace GeradorGrafosUWP
                 if (this.Grafo.qualCaminho())
                 {
                     List<string> CaminhoMinimoValue = this.Grafo.CaminhoMinimoDijkstra(a, b);
-                    CaminhoMinimo.Text = CaminhoMinimoValue[0].ToString();
+
+                    CaminhoMinimoCusto.Text = CaminhoMinimoValue[0];
+                    CaminhoMinimoArcos.Text = CaminhoMinimoValue[1];
                 }
                 else
                 {
@@ -251,13 +253,15 @@ namespace GeradorGrafosUWP
 
                     if (x == 2147483647 / 2)
                     {
-                        CaminhoMinimo.Text = "Impossível";
+                        CaminhoMinimoArcos.Text = "-";
+                        CaminhoMinimoCusto.Text = "Impossível";
                     }
                     else
                     {
-                        CaminhoMinimo.Text = x.ToString();
+                        CaminhoMinimoArcos.Text = x.ToString();
                         List<string> caminhos = this.Grafo.calculaArcosCaminho(a, b);
                         int totalArcos = caminhos.Count;
+                        CaminhoMinimoArcos.Text = totalArcos.ToString();
 
                         foreach(string arco in caminhos) //substituir por algo no front
                         {
