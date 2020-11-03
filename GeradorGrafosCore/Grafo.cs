@@ -307,7 +307,7 @@ namespace GeradorGrafosCore
         public int RetornaPeso(Vertice i, Vertice j)
         {
             Arco a = new Arco(); 
-            a = this.ProcuraArco(j, i); 
+            a = this.ProcuraArco(i, j); 
 
             if(a == null)
             {
@@ -330,7 +330,7 @@ namespace GeradorGrafosCore
         { 
             int di = this.Vertices.IndexOf(i);
             int dj = this.Vertices.IndexOf(j);
-            int comparador = d[di] + RetornaPeso(i, j);
+            int comparador = d[di] + RetornaPeso(j, i);
             
             if (d[dj] > comparador)
             { //atualizando o valor da distância de i à j para o menor que foi encontrado até o momento
@@ -362,7 +362,7 @@ namespace GeradorGrafosCore
         {
             int di = this.Vertices.IndexOf(i);
             int dj = this.Vertices.IndexOf(j);
-            int comparador = d[dj] + RetornaPeso(j, i); //comoparador recebe a distância do vértice j mais o peso o arco
+            int comparador = d[dj] + RetornaPeso(i, j); //comoparador recebe a distância do vértice j mais o peso o arco
 
             if (d[di] > comparador) // se a distância do vértice i for maior que a de comparador
             {
@@ -408,15 +408,16 @@ namespace GeradorGrafosCore
                 j = q[indice];
                 if (j == null)
                 { //impossibilidade de calcular
-                    retorno[0] = "Infinito";
+                    retorno[0] = "-";
                     retorno[1] = $"-";
+                    retorno[2] = "Não há caminho";
 
                     return retorno;
                 }
                 q[indice] = null;
                 dq[indice] = infinito;
                 S.Add(j);
-                retorno[2] += j.etiqueta + " -> ";
+                //retorno[2] += p[indice].etiqueta + " -> ";
                 
                 // verifica se é o vértice procurado e já retorna sua distância
                 // otimização de tempo de código
@@ -430,8 +431,24 @@ namespace GeradorGrafosCore
                             count++;
                         }
                     }
-                    retorno[0] = d[indice].ToString();
-                    retorno[1] = count.ToString();
+                    if(d[indice] == infinito)
+                    {
+                        retorno[0] = "-";
+                        retorno[1] = $"-";
+                        retorno[2] = "Não há caminho";
+                    }
+                    else
+                    {
+                        retorno[0] = d[indice].ToString();
+                        retorno[1] = count.ToString();
+                        retorno[2] = j.etiqueta;
+                        while(p[indice].etiqueta != null)
+                        {
+                            retorno[2] = p[indice].etiqueta + " -> " + retorno[2];
+                            indice = this.Vertices.IndexOf(p[indice]);
+                        }
+                    }
+                    
                     return retorno;
                 }
 
@@ -445,8 +462,9 @@ namespace GeradorGrafosCore
 
             //não foi encontrado algum caminho que leve s à k
 
-            retorno[0] = "Infinito";
+            retorno[0] = "-";
             retorno[1] = $"-";
+            retorno[2] = "Não há caminho";
 
             return retorno; 
         }
@@ -529,7 +547,7 @@ namespace GeradorGrafosCore
                     else
                     {
                         Vertice antecessor = aux.Predecssor;
-                        string arco = antecessor.id.ToString() + " - " + aux.id.ToString();
+                        string arco = antecessor.etiqueta + " -> " + aux.etiqueta;
                         caminho.Add(arco);
                         aux = antecessor;
                     }

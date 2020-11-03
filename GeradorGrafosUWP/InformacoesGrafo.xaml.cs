@@ -244,8 +244,10 @@ namespace GeradorGrafosUWP
                 {
                     List<string> CaminhoMinimoValue = this.Grafo.CaminhoMinimoDijkstra(a, b);
 
+                    
                     CaminhoMinimoCusto.Text = CaminhoMinimoValue[0];
                     CaminhoMinimoArcos.Text = CaminhoMinimoValue[1];
+                    CaminhoMinimoCaminho.Text = CaminhoMinimoValue[2];
                 }
                 else
                 {
@@ -253,20 +255,39 @@ namespace GeradorGrafosUWP
 
                     if (x == 2147483647 / 2)
                     {
+                        CaminhoMinimoCaminho.Text = "Não há caminho";
+                        CaminhoMinimoCusto.Text = "-";
                         CaminhoMinimoArcos.Text = "-";
-                        CaminhoMinimoCusto.Text = "Impossível";
                     }
                     else
                     {
-                        CaminhoMinimoArcos.Text = x.ToString();
+                        string cam = "";
+                        CaminhoMinimoCusto.Text = x.ToString();
                         List<string> caminhos = this.Grafo.calculaArcosCaminho(a, b);
                         int totalArcos = caminhos.Count;
                         CaminhoMinimoArcos.Text = totalArcos.ToString();
 
-                        foreach(string arco in caminhos) //substituir por algo no front
+                        if( a == b)
                         {
-                            Debug.WriteLine(arco);
+                            CaminhoMinimoCaminho.Text = a.etiqueta;
                         }
+                        else
+                        { 
+                            
+
+                            foreach (string arco in caminhos) //substituir por algo no front
+                            {
+                                cam += arco + " -> ";
+                            }
+
+                            if (cam != "")
+                            {
+                                cam = cam.Remove(cam.Length - 4);
+                            }
+                            
+                            CaminhoMinimoCaminho.Text = cam;
+                        }
+                        
                     }
                 }
 
