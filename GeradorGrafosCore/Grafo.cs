@@ -417,20 +417,12 @@ namespace GeradorGrafosCore
                 q[indice] = null;
                 dq[indice] = infinito;
                 S.Add(j);
-                //retorno[2] += p[indice].etiqueta + " -> ";
                 
                 // verifica se é o vértice procurado e já retorna sua distância
                 // otimização de tempo de código
                 if(j == k)
                 {
                     int count = 0;
-                    foreach(Vertice v in S)
-                    {
-                        if(ProcuraArco(j, v) != null)
-                        {
-                            count++;
-                        }
-                    }
                     if(d[indice] == infinito)
                     {
                         retorno[0] = "-";
@@ -440,13 +432,15 @@ namespace GeradorGrafosCore
                     else
                     {
                         retorno[0] = d[indice].ToString();
-                        retorno[1] = count.ToString();
+                        
                         retorno[2] = j.etiqueta;
                         while(p[indice].etiqueta != null)
                         {
                             retorno[2] = p[indice].etiqueta + " -> " + retorno[2];
                             indice = this.Vertices.IndexOf(p[indice]);
+                            count++;
                         }
+                        retorno[1] = count.ToString();
                     }
                     
                     return retorno;
