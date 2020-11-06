@@ -125,9 +125,13 @@
                                     <TextBlock x:Name="CaminhoText" FontSize="20" Foreground="White" Text="Caminho" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100" />
                                 </Grid>
                                 <Grid Margin="80, 0, 0, 0">
-                                    <StackPanel x:Name="LabelCaminho" Background="White" VerticalAlignment="Center" HorizontalAlignment="Center" Width="250" Height="100">
-                                        <TextBlock x:Name="CaminhoMinimoCaminho" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Black" Text="-"/>
-                                    </StackPanel>
+                                    <StackPanel x:Name="LabelCaminho" Background="White" VerticalAlignment="Center" HorizontalAlignment="Center" Width="250" >
+                                    <RichTextBlock  Foreground="White" FontSize="20" TextAlignment="Center" >
+                                        <Paragraph>
+                                            <Run x:Name="CaminhoMinimoCaminho" Text="0" Foreground="Black"></Run>
+                                        </Paragraph>
+                                    </RichTextBlock>
+                                </StackPanel>
                                 </Grid>
                             </Grid>
                         </Grid>
