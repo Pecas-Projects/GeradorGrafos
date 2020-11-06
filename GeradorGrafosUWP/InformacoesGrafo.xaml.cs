@@ -301,80 +301,99 @@ namespace GeradorGrafosUWP
         /// <param name="e"></param>
         private async void Button_SalvarArquivo(object sender, RoutedEventArgs e)
         {
-
-            try
-            {
-                StorageFile arqTxt = await ApplicationData.Current.LocalFolder.GetFileAsync(Grafo.Nome + ".txt");
-                // Apaga o arquivo .txt caso já exista
-                await arqTxt.DeleteAsync();
-
-                // Cria o arquivo .txt
-                StorageFile arquivoTxt = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + ".txt");
-
-                StorageFile arqPajek = await ApplicationData.Current.LocalFolder.GetFileAsync(Grafo.Nome + "Pajek" + ".net");
-                // Apaga o arquivo em pajek caso exista
-                await arqPajek.DeleteAsync();
-
-                // Cria o arquivo em pajek
-                StorageFile arquivoPajek = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Pajek" + ".net");
-
-                StorageFile arqMatrizAdj = await ApplicationData.Current.LocalFolder.GetFileAsync(Grafo.Nome + "MDA.txt");
-                // Apaga o arquivo .txt caso já exista
-                await arqTxt.DeleteAsync();
-
-                // Cria o arquivo .txt
-                StorageFile arquivoMDA = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "MDA.txt");
-
-                StorageFile arqInfo = await ApplicationData.Current.LocalFolder.GetFileAsync("Info_" + Grafo.Nome + ".txt");
-                // Apaga o arquivo .txt caso já exista
-                await arqTxt.DeleteAsync();
-
-                // Cria o arquivo .txt
-                StorageFile arquivoInfo = await ApplicationData.Current.LocalFolder.CreateFileAsync("Info_" + Grafo.Nome + ".txt");
-
-                if (this.Grafo.ponderado)
+                try
                 {
-                    StorageFile arqMatrizCusto = await ApplicationData.Current.LocalFolder.GetFileAsync(Grafo.Nome + "MDC.txt");
+                    StorageFile arqTxt = await ApplicationData.Current.LocalFolder.GetFileAsync(Grafo.Nome + ".txt");
                     // Apaga o arquivo .txt caso já exista
                     await arqTxt.DeleteAsync();
 
                     // Cria o arquivo .txt
-                    StorageFile arquivoMDC = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "MDC.txt");
+                    StorageFile arquivoTxt = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + ".txt");
 
-                    EscreverMatrizCusto(arquivoMDC, this.Grafo);
+                    EscreverArquivo(arquivoTxt, this.Grafo);
                 }
-               
+                catch
+                {
+                    StorageFile arquivoTxt = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + ".txt");
+                    EscreverArquivo(arquivoTxt, this.Grafo);
+                }
 
-               
+                try
+                {
+                    StorageFile arqPajek = await ApplicationData.Current.LocalFolder.GetFileAsync(Grafo.Nome + "Pajek" + ".net");
+                    // Apaga o arquivo em pajek caso exista
+                    await arqPajek.DeleteAsync();
 
-                EscreverArquivo(arquivoTxt, this.Grafo);
-                EscreverArquivo(arquivoPajek, this.Grafo);
-                EscreverMatrizAdj(arquivoMDA, this.Grafo);
-                EscreverInfoGrafos(arquivoInfo, this.Grafo);
-            }
-            // Caso os arquivos não existam para realizar a exclusão, apenas realiza a criação
-            catch
-            {
-                StorageFile arquivoTxt = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + ".txt");
-                EscreverArquivo(arquivoTxt, this.Grafo);
+                    // Cria o arquivo em pajek
+                    StorageFile arquivoPajek = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Pajek" + ".net");
 
-                StorageFile arquivoPajek = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Pajek.net");
-                EscreverArquivo(arquivoPajek, this.Grafo);
+                    EscreverArquivo(arquivoPajek, this.Grafo);
 
-                StorageFile arquivoInfo = await ApplicationData.Current.LocalFolder.CreateFileAsync("Info_" + Grafo.Nome + ".txt");
-                EscreverInfoGrafos(arquivoInfo, this.Grafo);
+                }
+                catch
+                {
+                    StorageFile arquivoPajek = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "Pajek.net");
+                    EscreverArquivo(arquivoPajek, this.Grafo);
+                }
 
-                StorageFile arquivoMDA = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "MDA.txt");
-                EscreverMatrizAdj(arquivoMDA, this.Grafo);
+                try
+                {
+                    StorageFile arqMatrizAdj = await ApplicationData.Current.LocalFolder.GetFileAsync(Grafo.Nome + "MDA.txt");
+                    // Apaga o arquivo .txt caso já exista
+                    await arqMatrizAdj.DeleteAsync();
+                    // Cria o arquivo .txt
+                    StorageFile arquivoMDA = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "MDA.txt");
+                    EscreverMatrizAdj(arquivoMDA, this.Grafo);
+
+                }
+                catch
+                {
+                    StorageFile arquivoMDA = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "MDA.txt");
+                    EscreverMatrizAdj(arquivoMDA, this.Grafo);
+                }
+
+                try
+                {
+                    StorageFile arqInfo = await ApplicationData.Current.LocalFolder.GetFileAsync("Info_" + Grafo.Nome + ".txt");
+                    // Apaga o arquivo .txt caso já exista
+                    await arqInfo.DeleteAsync();
+
+                    // Cria o arquivo .txt
+                    StorageFile arquivoInfo = await ApplicationData.Current.LocalFolder.CreateFileAsync("Info_" + Grafo.Nome + ".txt");
+                    EscreverInfoGrafos(arquivoInfo, this.Grafo);
+
+                }
+                catch
+                {
+                    StorageFile arquivoInfo = await ApplicationData.Current.LocalFolder.CreateFileAsync("Info_" + Grafo.Nome + ".txt");
+                    EscreverInfoGrafos(arquivoInfo, this.Grafo);
+                }
 
                 if (this.Grafo.ponderado)
                 {
-                    StorageFile arquivoMDC = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "MDC.txt");
-                    EscreverMatrizCusto(arquivoMDC, this.Grafo);
+                    try
+                    {
+                        StorageFile arqMatrizCusto = await ApplicationData.Current.LocalFolder.GetFileAsync(Grafo.Nome + "MDC.txt");
+                        // Apaga o arquivo .txt caso já exista
+                        await arqMatrizCusto.DeleteAsync();
+
+                        // Cria o arquivo .txt
+                        StorageFile arquivoMDC = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "MDC.txt");
+
+                        EscreverMatrizCusto(arquivoMDC, this.Grafo);
+                    }
+                    catch
+                    {
+                        StorageFile arquivoMDC = await ApplicationData.Current.LocalFolder.CreateFileAsync(Grafo.Nome + "MDC.txt");
+                        EscreverMatrizCusto(arquivoMDC, this.Grafo);
+                    }
+                  
                 }
-            }
+
 
         }
+
+
 
         private async void EscreverMatrizCusto(StorageFile arquivoMDC, Grafo grafo)
         {
