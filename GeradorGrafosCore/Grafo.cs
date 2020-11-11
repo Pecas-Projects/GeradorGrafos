@@ -382,10 +382,9 @@ namespace GeradorGrafosCore
         {
             List<string> retorno = new List<string>();
 
-
-            for(int i = 0; i < 3; i++){
-                retorno.Add("");
-            }
+            retorno.Add("-");
+            retorno.Add("-");
+            retorno.Add("Não há caminho");
 
             List<Vertice> q = new List<Vertice>(this.Vertices); //lista de vértices a serem visitados
             
@@ -408,10 +407,6 @@ namespace GeradorGrafosCore
                 j = q[indice];
                 if (j == null)
                 { //impossibilidade de calcular
-                    retorno[0] = "-";
-                    retorno[1] = $"-";
-                    retorno[2] = "Não há caminho";
-
                     return retorno;
                 }
                 q[indice] = null;
@@ -423,13 +418,7 @@ namespace GeradorGrafosCore
                 if(j == k)
                 {
                     int count = 0;
-                    if(d[indice] == infinito)
-                    {
-                        retorno[0] = "-";
-                        retorno[1] = $"-";
-                        retorno[2] = "Não há caminho";
-                    }
-                    else
+                    if(d[indice] != infinito)
                     {
                         retorno[0] = d[indice].ToString();
                         
@@ -455,10 +444,6 @@ namespace GeradorGrafosCore
             }
 
             //não foi encontrado algum caminho que leve s à k
-
-            retorno[0] = "-";
-            retorno[1] = $"-";
-            retorno[2] = "Não há caminho";
 
             return retorno; 
         }
