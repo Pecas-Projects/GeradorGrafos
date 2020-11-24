@@ -14,14 +14,23 @@ namespace GeradorGrafosCore
         public Vertice Predecssor { get; set; }
         public int PosX { get; set; }
         public int PosY { get; set; }
+        public List<double> PageRank { get; set; }
+        public int GrauAdj { get; set; }
+        public int GrauInc { get; set; }
+
 
         public List<Vertice> ListaAdjacencia { get; set; }
+        public List<Vertice> ListaIncidencia { get; set; }
 
         public Vertice()
         {
             this.Predecssor = null;
             this.ListaAdjacencia = new List<Vertice>();
+            this.ListaIncidencia = new List<Vertice>();
+            this.PageRank = new List<double>();
             this.id = 1;
+            this.GrauInc = 0;
+            this.GrauAdj = 0;
             AtualizaCoordenadas();
         }
         

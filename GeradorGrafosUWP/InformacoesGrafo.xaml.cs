@@ -535,6 +535,14 @@ namespace GeradorGrafosUWP
         private void BotaoCalularComponentes(object sender, RoutedEventArgs e)
         {
             NumeroDeComponentes.Text = Grafo.DFS().ToString();
+
+            Grafo.PageRank();
+
+            foreach(Vertice v in Grafo.Vertices)
+            {
+                Debug.WriteLine(v.PageRank[v.PageRank.Count - 1]);
+            }
+            
         }
 
         private void AtualizaGrafo(object sender, RoutedEventArgs e)
