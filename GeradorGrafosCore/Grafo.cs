@@ -126,10 +126,12 @@ namespace GeradorGrafosCore
             this.Arcos.Add(a);
 
             a.saida.ListaAdjacencia.Add(a.entrada);
+            a.entrada.ListaIncidencia.Add(a.saida);
 
             if (!this.dirigido)
             {
                 a.entrada.ListaAdjacencia.Add(a.saida);
+
             }          
             
             if(a.peso == 0)
@@ -141,6 +143,9 @@ namespace GeradorGrafosCore
             {
                 this.ponderado = true;
             }
+
+            a.saida.GrauAdj = a.saida.ListaAdjacencia.Count;
+            a.entrada.GrauInc = a.entrada.ListaIncidencia.Count;
         }
 
         public Arco ProcuraArco(int idArco)
@@ -664,6 +669,80 @@ namespace GeradorGrafosCore
             {
                 return true; // se não ele calcula por Dijkstra
             }
+        }
+
+        //adiciona uma aresta saindo de um vértice para todos os outros, se seu grau de Adjacência for igual a zero
+        public void HandleSinks()
+        {
+            foreach(Vertice v in Vertices)
+            {
+                if(v.GrauAdj == 0)
+                {
+                    foreach(Vertice v1 in Vertices)
+                    {
+                        if(v.id != v1.id)
+                        {
+                            Arco a = new Arco();
+
+                            a.entrada = v1;
+                            a.saida = v;
+
+                            this.AdicionarArco(a);
+                        }
+                    }
+                }
+            }
+
+        }
+
+        public void PageRank()
+        {
+            double convergence = 0.001;
+            double DFactor = 0.85;
+            bool done = false;
+            int contInteracoes = 0;
+            int n = Vertices.Count;
+
+
+            this.HandleSinks();
+
+            foreach(Vertice v in Vertices)
+            {
+                v.PageRank.Add(1 / n);
+            }
+
+            while (!done)
+            {
+                int contConvergence = 0;
+
+                foreach (Vertice v in Vertices)
+                {
+                    double PRIncidente = 0;
+
+                    foreach (Vertice v1 in v.ListaIncidencia)
+                    {
+                        PRIncidente += v1.PageRank[v1.PageRank.Count - 1] / v1.GrauAdj;
+                    }
+
+                    double aux = ((1 - DFactor) / n) + DFactor * (PRIncidente);
+
+                    v.PageRank.Add(aux);
+
+                    
+                }
+
+                contInteracoes += 1;
+
+                foreach(Vertice v in Vertices)
+                {
+                    if ((v.PageRank[v.PageRank.Count - 1]) - (v.PageRank[v.PageRank.Count - 2]) <= convergence) contConvergence++;
+                }
+
+                if (contConvergence == Vertices.Count || contInteracoes >= 100) done = true; 
+            }
+
+
+
         }
 
     }
